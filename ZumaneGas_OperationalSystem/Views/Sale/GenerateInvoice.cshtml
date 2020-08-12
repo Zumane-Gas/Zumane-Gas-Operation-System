@@ -1,0 +1,284 @@
+﻿@model ZumaneGas_OperationalSystem.Models.Sale
+
+@{
+    ViewBag.Title = "GenerateInvoice";
+}
+<br/>
+<div class="row">
+    <div class="col-md-4">
+
+    </div>
+        <div class="col-md-4">
+            <h3 style="text-align:center">Tax Invoice</h3>
+            <p>
+                <strong>ZUMANE GAS</strong> <br />
+                P7 Bhejane Road, KwaMashu, 4359 <br />
+                Cell No: <strong>060 3509 968</strong> <br />
+                Invoice Number: <strong>INV#@Html.DisplayFor(model => model.InvoiceId)</strong> <br/>
+                Tax Invoice VAT NO.: <strong>4860273384</strong><br />
+                Date: <strong>@Html.DisplayFor(model => model.SaleD)</strong> <br/>
+                @Html.DisplayFor(model => model.SaleType) Sale <br/>
+                @if(Model.Delivery == true)
+                {
+                    <p><strong>!!!!DELIVERY!!!</strong></p>
+                }
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Item(s)</strong>
+                    </div>
+                    <div class="col-md-2">
+                        <strong>Qty</strong>
+                    </div>
+                    <div class="col-md-3">
+                       <strong>Vat(15%)</strong>
+                    </div>
+                    <div class="col-md-3">
+                        <strong>Total</strong>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        @if(Model.item1 != null)
+                        {
+                            <p style="font-size:small">@Html.DisplayFor(model => model.item1) kg</p>
+                        }
+                        @if (Model.item2 != null)
+                        {
+                            <p style="font-size:small">@Html.DisplayFor(model => model.item2) kg</p>
+                        }
+                        @*Deposit*@
+                        @if (Model.DepositItem != null)
+                        {
+                            <p style="font-size: small">@Html.DisplayFor(model => model.DepositItem)</p>
+                        }
+                        @*Products*@
+                        @if(Model.Product_Item1 != null)
+                        {
+                            <p style="font-size:small">@Html.DisplayFor(model => model.Product_Item1)</p>
+                        }
+                        @if (Model.Product_Item2 != null)
+                        {
+                            <p style="font-size:small">@Html.DisplayFor(model => model.Product_Item2)</p>
+                        }
+                        <p style="font-size:small">####</p>
+                        <p style="font-size:small">####</p>
+                        <p style="font-size:small">####</p>
+                    </div>
+                    <div class="col-md-2">
+                        @if(Model.Qty1 != 0)
+                        {
+                            <p style="font-size:small">@Html.DisplayFor(model => model.Qty1)</p>
+                        }
+
+                        @if (Model.Qty2 != 0)
+                        {
+                            <p style="font-size:small">@Html.DisplayFor(model => model.Qty2)</p>
+                        }
+                        @if(Model.DepositQuantity != 0)
+                        {
+                            <p style="font-size:small">@Html.DisplayFor(model => model.DepositQuantity)</p>
+                        }
+                        @*Products Quantity*@
+                        @if(Model.Product_Qty1 != 0)
+                        {
+                            <p style="font-size:small">@Html.DisplayFor(model => model.Product_Qty1)</p>
+                        }
+                        @if (Model.Product_Qty2 != 0)
+                        {
+                            <p style="font-size:small">@Html.DisplayFor(model => model.Product_Qty2)</p>
+                        }
+                        <p style="font-size:small">####</p>
+                        <p style="font-size:small">####</p>
+                        <p style="font-size:small">####</p>
+                    </div>
+                    <div class="col-md-3">
+                        @if(Model.item1 != null)
+                        {
+                            <p id="item1_vat" style="font-size:small"></p>
+                        }
+                        @if (Model.item2 != null)
+                        {
+                            <p id="item2_vat" style="font-size:small"></p>
+                        }
+                        @if(Model.DepositItem != null)
+                        {
+                            <p id="DepositVat" style="font-size:small"></p>
+                        }
+                        @if(Model.Product_Item1 != null)
+                        {
+                            <p style="font-size:small" id="Prod1_vat"></p>
+                        }
+                        @if (Model.Product_Item2 != null)
+                        {
+                            <p style="font-size:small" id="Prod2_vat"></p>
+                        }
+                        <p style="font-size:small">####</p>
+                        <p style="font-size:small">####</p>
+                        <p style="font-size:small">####</p>
+                    </div>
+                    <div class="col-md-3">
+                        @if (Model.item1 != null)
+                        {
+                            <p id="item1_total" style="font-size:small"></p>
+                        }
+                        @if (Model.item2 != null)
+                        {
+                            <p id="item2_total" style="font-size:small"></p>
+                        }
+                        @if(Model.DepositItem != null)
+                        {
+                            <p style="font-size:small" id="DepositPrice"></p>
+                        }
+                        @if (Model.Product_Item1 != null)
+                        {
+                            <p style="font-size:small" id="Prod1_price"></p>
+                        }
+                        @if (Model.Product_Item2 != null)
+                        {
+                            <p style="font-size:small" id="Prod2_price"></p>
+                        }
+                        <p style="font-size:small">####</p>
+                        <p style="font-size:small">####</p>
+                        <p style="font-size:small">####</p>
+                    </div>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+</div>
+
+    <div class="row">
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-4">
+            <p style="font-size:large" id="items"><strong></strong></p>
+            <div class="row">
+
+                <div class="col-md-8" id="desc">
+                   
+                </div>
+                <div class="col-md-4" id="tots">
+
+                </div>
+            </div> 
+            <div class="row">
+                <div class="col-md-4">
+                    <p><strong>Rate</strong></p>
+                </div>
+                <div class="col-md-4">
+                    <p><strong>Vat</strong></p>
+                </div>
+                <div class="col-md-4">
+                    <p><strong>Total</strong></p>
+                </div>
+            </div> 
+            <div class="row">
+                <div class="col-md-4">
+                    <p><strong>15.00%</strong></p>
+                </div>
+                <div class="col-md-4">
+                    <p id="vat"></p>
+                </div>
+                <div class="col-md-4">
+                    <p id="VTot"></p>
+                </div>
+            </div>
+            <div class="row">
+                <p style="text-align:center">Please Keep this slip as proof of purchase.</p>
+                <p style="text-align:center"><strong>SIYABONGA NGOKUBAMBISANA</strong></p>
+            </div>      
+        </div>
+       
+        
+    </div>
+
+@*<footer><a href="javascript:window.print()">Click to Print This Page</a></footer>*@
+
+@section scripts{
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        window.onload = function () {
+
+            //var UrlSearch = window.location.search.substring(1);
+            var UrlSearch = window.location.pathname;
+            var parameters = UrlSearch.split("/");
+            console.log("Broken Down url: ", parameters);
+            var saleId = parseFloat(parameters[3]);
+
+            console.log("Sale Id: ",saleId);
+            $.get('/Sale/getSale?saleId=' + saleId + '', null, function (data) {
+                console.log(data);
+                //Item 1
+                var calcPrice1 = data.price1 * data.Qty1;
+                $("#item1_total").append("R", calcPrice1);
+
+                var calcVat1 = calcPrice1 * data.Vat;
+                $("#item1_vat").append("R",calcVat1);                                                                                              
+          
+                //Item 2
+                var calcPrice2 = data.price2 * data.Qty2;
+                $("#item2_total").append("R", calcPrice2);
+
+                var calcVat2 = calcPrice2 * data.Vat;
+                $("#item2_vat").append("R",calcVat2);  
+
+                //Cylinder Deposit 
+                var calcDep = data.DepositPrice * data.DepositQuantity;
+                $("#DepositPrice").append("R", calcDep);
+
+                var calcVatDep = calcDep * data.Vat;
+                $("#DepositVat").append("R", calcVatDep);
+
+                //Product1 
+                var calcProdPrice1 = data.Product_Price1 * data.Product_Qty1;
+                $("#Prod1_price").append("R", calcProdPrice1);
+
+                var calcProdVat1 = calcProdPrice1 * data.Vat;
+                $("#Prod1_vat").append("R", calcProdVat1);
+
+                //product2
+                var calcProdPrice2 = data.Product_Price1 * data.Product_Qty2;
+                $("#Prod2_price").append("R", calcProdPrice2);
+
+                var calcProdVat2 = calcProdPrice2 * data.Vat;
+                $("#Prod2_vat").append("R", calcProdVat2);
+
+                var items = data.Qty1 + data.Qty2 + data.DepositQuantity + data.Product_Qty1 + data.Product_Qty2;
+                $("#items").append("Items:", items);
+
+                var subTotal = (calcPrice1 + calcPrice2 + calcDep + calcProdPrice1 + calcProdPrice2) * data.Vat;
+                var vatTotal = calcVat1 + calcVat2 + calcVatDep + calcProdVat1 + calcProdVat2;
+                var Total = data.finalPrice;
+                var CashTendered = data.cashReceived;
+                var change = data.change;
+                var date = data.SaleD;
+                
+
+                $("#desc").append('<h4>' + '<strong>Total Due:</strong>' + '<br/>' 
+                    + '<strong>Cash Tendered:</strong>' + '<br/>' 
+                    + '<strong>Change:</strong>' + '</h4>');
+
+                $("#tots").append('<h4>' + 'R' + Total +'.00' + '<br/>'
+                    + 'R' + CashTendered +'.00' + '<br/>'
+                    + 'R' + change + '.00' + '</h4>');
+
+                $("#VTot").append('<strong>' + 'R' + Total + '.00' + '</strong>')
+                $("#vat").append('<strong>' + 'R' + vatTotal + '</strong>')
+            })
+
+            $.get('/Sale/pringMyPage?id=' + saleId + '', null, function () {
+
+            })
+        }
+    })
+
+</script>    
+
+}
+

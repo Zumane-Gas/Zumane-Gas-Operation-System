@@ -1,0 +1,179 @@
+﻿@model ZumaneGas_OperationalSystem.Models.Sale
+
+@{
+    ViewBag.Title = "Sale Information";
+}
+
+<h3><strong>Sale Copy</strong></h3>
+<br />
+<div class="row">
+    <div class="col-md-3">
+        <a href="#" class="list-group-item" style="font-size:large"><span class="glyphicon glyphicon-th-list"></span>  Menu</a>
+
+        <a href="" class="list-group-item" style="font-size:large"><strong>Sale</strong></a>
+        <a href="@Url.Action("NewSale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> New Sale</a>
+        <a href="@Url.Action("Index","Home")" class="list-group-item active"><span class="glyphicon glyphicon-eye-open"></span> View Today's Sales</a>
+        <a href="@Url.Action("S_Sale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Search Sale</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Stock</strong></a>
+        <a href="@Url.Action("ViewStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Stock</a>
+        <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Stock Details</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Invetory</strong></a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Invetory</a>
+        <a href="@Url.Action("Index","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Show Invetories</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Reports</strong> </a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Daily Report</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Empties</strong> </a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> Record Emptiess</a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> Available Empties</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Empties</strong> </a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> Record Emptiess</a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> Available Empties</a>
+        <a href="#" class="list-group-item"><span></span> Logout</a>
+    </div>
+    <div class="col-md-4">
+        <h3>Sale Summary</h3>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    <strong>
+                        Date and Time: <br />
+                        Invoice Number: <br />
+                        Tax Invoice Number:
+                    </strong>
+                </p>
+                <br/>
+                <h4>Items Sold:</h4>
+                  <div class="row">
+                      <div class="col-md-4">
+                          <strong>Item(s)</strong>
+                      </div>
+                      <div class="col-md-3">
+                          <strong>QTY</strong>
+                      </div>
+                      <div class="col-md-5">
+                          <strong>Unit P</strong>
+                      </div>
+                  </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            @if (Model.item1 != null)
+                            {
+                                <p style="font-size:small">@Html.DisplayFor(model => model.item1) kg</p>
+                            }
+                            @if (Model.item2 != null)
+                            {
+                                <p style="font-size:small">@Html.DisplayFor(model => model.item2) kg</p>
+                            }
+                            @*Deposit*@
+                            @if (Model.DepositItem != null)
+                            {
+                                <p style="font-size: small">@Html.DisplayFor(model => model.DepositItem)</p>
+                            }
+                            @*Products*@
+                            @if (Model.Product_Item1 != null)
+                            {
+                                <p style="font-size:small">@Html.DisplayFor(model => model.Product_Item1)</p>
+                            }
+                            @if (Model.Product_Item2 != null)
+                            {
+                                <p style="font-size:small">@Html.DisplayFor(model => model.Product_Item2)</p>
+                            }
+                            <p style="font-size:small">####</p>
+                            <p style="font-size:small">####</p>
+                        </div>
+                        <div class="col-md-3">
+                            @if (Model.Qty1 != 0)
+                            {
+                                <p style="font-size:small">@Html.DisplayFor(model => model.Qty1)</p>
+                            }
+
+                            @if (Model.Qty2 != 0)
+                            {
+                                <p style="font-size:small">@Html.DisplayFor(model => model.Qty2)</p>
+                            }
+                            @if (Model.DepositQuantity != 0)
+                            {
+                                <p style="font-size:small">@Html.DisplayFor(model => model.DepositQuantity)</p>
+                            }
+                            @*Products Quantity*@
+                            @if (Model.Product_Qty1 != 0)
+                            {
+                                <p style="font-size:small">@Html.DisplayFor(model => model.Product_Qty1)</p>
+                            }
+                            @if (Model.Product_Qty2 != 0)
+                            {
+                                <p style="font-size:small">@Html.DisplayFor(model => model.Product_Qty2)</p>
+                            }
+                            <p style="font-size:small">####</p>
+                            <p style="font-size:small">####</p>
+                        </div>
+                        <div class="col-md-5">
+                            @if (Model.item1 != null)
+                            {
+                                <p id="item1_total" style="font-size:small">R @Html.DisplayFor(model => model.price1)</p>
+                            }
+                            @if (Model.item2 != null)
+                            {
+                                <p id="item2_total" style="font-size:small">R @Html.DisplayFor(model => model.price2)</p>
+                            }
+                            @if (Model.DepositItem != null)
+                            {
+                                <p style="font-size:small" id="DepositPrice">R @Html.DisplayFor(model => model.DepositPrice)</p>
+                            }
+                            @if (Model.Product_Item1 != null)
+                            {
+                                <p style="font-size:small" id="Prod1_price">R @Html.DisplayFor(model => model.Product_Price1)</p>
+                            }
+                            @if (Model.Product_Item2 != null)
+                            {
+                                <p style="font-size:small" id="Prod2_price">R @Html.DisplayFor(model => model.Product_Price2)</p>
+                            }
+                            <p style="font-size:small">####</p>
+                            <p style="font-size:small">####</p>
+                        </div>
+                    </div>
+                <br/>
+                <div class="row">
+                   <div class="col-md-4">
+                       <input type="button" value="Print Invoice" id="btnPrint" />
+                   </div>
+                    <div class="col-md-offset-8">
+                        <input type="button" value="Cancel Sale" id="btnCancel" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    @Html.DisplayFor(model => model.SaleD) <br />
+                    @Html.DisplayFor(model => model.InvoiceId) <br />
+                    4860273384
+                </p>
+               
+            </div>
+        </div>
+    </div>
+
+ </div>
+
+
+@section scripts{
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnPrint").click(function () {
+            var inv = parseFloat('@ViewBag.InvoiceId');
+            var finalInv = inv + 1;
+
+            console.log('Inv id:', finalInv);
+            location.href = "/Sale/GenerateInvoice/" + finalInv;
+        })
+    })
+  </script>
+}
+

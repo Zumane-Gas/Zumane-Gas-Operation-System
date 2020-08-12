@@ -1,0 +1,175 @@
+﻿@model IEnumerable<ZumaneGas_OperationalSystem.Models.Sale>
+
+<h3><strong>Sale > View Today's sales</strong></h3>
+<br/>
+
+
+
+<div class="row">
+    <div class="col-md-3">
+       <a href="#" class="list-group-item" style="font-size:large"><span class="glyphicon glyphicon-th-list"></span>  Menu</a>
+
+        <a href="" class="list-group-item" style="font-size:large"><strong>Sale</strong></a>
+        <a href="@Url.Action("NewSale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> New Sale</a>
+        <a href="@Url.Action("Index","Home")" class="list-group-item active"><span class="glyphicon glyphicon-eye-open"></span> View Today's Sales</a>
+        <a href="@Url.Action("S_Sale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Search Sale</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Stock</strong></a>
+        <a href="@Url.Action("ViewStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Stock</a>
+        <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Stock Details</a>
+
+       <a href="#" class="list-group-item" style="font-size:large"><strong>Invetory</strong></a>
+       <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Invetory</a>
+       <a href="@Url.Action("Index","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Show Invetories</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Reports</strong> </a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Daily Report</a>
+        <a href="@Url.Action("","Report")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Retrieve Report</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Empties</strong> </a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> Record Emptiess</a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> Available Empties</a>
+        <a href="#" class="list-group-item"><span></span> Logout</a>
+    </div>
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Today's Sales: @DateTime.Today.Day/@DateTime.Today.Month/@DateTime.Today.Year</h4>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered table-hover" id="myT">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>
+                                <h5 style="font-family:Abel;font-weight:bolder;"><strong>Invoice No</strong></h5>
+                            </th>
+                            <th>
+                                <h5 style="font-family:Abel;font-weight:bolder;"><strong>Size(kg)</strong></h5>
+                            </th>
+                            <th>
+                                <h5 style="font-family:Abel;font-weight:bolder;"><strong>Appliances/Other Goods</strong></h5>
+                            </th>
+                            <th>
+                                <h5 style="font-family:Abel;font-weight:bolder;"><strong>Price</strong></h5>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            if (item.SaleD.Date == DateTime.Today.Date)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (item.New == true)
+                                        {
+                                            <p style="text-align:center">New 48kg</p>
+                                        }
+                                        else
+                                        {
+                                            <p></p>
+                                        }
+                                    </td>
+                                    <td style="font-family:Abel;">
+                                        @Html.DisplayFor(modelItem => item.InvoiceId)
+                                    </td>
+                                    <td style="font-family:Abel;">
+                                        @if (item.item1 != null || item.item2 != null || item.item3 != null)
+                                        {
+                                            if (item.item1 != null)
+                                            {
+
+                                                <p>@Html.DisplayFor(modelItem => item.item1) kg (@Html.DisplayFor(modelItem => item.Qty1))</p>
+                                            }
+
+                                            if (item.item2 != null)
+                                            {
+                                                <p>@Html.DisplayFor(modelItem => item.item2) kg (@Html.DisplayFor(modelItem => item.Qty2))</p>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <p>
+                                                <strong>-</strong>
+                                            </p>
+                                        }
+                                    </td>
+                                    <td style="font-family:Abel;">
+                                        @if (item.Product_Item1 != null || item.Product_Item2 != null || item.DepositItem != null)
+                                        {
+                                            if (item.Product_Item1 != null)
+                                            {
+                                                <p>@Html.DisplayFor(modelItem => item.Product_Item1) (@Html.DisplayFor(modelItem => item.Product_Qty1))</p>
+                                            }
+
+                                            if (item.Product_Item2 != null)
+                                            {
+                                                <p>@Html.DisplayFor(modelItem => item.Product_Item2) (@Html.DisplayFor(modelItem => item.Product_Qty2))</p>
+                                            }
+
+                                            if (item.DepositItem != null)
+                                            {
+                                                <p>@Html.DisplayFor(modelItem => item.DepositItem) (@Html.DisplayFor(modelItem => item.DepositQuantity))</p>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <p>
+                                                <strong>-</strong>
+                                            </p>
+                                        }
+                                    </td>
+                                    <td style="font-family:Abel;">
+                                        R @Html.DisplayFor(modelItem => item.finalPrice)
+                                    </td>
+                                    <td>
+                                        @if (item.SaleType == ZumaneGas_OperationalSystem.Models.SaleType.EFT)
+                                        {
+                                            <p>EFT</p>
+                                        }
+                                        @if (item.ServiceType == ZumaneGas_OperationalSystem.Models.ServiceType.Refill)
+                                        {
+                                            <p>Refill</p>
+                                        }
+                                        @if (item.Delivery == true)
+                                        {
+                                            <p>Delivery</p>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+
+                </table>
+                <h4>Current Total: R @ViewBag.c.00 <br/>
+                    Total Sales: @ViewBag.CurrTotSales
+                </h4>
+            </div>
+        </div>
+      
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" />
+
+@section Scripts{
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            window.onload = function () {
+                $("#myT").dataTable();
+                var f = document.getElementById('final');
+                f = $('#final').val();
+                console.log(f);
+            }
+        })
+        
+    </script>
+    }
+
+

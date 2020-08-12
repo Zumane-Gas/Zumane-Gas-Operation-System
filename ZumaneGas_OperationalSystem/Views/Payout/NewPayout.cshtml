@@ -1,0 +1,96 @@
+﻿@model ZumaneGas_OperationalSystem.Models.DailyPayout
+
+@{
+    ViewBag.Title = "NewPayout";
+}
+
+<h3><strong>Payout > New Payout</strong></h3>
+<br />
+
+<div class="row">
+    <div class="col-md-3">
+        <a href="#" class="list-group-item" style="font-size:large"><span class="glyphicon glyphicon-th-list"></span>  Menu</a>
+
+        <a href="" class="list-group-item" style="font-size:large"><strong>Sale</strong></a>
+        <a href="@Url.Action("NewSale","Sale")" class="list-group-item "><span class="glyphicon glyphicon-plus"></span> New Sale</a>
+        <a href="@Url.Action("Index","Home")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Today's Sales</a>
+        <a href="@Url.Action("S_Sale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Search Sale</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Stock</strong></a>
+        <a href="@Url.Action("ViewStock","Stock")" class="list-group-item active"><span class="glyphicon glyphicon-plus"></span>  New Stock</a>
+        <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Stock Details</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Invetory</strong></a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Invetory</a>
+        <a href="@Url.Action("Index","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Show Invetories</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Payouts</strong> </a>
+        <a href="@Url.Action("NewPayout","Payout")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  New Payout</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Reports</strong> </a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Daily Report</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Empties</strong> </a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> Record Emptiess</a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> Available Empties</a>
+        <a href="#" class="list-group-item"><span></span> Logout</a>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <div class="col-md-10">
+                <div class="form-group">
+                    <textarea id="Description" rows="5" cols="50">
+
+                    </textarea>
+                    <h4>Payout Description*</h4>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                <div class="form-group">
+                    <input type="text" class="form-control" required name="InvId" placeholder="Payout Amount" id="Amount" />
+                    <h4>Payout Amount (R)*</h4>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+                <input id="btnAdd" type="submit" value="Save Record" class="btn btn-success" />
+         </div>
+</div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnAdd").click(function () {
+                var DailyPayout = {};
+
+                var Description = $("#Description").val();
+                var Amount = $("#Amount").val();
+
+                DailyPayout.Payout_Descriptiom = Description;
+                DailyPayout.Payout_Amount = Amount;
+
+                $.post('/Payout/RecordPayout/', DailyPayout, function () {
+                    alert('Payout Added');
+                });
+
+                //if ((Description != "") && (Amount != "")) {
+                   
+                //}
+                //else {
+                //    alert('Error Adding New Payout');
+                //}
+            })
+        })
+    </script>
+   
+}
+
+
+
+
+
+
+

@@ -1,0 +1,83 @@
+﻿@model IEnumerable<ZumaneGas_OperationalSystem.Models.Invetory>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Cylinder_Size)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cylinder_Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Size_Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gas_Size)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Product_Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Deposit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepositFee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inv_Description)
+        </th>
+
+       <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cylinder_Size)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cylinder_Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Size_Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gas_Size)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product_Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Deposit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepositFee)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Inv_Description)
+        </td>
+        <td></td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Invetory_Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Invetory_Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Invetory_Id })
+        </td>
+    </tr>
+}
+
+</table>

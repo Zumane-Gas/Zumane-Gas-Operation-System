@@ -1,0 +1,200 @@
+﻿@model ZumaneGas_OperationalSystem.Models.Daily_Report
+
+@{
+    ViewBag.Title = "Daily Report";
+}
+
+<h3 style="text-align:center">End of Shift Report</h3>
+<br/>
+<br/>
+
+<div class="row">
+
+    @*Top Part start*@
+    <div class="row">
+        <div class="col-md-3">
+            <p>
+                <strong style="font-size: larger">ZUMANE GAS</strong> <br />
+                P7 Bhejane Road, KwaMashu, 4359 <br />
+                Date and Time: <br/>
+                Shift:
+            </p>
+        </div>
+        <div class="col-md-3">
+            <p>
+                <br/>
+                <br/>
+                @Html.DisplayFor(model => model.Report_Date) <br/>
+                @Html.DisplayFor(model => model.Shift)
+            </p>
+        </div>
+    </div>
+    @*Top part end*@ 
+    <br/>
+    <h3><strong>Sales Information:</strong></h3>
+    @*Table start*@
+    <div class="row">
+        <div class="col-md-2">
+            <p>
+                <strong>Cash Sales (R)</strong> <br/>
+                R @Html.DisplayFor(model => model.CashSales)
+            </p>
+        </div>
+        <div class="col-md-2">
+            <p>
+                <strong>EFT Sales (R)</strong> <br/>
+                R @Html.DisplayFor(model => model.EFTSales)
+            </p>
+        </div>
+        <div class="col-md-2">
+            <p>
+                <strong>Cash Out (R)</strong> <br/>
+                R @Html.DisplayFor(model => model.Payout_Amount)
+            </p>
+        </div>
+        <div class="col-md-2">
+            <p>
+                <strong>On Hand (R)</strong> <br/>
+                R @Html.DisplayFor(model => model.Closing_Amount)
+            </p>
+        </div>
+    </div>
+    @*Table End*@
+    <br/>
+    <br/>
+
+    <h3><strong>Stock Information:</strong></h3>
+    @*New Row*@
+    <div class="row">
+        @*Start of Third Panel*@
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <p>Opening Stock</p>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>
+                                9kg  <br />
+                                14kg <br />
+                                19kg <br />
+                                48kg <br />
+                                Cooker Top(s) <br />
+                                Cylinder Key(s) <br />
+                                Regulator(s)
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>
+                                @Html.DisplayFor(model => model.Opening_9kg) <br />
+                                @Html.DisplayFor(model => model.Opening_14kg) <br />
+                                @Html.DisplayFor(model => model.Opening_19kg) <br />
+                                @Html.DisplayFor(model => model.Opening_48kg) <br />
+                                @Html.DisplayFor(model => model.Opening_CT) <br />
+                                @Html.DisplayFor(model => model.Opening_Key) <br />
+                                @Html.DisplayFor(model => model.Opening_Reg)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*End of Third Panel*@
+
+        @*Start of First Panel*@
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <p>Sold Stock</p>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>
+                                9kg  <br />
+                                14kg <br />
+                                19kg <br />
+                                48kg <br />
+                                Cooker Top(s) <br />
+                                Cylinder Key(s) <br />
+                                Regulator(s)
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>
+                                @Html.DisplayFor(model => model.Exchanges_9) <br />
+                                @Html.DisplayFor(model => model.Exchanges_14) <br />
+                                @Html.DisplayFor(model => model.Exchanges_19) <br />
+                                @Html.DisplayFor(model => model.Exchanges_48) <br />
+                                @Html.DisplayFor(model => model.Cooker_Tops) <br />
+                                @Html.DisplayFor(model => model.CylinderKeys) <br />
+                                @Html.DisplayFor(model => model.Regulators)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*End of First Panel*@
+
+        @*Start of Second Panel*@
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <p>Closing Stock</p>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>
+                                9kg  <br />
+                                14kg <br />
+                                19kg <br />
+                                48kg <br />
+                                Cooker Top(s) <br />
+                                Cylinder Key(s) <br />
+                                Regulator(s)
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>
+                                @Html.DisplayFor(model => model.Current_9kg) <br />
+                                @Html.DisplayFor(model => model.Current_14kg) <br />
+                                @Html.DisplayFor(model => model.Current_19kg) <br />
+                                @Html.DisplayFor(model => model.Current_48kg) <br />
+                                @Html.DisplayFor(model => model.Current_CT) <br />
+                                @Html.DisplayFor(model => model.Current_Key) <br />
+                                @Html.DisplayFor(model => model.Current_Reg)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*End of Second Panel*@
+    </div>
+    @*End of Row*@
+
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            window.onload = function () {
+
+                //var UrlSearch = window.location.search.substring(1);
+                var UrlSearch = window.location.pathname;
+                var parameters = UrlSearch.split("=");
+                console.log("Broken Down url: ", parameters);
+                var ReportID = parseFloat(parameters[3]);
+
+                $.get('/Report/getReport?ReportID=' + ReportID, null, function (data) {
+                    console.log(data);
+                })
+            }
+        })
+    </script>    
+}
+
+

@@ -1,0 +1,205 @@
+﻿@model ZumaneGas_OperationalSystem.Models.Daily_Report
+@{
+    ViewBag.Title = "DailyReport";
+}
+
+<h3><strong>Reports > Daily Report</strong></h3>
+<br />
+
+<div class="row">
+    <div class="col-md-3">
+        <a href="#" class="list-group-item" style="font-size:large"><span class="glyphicon glyphicon-th-list"></span>  Menu</a>
+
+        <a href="" class="list-group-item" style="font-size:large"><strong>Sale</strong></a>
+        <a href="@Url.Action("NewSale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> New Sale</a>
+        <a href="@Url.Action("Index","Home")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Today's Sales</a>
+        <a href="@Url.Action("","")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Search Sale</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Stock</strong></a>
+        <a href="@Url.Action("ViewStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Stock</a>
+        <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Stock Details</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Invetory</strong></a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Invetory</a>
+        <a href="@Url.Action("Index","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Show Invetories</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Reports</strong> </a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item active"><span class="glyphicon glyphicon-eye-open"></span>  Daily Report</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Empties</strong> </a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> Record Emptiess</a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> Available Empties</a>
+        <a href="#" class="list-group-item"><span></span> Logout</a>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Today's Report: @DateTime.Today.Day/@DateTime.Today.Month/@DateTime.Today.Year</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <p>
+                            Current Cash: <br/>
+                            + Cash Sales: <br/>
+                            - EFT Sales: <br/>
+                            - Payouts: 
+                            <br/>
+                            <br/>
+                            <strong>Sales Information:</strong>  <br/>
+                            Total Item(s) <br />
+                            Exchange(s) <br/>
+                            Refill(s) <br/>
+                            Deposits(s) <br/>
+                            Cooker Top(s) <br/>
+                            Regulator(s) <br/>
+                            Cylinder Key
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <p>
+                            <strong>R @ViewBag.c</strong> <br/>
+                            R @ViewBag.Cash <br/>
+                            R @ViewBag.Eft <br/>
+                            R @ViewBag.Payouts
+                            <br />
+                            <br />
+                            <strong></strong><br />
+                            @ViewBag.CurrTotSales <br />
+                            @ViewBag.Exchanges <br />
+                            @ViewBag.Refills <br />
+                            @ViewBag.deposits <br/>
+                            @ViewBag.CookerTop <br/>
+                            @ViewBag.Regulator <br/>
+                            @ViewBag.Key
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Sales Information (Exchanges)</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <p>
+                            <strong>Gas Size:</strong> <br/>
+                            9kg <br/>
+                            14kg <br/>
+                            19kg <br/>
+                            48kg
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>
+                            <strong>Purchased:</strong> <br/>
+                            @ViewBag.Nine  <br/>
+                            @ViewBag.Fourteen <br/>
+                            @ViewBag.Nineteen <br/>
+                            @ViewBag.Fourty (Purchased + Used)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>End Shift</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.EnumDropDownListFor(model => model.Shift, htmlAttributes: new { @class = "form-control" })
+                        <h5></h5>
+                        <input type="button" id="submit" value="End Shift"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //go the Stock model and fetch the current stock
+            //go the Payout model and fetch all the payouts for today
+
+
+
+
+            $("#submit").click(function () {
+                var da = {};
+
+                var shift = $("#Shift").val();
+                var Cash_Sales = '@ViewBag.Cash';
+                var Cooker_Tops = '@ViewBag.CookerTop';
+                var CylinderKeys = '@ViewBag.Key';
+                var Deposits = '@ViewBag.deposits';
+                var Regulators = '@ViewBag.Regulator';
+                var EFTSales = '@ViewBag.Eft';
+                var Exchanges_14 = '@ViewBag.Fourteen';
+                var Exchanges_19 = '@ViewBag.Nineteen';
+                var Exchanges_48 = '@ViewBag.Fourty';
+                var Exchanges_9 = '@ViewBag.Nine';
+                var Curr_9kg = '@ViewBag.Curr9kg';
+                var Curr_14kg = '@ViewBag.Curr14kg';
+                var Curr_19kg = '@ViewBag.Curr19kg';
+                var Curr_48kg = '@ViewBag.Curr48kg';
+                var Curr_CT = '@ViewBag.CurrCT';
+                var Curr_reg = '@ViewBag.Curr_Reg';
+                var Curr_Key = '@ViewBag.Key';
+                var Opening9kg = '@ViewBag.Opening9kg';
+                var Opening14kg = '@ViewBag.Opening14kg';
+                var Opening19kg = '@ViewBag.Opening19kg';
+                var Opening48kg = '@ViewBag.Opening48kg';
+                var OpeningCT = '@ViewBag.OpeningCT';
+                var OpeningReg = '@ViewBag.OpeningReg';
+                var OpeningKey = '@ViewBag.OpeningKey';
+                var Payouts = '@ViewBag.Payouts';
+
+                da.CashSales = Cash_Sales;
+                da.Cooker_Tops = Cooker_Tops;
+                da.CylinderKeys = CylinderKeys;
+                da.Regulators = Regulators;
+                da.Deposits = Deposits;
+                da.EFTSales = EFTSales;
+                da.Exchanges_14 = Exchanges_14;
+                da.Exchanges_19 = Exchanges_19;
+                da.Exchanges_48 = Exchanges_48;
+                da.Exchanges_9 = Exchanges_9;
+                da.Opening_14kg = Opening14kg;
+                da.Opening_19kg = Opening19kg;
+                da.Opening_48kg = Opening48kg;
+                da.Opening_9kg = Opening9kg;
+                da.Opening_CT = OpeningCT;
+                da.Opening_Key = OpeningKey;
+                da.Opening_Reg = OpeningKey;
+                da.Current_14kg = Curr_14kg;
+                da.Current_19kg = Curr_19kg;
+                da.Current_48kg = Curr_48kg;
+                da.Current_9kg = Curr_9kg;
+                da.Current_CT = Curr_CT;
+                da.Current_Key = Curr_Key;
+                da.Current_Reg = Curr_reg;
+                da.Payout_Amount = Payouts;
+
+                da.Total_Revenue = Cash_Sales - Payouts ;
+                da.Closing_Amount = da.Total_Revenue;
+                da.Shift = shift;
+
+                $.post('/Report/New_Report/', da, function () {
+                    alert('Shift has been ended');
+                    $.get('/Report/getLatestReport/' + '', null, function (data) {
+                        var LatestReport = data.Report_ID;
+                        location.href = '/Report/ViewReport?ReportId=' + LatestReport;
+                    })
+                });
+            });
+        });
+    </script>
+
+}

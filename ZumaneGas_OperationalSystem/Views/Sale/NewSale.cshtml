@@ -1,0 +1,688 @@
+﻿@model ZumaneGas_OperationalSystem.Models.Sale
+@{
+    ViewBag.Title = "NewSale";
+}
+
+<h3><strong>Sale > New Sale</strong></h3>
+<br/>
+    <div class="row">
+        <div class="col-md-3">
+            <a href="#" class="list-group-item" style="font-size:large"><span class="glyphicon glyphicon-th-list"></span>  Menu</a>
+
+            <a href="" class="list-group-item" style="font-size:large"><strong>Sale</strong></a>
+            <a href="@Url.Action("NewSale","Sale")" class="list-group-item active"><span class="glyphicon glyphicon-plus"></span> New Sale</a>
+            <a href="@Url.Action("Index","Home")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Today's Sales</a>
+            <a href="@Url.Action("S_Sale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Search Sale</a>
+
+            <a href="#" class="list-group-item" style="font-size:large"><strong>Stock</strong></a>
+            <a href="@Url.Action("ViewStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Stock</a>
+            <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Stock Details</a>
+
+            <a href="#" class="list-group-item" style="font-size:large"><strong>Invetory</strong></a>
+            <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Invetory</a>
+            <a href="@Url.Action("Index","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Show Invetories</a>
+
+            <a href="#" class="list-group-item" style="font-size:large"><strong>Reports</strong> </a>
+            <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Daily Report</a>
+
+            <a href="#" class="list-group-item" style="font-size:large"><strong>Empties</strong> </a>
+            <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> Record Emptiess</a>
+            <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> Available Empties</a>
+            <a href="#" class="list-group-item"><span></span> Logout</a>
+        </div>
+        <div class="col-md-9">
+            <h4><strong>LPG GAS Details:</strong></h4>
+            @*FIRST ROW: ITEM 1 DETAILS*@
+            <div class="row">
+                <div class="col-md-3" style="font-family:Abel;">
+                    <div class="form-group" style="font-family:Abel;">
+                        <span><h4>Gas Size1:</h4> <input type="text" class="form-control" name="" placeholder="Gas Size" id="GasSize1" /></span>
+                    </div>
+                    <div class="form-group" style="font-family:Abel;">
+                        <span><h4>Price</h4> <input type="text" class="form-control" name="" placeholder="Price" id="price1" readonly="readonly" /></span>
+                    </div>
+                    <div class="form-group" style="font-family:Abel;">
+                        <span><h4>Quntity</h4> <input type="text" class="form-control" name="" placeholder="Quntity" id="qty1" /></span>
+                    </div>
+                </div>
+
+                <div class="col-md-3" style="font-family:Abel;">
+                    <div id="item2">
+                        <div class="form-group" style="font-family:Abel;">
+                            <span><h4>Gas Size2:</h4> <input type="text" class="form-control" name="" placeholder="Gas Size" id="GasSize2" /></span>
+                        </div>
+                        <div class="form-group" style="font-family:Abel;">
+                            <span><h4>Price2</h4> <input type="text" class="form-control" name="" placeholder="Price" id="price2" readonly="readonly" /></span>
+                        </div>
+                        <div class="form-group" style="font-family:Abel;">
+                            <span><h4>Quntity</h4> <input type="text" class="form-control" name="" placeholder="Quntity" id="qty2" /></span>
+                        </div>
+                    </div>
+                </div>
+
+                @*Item 3 - to be added at later stage when everything else works the way its should*@
+                @*<div class="col-md-3" style="font-family:Abel;">
+                <div id="item2">
+                    <div class="form-group" style="font-family:Abel;">
+                        <span><h4>Gas Size2:</h4> <input type="text" class="form-control" required name="InvId" placeholder="Gas Size" id="GasSize2" /></span>
+                    </div>
+                    <div class="form-group" style="font-family:Abel;">
+                        <span><h4>Price2</h4> <input type="text" class="form-control" required name="" placeholder="Price" id="price2" readonly="readonly" /></span>
+                    </div>
+                    <div class="form-group" style="font-family:Abel;">
+                        <span><h4>Quntity</h4> <input type="text" class="form-control" required name="" placeholder="Quntity" id="qty2" /></span>
+                    </div>
+                </div>
+            </div>*@
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-3" style="font-family:Abel;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>Additional Information</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-md-10" style="font-family:Abel;">
+                                <div class="checkbox">
+                                    @Html.DisplayNameFor(model => model.New)
+                                    @Html.EditorFor(model => model.New)
+                                </div>
+                            </div>
+                            <div class="form-group" id="SaletType">
+                                <div class="col-md-10" style="font-family:Abel;">
+                                    @Html.DisplayNameFor(model => model.SaleType)
+                                    @Html.EnumDropDownListFor(model => model.SaleType, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10" style="font-family:Abel;" id="Del">
+                                    <div class="checkbox">
+                                        @Html.DisplayNameFor(model => model.Delivery)
+                                        @Html.EditorFor(model => model.Delivery)
+                                    </div>
+                                </div>
+                                <div class="col-md-10" style="font-family:Abel;" id="Service">
+                                    @Html.DisplayNameFor(model => model.ServiceType)
+                                    @Html.EnumDropDownListFor(model => model.ServiceType, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="col-md-3" style="font-family:Abel;">
+
+                </div>*@
+            </div>
+            @*SECOND ROW: ITEM 2 DETAILS*@
+            @*<div class="row">
+                <div id="item2">
+                    <div class="col-md-3" style="font-family:Abel;">
+                        <div class="form-group" style="font-family:Abel;">
+                            <span><h4>Gas Size2:</h4> <input type="text" class="form-control" required name="InvId" placeholder="Gas Size" id="GasSize2" /></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="font-family:Abel;">
+                        <div class="form-group" style="font-family:Abel;">
+                            <span><h4>Price2</h4> <input type="text" class="form-control" required name="" placeholder="Price" id="price2" readonly="readonly" /></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="font-family:Abel;">
+                        <div class="form-group" style="font-family:Abel;">
+                            <span><h4>Quntity</h4> <input type="text" class="form-control" required name="" placeholder="Quntity" id="qty2" /></span>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+            <hr />
+            @*APPLIANCES DETAILS*@
+            <h4><strong>Gas Appliances Details:</strong></h4>
+            <div class="col-md-10" style="font-family:Abel;">
+                <div class="checkbox">
+                    <input type="checkbox" id="Appliances" />
+                    <label for="Appliances"> Add Appliance</label>
+                </div>
+            </div>
+            <div class="row" id="ApplianceRow">
+                <div class="col-md-3" style="font-family:Abel;">
+                    <div class="form-group" style="font-family:Abel;">
+                        <span><h4>Appliance Code:</h4> <input type="text" class="form-control" name="" placeholder="Gas Appliance Code" id="AppCode1" /></span>
+                    </div>
+                </div>
+                <div class="col-md-3" style="font-family:Abel;">
+                    <div class="form-group" style="font-family:Abel;">
+                        <span><h4>Product Name</h4> <input type="text" class="form-control" name="" placeholder="Product" id="Prod_Name1" readonly="readonly" /></span>
+                    </div>
+                </div>
+                <div class="col-md-3" style="font-family:Abel;">
+                    <div class="form-group" style="font-family:Abel;">
+                        <span><h4>Price</h4> <input type="text" class="form-control" name="" placeholder="Price" id="AppPrice1" readonly="readonly" /></span>
+                    </div>
+                </div>
+                <div class="col-md-3" style="font-family:Abel;">
+                    <div class="form-group" style="font-family:Abel;">
+                        <span><h4>Quantity</h4> <input type="text" class="form-control" name="" placeholder="Quntity" id="AppQty1" /></span>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            @*DEPOSIT*@
+            <h4><strong>Deposit Cylinder Details:</strong></h4>
+            <div class="col-md-10" style="font-family:Abel;">
+                <div class="checkbox">
+                    <input type="checkbox" id="Deposit_Check" />
+                    <label for="Appliances"> Add Deposit</label>
+                </div>
+                    <div class="row" id="Dep_Check">
+                        <div class="col-md-3" style="font-family:Abel;">
+                            <div class="form-group" style="font-family:Abel;">
+                                <span><h4>Deposit Code:</h4> <input type="text" class="form-control" name="" placeholder="Deposit Code" id="DepCode" /></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="font-family:Abel;">
+                            <div class="form-group" style="font-family:Abel;">
+                                <span><h4>Deposit</h4> <input type="text" class="form-control" name="" placeholder="Deposit" id="DepNames" readonly="readonly" /></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="font-family:Abel;">
+                            <div class="form-group" style="font-family:Abel;">
+                                <span><h4>Deposit Fee</h4> <input type="text" class="form-control" name="" placeholder="Deposit Fee" id="DepFee" readonly="readonly" /></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="font-family:Abel;">
+                            <div class="form-group" style="font-family:Abel;">
+                                <span><h4>Quantity</h4> <input type="text" class="form-control" name="" placeholder="No.of Deposit" id="DepQuantity" /></span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    @*NEW ROW: AMOUNT AND SALE OVERVIEW*@
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4>Amount Details</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group" style="font-family:Abel;">
+                                        <span><h4>Cash Received</h4> <input type="text" class="form-control" required name="" placeholder="Amount" id="cash" /></span>
+                                    </div>
+                                    <br />
+                                    <h4 id="total"></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4>Sale Overview</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <h5><strong>Item Code</strong></h5>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h5><strong>Size(Kg)</strong></h5>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h5><strong>Unit Price(R)</strong></h5>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h5><strong>Qty</strong></h5>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h5><strong>Price(Incl)</strong></h5>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <h5 id="code1"></h5>
+                                            <h5 id="code2"></h5>
+                                            <h5 id="code3"></h5>
+                                            <h5 id="code4"></h5>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h5 id="size1"></h5>
+                                            <h5 id="size2"></h5>
+                                            <h5 id="size3"></h5>
+                                            <h5 id="size4"></h5>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h5 id="unit1"></h5>
+                                            <h5 id="unit2"></h5>
+                                            <h5 id="unit3"></h5>
+                                            <h5 id="unit4"></h5>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h5 id="qy1"></h5>
+                                            <h5 id="qy2"></h5>
+                                            <h5 id="qy3"></h5>
+                                            <h5 id="qy4"></h5>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h5 id="tot1"></h5>
+                                            <h5 id="tot2"></h5>
+                                            <h5 id="tot3"></h5>
+                                            <h5 id="tot4"></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="submit" value="Submit" id="submit" />
+                </div>
+            </div>
+@section Scripts{
+
+                <script type="text/javascript">
+
+                    window.onload = function () {
+                        document.getElementById("item2").style.visibility = 'hidden';
+                        document.getElementById("ApplianceRow").style.visibility = 'hidden';
+                        document.getElementById("Dep_Check").style.visibility = 'hidden';
+                        document.getElementById("Del").style.visibility = "hidden";
+                        document.getElementById("Service").style.visibility = "hidden";
+                    }
+                    $(document).ready(function () {
+                        $("#Deposit_Check").change(function () {
+                            var isChecked = $("#Deposit_Check").is(":checked");
+                            var GasSize1 = $("#GasSize1").val();
+
+                            
+
+                            if (isChecked === true) {
+                                document.getElementById("Dep_Check").style.visibility = 'visible';
+                            }
+                            else {
+                                document.getElementById("Dep_Check").style.visibility = 'hidden';
+                            }
+                        })
+                    })
+
+                    $(document).ready(function () {
+                        $("#Appliances").change(function () {
+                            var isChecked = $("#Appliances").is(":checked");
+
+                            if (isChecked === true) {
+                                document.getElementById("ApplianceRow").style.visibility = 'visible';
+                            }
+                            else {
+                                document.getElementById("ApplianceRow").style.visibility = 'hidden';
+                            }
+                        })
+                    })
+
+
+                    $(document).ready(function () {
+                        $("#GasSize1").keyup(function () {
+                            //document.addEventListener('keyup', function (event) {
+                            //    if (event.defaultPrevented) {
+                            //        return;
+                            //    }
+
+                               
+                            //});
+                            var key = event.key || event.keyCode;
+
+                            if (key === 'Backspace') {
+                                document.getElementById("Service").style.visibility = "hidden";
+                                document.getElementById("Del").style.visibility = "hidden";
+                                $("#price1").html("");
+                                $("qty1").html("");
+                                $("#total").html("");
+                            }
+                            var value = $(this).val();
+                            if (value == 14 || value == 19 || value == 48) {
+                                //document.getElementById("Service").style.visibility = "visible";
+                                document.getElementById("Del").style.visibility = "visible";
+                                
+                            }
+                            else if (value == 9) {
+                                document.getElementById("Service").style.visibility = "visible";
+                                document.getElementById("Del").style.visibility = "visible";
+                            }
+                            console.log(value)
+                            $.get('/Sale/getGAS?Size=' + value + '', null, function (data) {
+                                console.clear();
+                                console.log(data);
+
+                                var Price = document.getElementById('price1');
+                                Price.value = data.Cylinder_Price;
+                            })
+                        })
+                    });
+
+                    $(document).ready(function () {
+                        $("#GasSize2").keyup(function () {
+                            //If gassize1 is not equals to Exchanges, and if Gassize2 is key pressed Backspace than hide 
+                            var key = event.key || event.keyCode;
+                            var GasSize1 = $("#GasSize1").val();
+
+                            if ((GasSize1 == 14 || GasSize1 == 19 || GasSize1 == 48) && (key === "Backspace")) {
+                                //document.getElementById("ServiceType").style.visibility = "visible";
+                                document.getElementById("Delivery").style.visibility = "visible";
+                                $("#price2").html("");
+                                $("qty2").html("");
+                                $("#total").html("");
+                            }
+                            else if (GasSize1 == 14 && key === "Backspace") {
+                                document.getElementById("Service").style.visibility = "visible";
+                                document.getElementById("Del").style.visibility = "visible";
+                            }
+
+                            else {
+                                document.getElementById("ServiceType").style.visibility = "hidden";
+                            }
+                            var value = $(this).val();
+                            if (value == 14 || value == 19 || value == 48) {
+                                //document.getElementById("ServiceType").style.visibility = "visible";
+                                document.getElementById("Delivery").style.visibility = "visible";
+                            }
+                            else if (value == 9) {
+                                document.getElementById("ServiceType").style.visibility = "visible";
+                                document.getElementById("Del").style.visibility = "visible";
+                            }
+                            console.log(value)
+                            $.get('/Sale/getGAS?Size=' + value + '', null, function (data) {
+                                console.clear();
+                                console.log(data);
+                                var Price2 = document.getElementById('price2');
+                                Price2.value = data.Cylinder_Price;
+                            })
+
+                        })
+                    })
+
+
+
+                    $(document).ready(function () {
+                        $("#qty1").keyup(function () {
+                            var value = $("#GasSize1").val();
+                            $.get('/Sale/getGAS?Size=' + value + '', null, function (data) {
+
+                                $("#code1").html("");
+                                $("#size1").html("");
+                                $("#unit1").html("");
+                                $("#qy1").html("");
+                                $("#tot1").html("");
+
+                                $("#code1").append(data.Size_Code);
+                                $("#size1").append(value);
+                                $("#unit1").append("R", data.Cylinder_Price - (data.Cylinder_Price * 0.15));
+                                $("#qy1").append($("#qty1").val());
+                                var ServiceType = $("#ServiceType").val();
+                                if (ServiceType == 0) {
+                                    $("#tot1").append("R", data.Cylinder_Price * $("#qty1").val())
+                                }
+
+                                else if(ServiceType == 1) {
+                                    $("#tot1").append("R", data.Cylinder_Price * $("#qty1").val() + 20)
+                                }
+                               
+                                document.getElementById("item2").style.visibility = 'visible';
+
+                                //  $("#total").append(tot);
+                                //  var Tot1 = ((data.Cylinder_Price * $("#qty1").val()));
+
+                            })
+                        })
+                    })
+
+                    $(document).ready(function () {
+                        $("#qty2").keyup(function () {
+                            var value = $("#GasSize2").val();
+                            $.get('/Sale/getGAS?Size=' + value + '', null, function (data) {
+
+                                $("#code2").html("");
+                                $("#size2").html("");
+                                $("#unit2").html("");
+                                $("#qy2").html("");
+                                $("#tot2").html("");
+
+                                $("#code2").append(data.Size_Code);
+                                $("#size2").append(value);
+                                $("#unit2").append("R", data.Cylinder_Price - (data.Cylinder_Price * 0.15));
+                                $("#qy2").append($("#qty2").val());
+                                $("#tot2").append("R", data.Cylinder_Price * $("#qty2").val())
+
+                                var tot = "R" + data.Cylinder_Price * $("#qty2").val()
+                                var Tot2 = ((data.Cylinder_Price * $("#qty2").val()));
+
+                            })
+                        })
+                    })
+
+                    $(document).ready(function () {
+                        $("#AppCode1").keyup(function () {
+                            var value = $(this).val();
+                            $.get('/Sale/getProduct?Code=' + value + '', null, function (data) {
+                                console.clear();
+                                console.log(data);
+
+                                var Name = document.getElementById('Prod_Name1');
+                                Name.value = data.ProductName;
+
+                                var Price = document.getElementById('AppPrice1');
+                                Price.value = data.Product_Price;
+                            })
+                        })
+                    })
+
+
+                    $(document).ready(function () {
+                        $("#DepCode").keyup(function () {
+                            var value = $(this).val();
+                            $.get('/Sale/getProduct?Code=' + value + '', null, function (data) {
+                                console.clear();
+                                console.log(data);
+
+                                var Name = document.getElementById('DepNames');
+                                Name.value = data.Deposit;
+
+                                var Price = document.getElementById('DepFee');
+                                Price.value = data.DepositFee;
+
+
+                            })
+                        })
+                    })
+
+
+                    $(document).ready(function () {
+                        $("#AppQty1").keyup(function () {
+                            var value = $("#AppCode1").val();
+                            $.get('/Sale/getProduct?Code=' + value + '', null, function (data) {
+
+                                $("#code3").html("");
+                                $("#size3").html("");
+                                $("#unit3").html("");
+                                $("#qy3").html("");
+                                $("#tot3").html("");
+
+                                $("#code3").append(data.Size_Code);
+                                $("#size3").append(data.ProductName);
+                                $("#unit3").append("R", data.Product_Price - (data.Product_Price * 0.15));
+                                $("#qy3").append($("#AppQty1").val());
+                                $("#tot3").append("R", data.Product_Price * $("#AppQty1").val())
+                            })
+                        })
+                    })
+
+                    $(document).ready(function () {
+                        $("#DepQuantity").keyup(function () {
+                            var value = $("#DepCode").val();
+                            $.get('/Sale/getProduct?Code=' + value + '', null, function (data) {
+
+                                $("#code4").html("");
+                                $("#size4").html("");
+                                $("#unit4").html("");
+                                $("#qy4").html("");
+                                $("#tot4").html("");
+
+                                $("#code4").append(data.Size_Code);
+                                $("#size4").append(data.Deposit);
+                                $("#unit4").append("R", data.DepositFee - (data.DepositFee * 0.15));
+                                $("#qy4").append($("#DepQuantity").val());
+                                $("#tot4").append("R", data.DepositFee * $("#DepQuantity").val())
+
+                                //var Tot4 = ((data.DepositFee * $("#qy4").val()));
+
+                            })
+                        })
+                    })
+
+                    $("#cash").click(function () {
+                        $("#total").html("");
+
+                        var price1 = $("#price1").val();
+                        var price2 = $("#price2").val();
+                        var qty1 = $("#qty1").val();
+                        var qty2 = $("#qty2").val();
+                        var prod_price1 = $("#AppPrice1").val();
+                        var prod_qty1 = $("#AppQty1").val();
+                        var DeepFee = $("#DepFee").val();
+                        var DeepQty = $("#DepQuantity").val();
+                        var ServiceType = $("#ServiceType").val();
+                        console.log(ServiceType);
+
+                        if (ServiceType == 1) {
+                            var finalTot = (price1 * qty1) + (price2 * qty2) + (prod_price1 * prod_qty1) + (DeepFee * DeepQty) + 20;
+                            $("#total").append("<h4><strong>" + "Total Due: R", finalTot + "</strong></h4>");
+
+                        }
+                            
+                        else if(ServiceType == 0) {
+                            var finalTot = (price1 * qty1) + (price2 * qty2) + (prod_price1 * prod_qty1) + (DeepFee * DeepQty);
+                            $("#total").append("<h4><strong>" + "Total Due: R", finalTot + "</strong></h4>");
+                        }
+                    })
+
+                    $(document).ready(function () {
+                        $("#SaleType").change(function () {
+                            document.getElementById('cash').readOnly = false;
+                            console.clear();
+                            var value = $("#SaleType").val();
+                            console.log(value);
+                            if (value == 1) {
+                                document.getElementById('cash').readOnly = true;
+                            }
+                        })
+                    })
+
+                    $(document).ready(function () {                     
+                        $("#ServiceType").change(function () {
+                            console.clear();
+                            var value = $("#ServiceType").val();
+                           
+                        })
+                    })
+
+                    $(document).ready(function () {
+                        $("#Delivery").change(function () {
+                            var isChecked = $("#Delivery").is(":checked");
+
+                            if (isChecked == true) {
+                                document.getElementById('cash').readOnly = true;
+                            }
+                            else if (isChecked == false) {
+                                document.getElementById('cash').readOnly = false;
+                            }
+                        })
+                    })
+
+                    $(document).ready(function () {
+                        $("#submit").click(function () {
+                            var sale = {};
+
+                            var Item1 = $("#GasSize1").val();
+                            var Item2 = $("#GasSize2").val();
+                            var price1 = $("#price1").val();
+                            var price2 = $("#price2").val();
+                            var qty1 = $("#qty1").val();
+                            var qty2 = $("#qty2").val();
+                            var product1 = $("#Prod_Name1").val();
+                            var prod_price1 = $("#AppPrice1").val();
+                            var prod_qty1 = $("#AppQty1").val();
+                            var cash = $("#cash").val();
+                            var DeepItem = $("#DepNames").val();
+                            var DeepFee = $("#DepFee").val();
+                            var DeepQty = $("#DepQuantity").val();
+                            var new48 = $("#New").is(":checked");
+                            var delivery = $("#Delivery").is(":checked");
+                            var SaleType = $("#SaleType").val();
+                            var ServiceType = $("#ServiceType").val();
+                            console.log("Service Type", ServiceType);
+                          
+                            console.log(new48);
+
+                            var items;
+                            sale.item1 = Item1;
+                            sale.item2 = Item2;
+                            sale.price1 = price1;
+                            sale.price2 = price2;
+                            sale.Qty1 = qty1;
+                            sale.Qty2 = qty2;
+                            sale.Product_Item1 = product1;
+                            sale.Product_Price1 = prod_price1;
+                            sale.Product_Qty1 = prod_qty1;
+                            sale.cashReceived = cash;
+                            sale.DepositItem = DeepItem;
+                            sale.DepositPrice = DeepFee;
+                            sale.DepositQuantity = DeepQty;
+                            sale.New = new48;
+                            sale.ServiceType = ServiceType;
+                            sale.SaleType = SaleType;
+                            sale.Delivery = delivery;
+                            //items = parseFloat(qty1) + parseFloat(qty2) + parseFloat(prod_qty1) + parseFloat(prod_qty1);
+                            //console.log("Sale Items: ", items);
+                            sale.TotalItems = items;
+                            // console.log("New 48 checked:", new48);
+
+                            $.post('/Sale/RecordSale/', sale, function () {
+                                alert('New Sale Added');
+             
+                                $.get('/Sale/getLatestSale/' + '', null, function (data) {
+
+                                    //var newS = data.Sale_Id;
+                                    //location.href = "/Sale/GenerateInvoice/" + newS;
+                                    
+                                })
+                                //$.get('/Sale/CreatePdf/' + '', null, function () {
+
+                                //})
+
+                            })
+                        })
+                    })
+
+                    //Event to check if checkbox is checked or not
+                    //$(document).ready(function () {
+                    //    $(function () {
+                    //        $("#New").on("change", function () {
+                    //            var eventId = $(this).attr("id");
+                    //            // checked or unchecked for change event
+                    //            if ($(this).is(":checked")) {
+                    //                console.log("=> " + eventId + " has been checked");
+                    //            } else {
+                    //                console.log("=> " + eventId + " has been unchecked");
+                    //            }
+
+                    //            // Iterate all checkboxes
+                    //            $.each($("#New"), function () {
+                    //                var id = $(this).attr("id");
+                    //                if (id !== eventId) {
+                    //                    if ($(this).is(":checked")) {
+                    //                        console.log("=> " + id + " is checked");
+                    //                    } else {
+                    //                        console.log("=> " + id + " is not checked");
+                    //                    }
+                    //                }
+                    //            });
+                    //        });
+                    //    })
+                    //})
+                </script>
+            }

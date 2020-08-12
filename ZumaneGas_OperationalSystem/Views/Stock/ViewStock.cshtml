@@ -1,0 +1,244 @@
+﻿@model ZumaneGas_OperationalSystem.Models.Stock
+@{
+    ViewBag.Title = "Stock Edit";
+}
+<h3><strong>Stock > New Stock</strong></h3>
+<br />
+
+<div class="row">
+    <div class="col-md-3">
+        <a href="#" class="list-group-item" style="font-size:large"><span class="glyphicon glyphicon-th-list"></span>  Menu</a>
+
+        <a href="" class="list-group-item" style="font-size:large"><strong>Sale</strong></a>
+        <a href="@Url.Action("NewSale","Sale")" class="list-group-item "><span class="glyphicon glyphicon-plus"></span> New Sale</a>
+        <a href="@Url.Action("Index","Home")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Today's Sales</a>
+        <a href="@Url.Action("S_Sale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Search Sale</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Stock</strong></a>
+        <a href="@Url.Action("ViewStock","Stock")" class="list-group-item active"><span class="glyphicon glyphicon-plus"></span>  New Stock</a>
+        <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Stock Details</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Invetory</strong></a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Invetory</a>
+        <a href="@Url.Action("Index","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Show Invetories</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Reports</strong> </a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Daily Report</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Empties</strong> </a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> Record Emptiess</a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> Available Empties</a>
+        <a href="#" class="list-group-item"><span></span> Logout</a>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Invetory_Id, ViewBag.Inv as SelectList, "Gas Size/Product", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Invetory_Id, "", new { @class = "text-danger" })
+                <h4>Gas Size/Product*</h4>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                <div class="form-group">
+
+                    <input type="text" class="form-control" required name="" placeholder="Current Stock" id="Current" readonly="readonly" />
+                    <h4>Available Stock*</h4>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                <div class="form-group">
+                    <input type="text" class="form-control" required name="InvId" placeholder="New Stock Number" id="Number" />
+                    <h4>New Stock Number*</h4>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-8 col-md-4">
+                <input id="btnAdd" type="submit" value="Save Record" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+
+            <div class="col-md-10">
+                <p style="font-size:large">
+                    <input type="hidden" class="form-control" required name="" placeholder="Current Stock" id="det" readonly="readonly" />
+                    <input type="hidden" class="form-control" required name="" placeholder="C_Size" id="C_Size" readonly="readonly" />
+                    <input type="hidden" class="form-control" required name="" placeholder="Cylinder_Size" id="Cylinder_Size" readonly="readonly" />
+                    <input type="hidden" class="form-control" required name="" placeholder="ProductName" id="ProductName" readonly="readonly" />
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Invetory_Id").change(function () {
+                var value = $("#Invetory_Id").val();
+                $.get('/Stock/getStockDetails?InvID=' + value + '', null, function (data) {
+                    console.clear();
+                    console.log(data);
+
+                    //current number of stock
+                    var avail = document.getElementById('Current');
+                    avail.value = data.Quantity;
+                    //Fetching stock id to use on edit method
+                    var stockId = document.getElementById('det');
+                    stockId.value = data.Stock_Id;
+
+                    var C_Size = document.getElementById('C_Size');
+                    C_Size.value = data.C_Size;
+
+                    var Cylinder_Size = document.getElementById('Cylinder_Size');
+                    Cylinder_Size.value = data.Cylinder_Size;
+
+                    var ProductName = document.getElementById('ProductName');
+                    ProductName.value = data.ProductName;
+
+                    var s = parseFloat(stockId.value);
+                    
+
+                    $.get('/Stock/StockEdit?StockId=' + s, function () {
+                        console.log("Stock Id passed to method header:", s);
+                    })
+                })
+            })
+
+            $("#btnAdd").click(function () {
+                var value = $("#Invetory_Id").val();
+                $.get('/Stock/getStockDetails?InvID=' + value + '', null, function (data) {
+                    var stock = {};
+
+                    var quantity = $("#Number").val();
+                    var curr = document.getElementById('Current');
+                    curr.value = $("#Current").val();
+                    var i = parseFloat(curr.value);
+
+                    var stockId = document.getElementById('det');
+                    stockId.value = data.Stock_Id;
+                    var StockIdentity = stockId.value;
+
+                    var C_Siz = $("#C_Size").val();
+                    // C_Siz.value = 
+
+                    var Cylinder_Siz = $("#Cylinder_Size").val();
+                    // Cylinder_Siz.value = 
+
+                    var ProductNam = $("#ProductName").val();
+                    //ProductNam.value = 
+
+                    stock.Stock_Id = StockIdentity;
+                    stock.Invetory_Id = value;
+                    stock.C_Size = C_Siz;
+                    stock.Cylinder_Size = Cylinder_Siz;
+                    stock.ProductName = ProductNam;
+                    stock.NewStock = parseFloat(quantity);
+                    stock.Quantity = i + parseFloat(quantity);
+                    var f = stock.Quantity;
+                    stock.Quantity = f;
+
+                    $.post('/Stock/StockEdit/', stock, function () {
+                        alert("Stock Details Updated");
+                    })
+                })
+
+            })
+
+        })
+
+      
+
+        
+    </script>
+    @*<script type="text/javascript">
+
+            $(document).ready(function () {
+                $("#Invetory_Id").change(function () {
+                    var value = $("#Invetory_Id").val();
+                    $.get('/Stock/getStockDetails?InvID=' + value + '', null, function (data) {
+                        console.clear();
+                        console.log(data);
+
+                        var avail = document.getElementById('Current');
+                        avail.value = data.Quantity;
+
+                        var stockId = document.getElementById('det');
+                        stockId.value = data.Stock_Id;
+
+                      //  console.log("Current Stock Id", stockId.value);
+                       // console.log("Current Stock", avail.value);
+                    })
+                })
+            })
+
+            $(document).ready(function () {
+                $("#btnAdd").click(function () {
+                        var value = $("#Invetory_Id").val();
+                        $.get('/Stock/getInventoryDetails?InvID=' + value + '', null, function (data) {
+                            // console.log(data);
+
+                            var stockId = document.getElementById('det');
+                            stockId.value = $("#det").val();
+
+                            var s = stockId.value;
+                            console.log(s);
+
+                            //Edit - Get Stock Details
+                            $.get('/Stock/StockEdit?StockId=' + s, function () {
+                                var stock = {};
+
+                                var value = $("#Invetory_Id").val();
+                                var quantity = $("#Number").val();
+                                var ProductName = data[0].ProductName;
+                                var Size = data[0].Cylinder_Size;
+
+                                var curr = document.getElementById('Current');
+                                curr.value = $("#Current").val();
+                                var i = parseFloat(curr.value);
+                                console.log("Current Stock:", i);
+                                console.log("Current Stock Id", stockId.value);
+
+                                stock.Stock_Id = s;
+                                stock.ProductName = ProductName;
+                                stock.Cylinder_Size = Size;
+                                stock.C_Size = Size;
+                                stock.Invetory_Id = value;
+                                stock.NewStock = parseFloat(quantity);
+                                stock.Quantity = i + parseFloat(quantity);
+                                var f = stock.Quantity;
+                                stock.Quantity = f;
+                                console.log("Final", f);
+
+                                console.log("Stock Id: ", s);
+                                console.log("New Stock Quantity: ", stock.Quantity);
+                            })
+
+                            $.post('/Stock/StockEdit/', stock, function () {
+                                alert("Stock Details Updated");
+                            })
+
+                            //var success = "Stock Updated";
+                            //$.ajax({
+                            //    type: "POST",
+                            //    url: "/Stock/StockEdit?StockId=" + s + "/" + stock,
+                            //    //data: s,
+                            //    success: function () {
+                            //        console.log("Stock Id: ", s);
+                            //        console.log("New Stock Quantity: ",stock.Quantity);
+                            //    },
+                            //    dataType: "text"
+                            //});
+
+                        })
+
+                })
+            })
+        </script>*@
+}
+
