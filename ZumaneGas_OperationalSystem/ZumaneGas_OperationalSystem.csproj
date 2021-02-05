@@ -173,9 +173,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Company_FeedController.cs" />
+    <Compile Include="Controllers\Empty_CylinderController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvetoriesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PayoutController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SaleController.cs" />
@@ -193,11 +196,14 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Company_Feed.cs" />
     <Compile Include="Models\DailyPayout.cs" />
     <Compile Include="Models\Daily_Report.cs" />
+    <Compile Include="Models\Empty_Cylinder.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Invetory.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Sale.cs" />
     <Compile Include="Models\Stock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -210,10 +216,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="hnet.com-image.ico" />
+    <Content Include="Icons\chat.jpg" />
+    <Content Include="Icons\comment.jpg" />
     <Content Include="Icons\signs %281%29.png" />
     <Content Include="Icons\signs.png" />
+    <Content Include="Images\hnet.com-image.ico" />
+    <Content Include="Images\Zumane Logo.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Images\WhatsApp Image 2020-09-10 at 14.11.08.jpeg" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -281,6 +293,12 @@
     <Content Include="Views\Report\Report_Filter.cshtml" />
     <Content Include="Views\Report\RetrieveReport.cshtml" />
     <Content Include="Views\Sale\NoRecord.cshtml" />
+    <Content Include="Views\Order\OrderCalculator.cshtml" />
+    <Content Include="Views\Order\Capture_CustomerDetails.cshtml" />
+    <Content Include="Views\Order\NextPage_Order.cshtml" />
+    <Content Include="Views\Sale\GenerateInvoice_Reprint.cshtml" />
+    <Content Include="Views\Empty_Cylinder\NewSet.cshtml" />
+    <Content Include="Views\Company_Feed\LatestFeeds.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -306,6 +324,9 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>hnet.com-image.ico</ApplicationIcon>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
@@ -320,7 +341,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1267</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1267/</IISUrl>
+          <IISUrl>http://localhost:1902/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

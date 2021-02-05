@@ -19,6 +19,7 @@ namespace ZumaneGas_OperationalSystem.Models
         public string ProductName { get; set; }
         public int? NewStock { get; set; }
         public Status Status { get; set; }
+        //public DateTime LastChanged { get; set;}
     }
     public enum Status
     {

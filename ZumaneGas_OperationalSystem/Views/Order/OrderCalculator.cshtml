@@ -1,0 +1,353 @@
+﻿<h3><strong>Order > New Order</strong></h3>
+<br />
+
+<div class="row">
+    <div class="col-md-3">
+        <a href="#" class="list-group-item" style="font-size:large"><span class="glyphicon glyphicon-th-list"></span>  Menu</a>
+
+        <a href="" class="list-group-item" style="font-size:large"><strong>Sale</strong></a>
+        <a href="@Url.Action("NewSale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> New Sale</a>
+        <a href="@Url.Action("Index","Home")" class="list-group-item active"><span class="glyphicon glyphicon-eye-open"></span> View Today's Sales</a>
+        <a href="@Url.Action("S_Sale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Search Sale</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Stock</strong></a>
+        <a href="@Url.Action("ViewStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Stock</a>
+        <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Stock Details</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Invetory</strong></a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Invetory</a>
+        <a href="@Url.Action("Index","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Show Invetories</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Reports</strong> </a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Daily Report</a>
+        <a href="@Url.Action("","Report")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Retrieve Report</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Empties</strong> </a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> Record Emptiess</a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> Available Empties</a>
+        <a href="#" class="list-group-item"><span></span> Logout</a>
+    </div>
+
+    <div class="col-md-9">
+
+        <div class="row">
+            <h4><strong>Order Details:</strong></h4>
+            <br />
+            @*Total Price*@
+            <div class="form-group">
+                <div class="col-md-10" style="padding-left:0px">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5>Total Price:</h5>
+                        </div>
+                        <div class="col-sm-3" style="padding-left:0px">
+                            <input type="text" id="Price" class="form-control" placeholder="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*Quantity*@
+            <div class="form-group" id="PutPrice">
+                <div class="col-md-10" style="padding-left:0px">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5>Quantity:</h5>
+                        </div>
+                        <div class="col-sm-2" style="padding-left:0px">
+                            <input type="text" id="Qty" class="form-control" placeholder="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*submit*@
+            <div class="form-group" id="SubmitPrice">
+                <div class="col-md-10" style="padding-left:0px">
+                    @*<input type="button" id="submit" value="getUnit Price" />*@
+                    <button type="button" class="btn btn-secondary" id="submit">getUnit Price</button>
+                </div>
+            </div>
+            <br />
+            @*Unit Price*@
+            <div class="form-group" id="UnitPrice">
+                <div class="col-md-10" style="padding-left:0px">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5>Unit Price:</h5>
+                        </div>
+                        <div class="col-sm-3" style="padding-left:0px">
+                            <input type="text" id="Unit" class="form-control" readonly="readonly" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*Size*@
+            <div class="form-group" id="GasSize">
+                <div class="col-md-10" style="padding-left:0px">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5>Enter Size:</h5>
+                        </div>
+                        <div class="col-sm-3" style="padding-left:0px">
+                            <input type="text" id="Size" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*submit*@
+            <div class="form-group" id="UnitSize">
+                <div class="col-md-10" style="padding-left:0px">
+                    <button type="button" class="btn btn-secondary" id="submitPrice">getKG Price</button>
+                </div>
+            </div>
+
+            @*kg Price*@
+            <div class="form-group" id="KgPrice">
+                <div class="col-md-10" style="padding-left:0px">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5>KG Price:</h5>
+                        </div>
+                        <div class="col-sm-2" style="padding-left:0px">
+                            <input type="text" id="KG" class="form-control" readonly="readonly" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="form-group" id="Quote">
+                <h4><strong>Quotation Details:</strong></h4>
+                <h5 id="KgWording"></h5>
+            </div>
+
+            <div class="form-group" id="InputSize">
+                <div class="col-md-10" style="padding-left:0px">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5>Quote Size:</h5>
+                        </div>
+                        <div class="col-sm-2" style="padding-left:0px">
+                            <input type="text" id="putSize" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" id="InputQty">
+                <div class="col-md-10" style="padding-left:0px">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5>Quote Quantity:</h5>
+                        </div>
+                        <div class="col-sm-2" style="padding-left:0px">
+                            <input type="text" id="putQuantity" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" id="CalcCostEl">
+                <div class="col-md-10" style="padding-left:0px">
+                    <button type="button" class="btn btn-secondary" id="CalcCost">getPrice</button>
+                </div>
+            </div>
+
+            <div class="form-group" id="InputPrice">
+                <div class="col-md-10" style="padding-left:0px">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5>Quote Price:</h5>
+                        </div>
+                        <div class="col-sm-2" style="padding-left:0px">
+                            <input type="text" id="CalculatedPrice" class="form-control" readonly="readonly" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="form-group" id="ButtonGroup">
+                <br />
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" id="Add">Add</button>
+                    <button type="button" class="btn btn-secondary">Clear</button>
+                    <button type="button" class="btn btn-secondary">Cancel</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="form-group" id="Details">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <p>Size</p>
+                    </div>
+                    <div class="col-sm-3">
+                        <p>Unit Price</p>
+                    </div>
+                    <div class="col-sm-3">
+                        <p>Qty</p>
+                    </div>
+                    <div class="col-sm-3">
+                        <p>Final Price</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <p id="SizeWording"></p>
+                    </div>
+                    <div class="col-sm-3">
+                        <p id="UnitWording"></p>
+                    </div>
+                    <div class="col-sm-3">
+                        <p id="QtyWording"></p>
+                    </div>
+                    <div class="col-sm-3">
+                        <p id="FinalWording"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group" id="Generate">
+                <h4><strong>Quotation Final Price:</strong></h4>
+                <br />
+                <div class="col-md-10" style="padding-left:0px">
+                    <p id="FinalPriceWording"></p>
+                    <br />
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary" id="genPrice">Generate Price</button>
+                        <button type="button" class="btn btn-secondary" id="">Clear All</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+@section scripts{
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            window.onload = function () {
+                $("#PutPrice").hide();
+                $("#SubmitPrice").hide();
+                $("#UnitPrice").hide();
+                $("#GasSize").hide();
+                $("#UnitSize").hide();
+                $("#KgPrice").hide();
+                $("#Quote").hide();
+                $("#InputSize").hide();
+                $("#InputQty").hide();
+                $("#CalcCostEl").hide();
+                $("#ButtonGroup").hide();
+                $("#InputPrice").hide();
+                $("#Details").hide();
+                $("#Generate").hide();
+            }
+
+            $("#Price").change(function () {
+                $("#PutPrice").fadeIn(1000);
+            });
+            $("#Qty").change(function () {
+                $("#SubmitPrice").fadeIn(1000);
+            });
+
+            $("#submit").click(function () {
+                var TotalPrice = $("#Price").val();
+                var TotalQuantity = $("#Qty").val();
+                var UnitPrice = (TotalPrice / TotalQuantity).toFixed(2);
+                $("#Unit").val(UnitPrice);
+                $("#UnitPrice").fadeIn(1000);
+                $("#GasSize").fadeIn(1000);
+            });
+
+            $("#Size").change(function () {
+                $("#UnitSize").fadeIn(1000);
+            });
+
+            $("#submitPrice").click(function () {
+                var UP = $("#Unit").val();
+                var Size = $("#Size").val();
+                var Kg = (UP / Size).toFixed(2);
+                $("#KG").val(Kg);
+                $("#KgPrice").fadeIn(1000);
+                $("#KgWording").append("Price per KG: R", Kg);
+                $("#Quote").fadeIn(1000);
+                $("#InputSize").fadeIn(1000);
+
+            });
+
+            $("#putSize").change(function () {
+                $("#InputQty").fadeIn(1000);
+            });
+
+            $("#InputQty").change(function () {
+                $("#CalcCostEl").fadeIn(1000);
+            });
+
+            $("#CalcCost").click(function () {
+                var InputtedSize = $("#putSize").val();
+                var KgPrice = $("#KG").val();
+                var Quantity = $("#putQuantity").val();
+                var QoutePrice = (InputtedSize * KgPrice).toFixed(3);
+                var SubQuotePrice = (QoutePrice * Quantity).toFixed(2);
+                $("#CalculatedPrice").val(SubQuotePrice);
+                $("#InputPrice").fadeIn(1000);
+                console.log("Gas for Price for ", InputtedSize, "KG: R", SubQuotePrice)
+
+                $("#ButtonGroup").fadeIn(1000);
+            });
+
+            var OrderList = [];
+
+            $("#Add").click(function () {
+                var CalcPrice = $("#CalculatedPrice").val();
+                console.log("Price:", CalcPrice);
+                OrderList.push(parseFloat(CalcPrice));
+                console.log("Array Items: ", OrderList)
+                var Size = $("#putSize").val();
+                var Unit = (parseFloat(CalcPrice) / parseFloat(Size)).toFixed(2);
+                var QuoteQty = $("#putQuantity").val();
+                var LastItem = OrderList[OrderList.length - 1];
+                $("#SizeWording").append(Size, "Kg", '</br>').fadeIn(1000);
+                $("#UnitWording").append("R", Unit, '</br>').fadeIn(1000);
+                $("#FinalWording").append("R", LastItem, '</br>').fadeIn(1000);
+                $("#QtyWording").append(QuoteQty, '</br>').fadeIn(1000);
+                $("#Details").fadeIn(1000);
+                $("#Generate").fadeIn(1000);
+
+                //$("#Price").html("");
+                //$("#Size").html("");
+                //if ($("div:contains(Size.toArray)")) {
+
+                //}
+            });
+            var OrderPrice = 0;
+            $("#genPrice").click(function () {
+                for (var i in OrderList) {
+                    OrderPrice += OrderList[i];
+                }
+                $("#FinalPriceWording").append("This order will cost R", parseFloat(OrderPrice).toFixed(2));
+            });
+
+            $("#Clear").click(function () {
+                OrderList.clear();
+            });
+        });
+    </script>
+}
+
+
+
+
+
+

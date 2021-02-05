@@ -1,0 +1,134 @@
+﻿@model ZumaneGas_OperationalSystem.Models.Company_Feed
+
+@{
+    ViewBag.Title = "Company Feeds";
+}
+
+<h3><strong>Feeds > Company Feeds</strong></h3>
+<br/>
+<div class="row">
+    <div class="col-md-3">
+        <a href="#" class="list-group-item" style="font-size:large"><span class="glyphicon glyphicon-th-list"></span>  Menu</a>
+
+        <a href="" class="list-group-item" style="font-size:large"><strong>Sale</strong></a>
+        <a href="@Url.Action("NewSale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> New Sale</a>
+        <a href="@Url.Action("Index","Home")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Today's Sales</a>
+        <a href="@Url.Action("S_Sale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Search Sale</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Feeds</strong> </a>
+        <a href="@Url.Action("LatestFeeds","Company_Feed")" class="list-group-item active"><span class="glyphicon glyphicon-eye-open"></span>  Company Feeds</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Stock</strong></a>
+        <a href="@Url.Action("ViewStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Stock</a>
+        <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Stock Details</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Invetory</strong></a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Invetory</a>
+        <a href="@Url.Action("Index","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Show Invetories</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Reports</strong> </a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Daily Report</a>
+        <a href="@Url.Action("RetrieveReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Retrieve Report</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Empties</strong> </a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> Record Emptiess</a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> Available Empties</a>
+        <a href="#" class="list-group-item"><span></span> Logout</a>
+    </div>
+    <div class="container">
+        <h4>Latest Updates:</h4>
+        <br/>
+        <div class="col-md-4">
+            @*<div class="card" style="width: 30rem;  border-radius: 3px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s;">
+                    <div class="card-body" style="padding-left: 2px">
+                        <img src="~/Images/Zumane Logo.jpg" class="img-circle" style="width: 17%;height:20%">
+                        <span class="card-title" id="Title"><b>Testing</b></span>
+                        <h6 class="card-subtitle mb-2 text-muted" id="SubTitle"  style="padding-left: 2px">Testing</h6>
+                        <p class="card-text" id="Details"  style="padding-left: 2px; padding-bottom: 2px;">Testing Testing</p>
+                    </div>
+                </div>*@
+            <div class="row align-items-end" id="Card_Section">
+                <div class="col"></div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10" style="padding-left:0px">
+                    <button type="button" class="btn btn-secondary" id="Next">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var i = 0;
+            var Number_Of_Cards = 2;
+
+            window.onload = function () {
+                $(document).ready(function RunCards() {
+                    $("#Card_Section").empty();
+                    console.log('Start: ', i);
+                    console.log('End: ', Number_Of_Cards);
+                    $.get('/Company_Feed/getCurrentFeeds/' + '', null, function (data) {                          
+                        //if statements outside append
+                        var stock_Item, stock_added, stock_old = '';
+                        var payout_desc, payout_cost = '';
+
+                        for (i; i < Number_Of_Cards; i++) {
+                            if (data[i].Updated_Item != null) {
+                                stock_Item = 'Gas Size/Product: ' + '<b>' + data[i].Updated_Item + '</b>';
+                                stock_added = 'Stock Added: ' + '<b>' + data[i].New_Quantiy + '</b>';
+                                stock_old = 'Previously Available Stock:  ' + '<b>' + data[i].Old_Quantity + '</b>';
+
+                            }
+                            else {
+                                stock_Item = '';
+                                stock_added = '';
+                                stock_old = '';
+                            }
+
+                            if (data[i].Details != null) {
+                                payout_desc = 'Payout Description: ' + '<b>' + data[i].Details + '</b>';
+                                payout_cost = 'Amount: ' + '<b>' + 'R' + data[i].updated_Cost + '</b>';
+                            }
+                            else {
+                                payout_desc = '';
+                                payout_cost = '';
+                            }
+                            if (data.length != 0 || data.length != data.length + 1) {
+                                $("#Card_Section").append("<div class='card bg-light' style='width: 32rem;  border-radius: 3px; box-shadow: 0 5px 9px 0 rgba(0,0,0,0.2); transition: 0.3s;'>"
+                                                              + "<div class='card-body' style='padding-left: 2px'>" +
+                                                              "<img src='/Images/Zumane Logo.jpg' class='img-circle' style='width: 17%;height:20%'>" +
+                                                              "<span class='card-title'>" + "<b>" + data[i].Title.toUpperCase() + "</b>" + "</span>" +
+                                                              "<h6  class='card-subtitle mb-2 text-muted' style='padding-left: 2px'>" + data[i].SubTitle + "</h6>" + "<hr/ style='padding-left: 2px; padding-right:2px;'> " +
+                                                              "<p class='card-text' style='padding-left: 3px'> The following updates were made: " + "<br/>" + "<br/>" + stock_Item + payout_desc +
+                                                                "<br/>" + stock_added + payout_cost + "<br/>" + stock_old + "</p>" + "<hr/ style='padding-left: 2px; padding-right:2px;'> " +
+                                                                "<div style='padding-left: 5px;'>" + "<img src='/Icons/chat.jpg' style='padding-bottom:12px;'>" + "<span text-muted id='comment_Section'>" + " Comment..." + "</span>" + "<span style='float: right; padding-right: 10px; padding-bottom: 0px !important;'>" + "0 comments" + "</span>" +
+                                                                "</div>" + "</div>" + "</div>" + "<br/>");
+                            }
+                            else {
+                                $("#Card_Section").append("<h3>" + "No New Feeds" + "</h3>")
+                            }
+                         
+                        };   
+                    });
+
+                    $("#Next").click(function () {
+                        i = Number_Of_Cards;
+                        Number_Of_Cards = Number_Of_Cards + 2;
+                        $("#Card_Section").empty();
+                        RunCards();
+                        console.log(data.length);
+                        
+                    });
+                });
+            };
+
+            $("#comment_Section").click(function () {
+                alert('Clicked');
+            });
+        });
+    </script>
+
+}

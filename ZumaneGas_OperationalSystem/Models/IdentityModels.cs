@@ -34,5 +34,8 @@ namespace ZumaneGas_OperationalSystem.Models
         public DbSet<Stock> Stockes { get; set; }
         public DbSet<DailyPayout> payouts { get; set; }
         public DbSet<Daily_Report> reports { get; set; }
+        public DbSet<Order> orders { get; set; }
+        public DbSet<Empty_Cylinder> Empties { get; set; }
+        public DbSet<Company_Feed> Feeds { get; set; }
     }
 }

@@ -37,17 +37,25 @@
                 <th>Description</th>
                 <th>Current Stock</th>
                 <th>Availability Status</th>
-                <th>Record New Stock</th>               
+                              
             </tr>
             @foreach (var item in Model)
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
                     <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
-                        <td>
+                    @if (item.Status == ZumaneGas_OperationalSystem.Models.Status.OutOfStock)
+                    {
+                        <td style="color:red">@Html.DisplayFor(modelItem => item.Status)</td>
+                    }
+                    else
+                    {
+                        <td style="color:green">@Html.DisplayFor(modelItem => item.Status)</td>
+                    }
+
+                        @*<td>
                             <a href="@Url.Action("EditStock", "Stock", new { @class = "btn btn-warning", id = item.Stock_Id })"><span class="glyphicon glyphicon-edit"></span></a>
-                    </td>
+                    </td>*@
                 </tr>
             }
         </table>

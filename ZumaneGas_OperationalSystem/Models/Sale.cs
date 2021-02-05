@@ -12,7 +12,7 @@ namespace ZumaneGas_OperationalSystem.Models
         [Key]
         public int Sale_Id { get; set; }
         public string InvoiceId { get; set; }
-      //public virtual Stock Stock { get; set; }
+        //public virtual Stock Stock { get; set; }
         public int? Stock_Id { get; set; }
         public int? Invetory_Id { get; set; }
         public virtual Invetory Inventory { get; set; }
@@ -35,6 +35,8 @@ namespace ZumaneGas_OperationalSystem.Models
         [DisplayName("Payment Method")]
         public SaleType SaleType { get; set; }
         public ServiceType ServiceType { get; set; }
+        public SaleStatus SaleStatus { get; set; }
+        public DepositStatus DepositStatus { get; set; }
         public double cashReceived { get; set; }
         public double change { get; set; }
         //Gas Appliances
@@ -49,11 +51,12 @@ namespace ZumaneGas_OperationalSystem.Models
         public string DepositItem { get; set; }
         public int DepositPrice { get; set; }
         public int DepositQuantity { get; set; }
+        public DateTime? DepositReturnDate { get; set; }
         [DisplayName("New 48kg")]
         public bool New { get; set; }
         public bool Delivery { get; set; }
         public int TotalItems { get; set; }
-        
+
     }
     public enum SaleType
     {
@@ -62,7 +65,15 @@ namespace ZumaneGas_OperationalSystem.Models
 
     public enum ServiceType
     {
-         Exchange, Refill
+        Exchange, Refill
+    }
+    public enum SaleStatus
+    {
+        Sold, Cancelled
+    }
+    public enum DepositStatus
+    {
+        NotReturned, Returned
     }
 
 }

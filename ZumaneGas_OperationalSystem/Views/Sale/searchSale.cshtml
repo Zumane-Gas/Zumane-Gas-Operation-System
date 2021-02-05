@@ -168,12 +168,9 @@
     $(document).ready(function () {
         $("#btnPrint").click(function () {
             var inv = parseFloat('@ViewBag.InvoiceId');
-            var finalInv = inv + 1;
-
-            console.log('Inv id:', finalInv);
-            location.href = "/Sale/GenerateInvoice/" + finalInv;
-        })
-    })
+            location.href = "/Sale/GenerateInvoice_Reprint/" + inv;
+        });
+    });
   </script>
 }
 

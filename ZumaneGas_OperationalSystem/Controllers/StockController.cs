@@ -79,11 +79,27 @@ namespace ZumaneGas_OperationalSystem.Controllers
         }
 
         [HttpPost]
-        public ActionResult StockEdit([Bind(Include = "Stock_Id,Invetory_Id,Quantity,NewStock,C_Size,Cylinder_Size,ProductName")]Stock stock)
+        public ActionResult StockEdit(Stock stock)
         {
+            Company_Feed feed = new Company_Feed();
+
+            var old = stock.Quantity - stock.NewStock;
+            feed.Title = "Stock Details Updated";
+            feed.DateTime = DateTime.Now;
+            feed.SubTitle = "New stock has been added at " + feed.DateTime;
+            feed.Updated_Item = stock.ProductName;
+            feed.New_Quantiy = stock.NewStock.ToString();
+            feed.Old_Quantity = old.ToString();
+
+            //feed.Details = "The following stock was updated: " + Environment.NewLine + 
+            //               "Gas Size/Product: " + stock.ProductName + Environment.NewLine +
+            //               "Quantity: " + stock.NewStock + Environment.NewLine +
+            //               "Old Quantity: " + old + Environment.NewLine + 
+            //               "New Total Quantity: " + stock.Quantity;
 
             if (ModelState.IsValid)
             {
+                db.Feeds.Add(feed);
                 db.Entry(stock).State = EntityState.Modified;
                 db.SaveChanges();
                

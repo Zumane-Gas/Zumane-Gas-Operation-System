@@ -1,0 +1,134 @@
+﻿@model IEnumerable<ZumaneGas_OperationalSystem.Models.Order>
+
+<h3><strong>Order > New Order</strong></h3>
+<br />
+
+
+
+<div class="row">
+    <div class="col-md-3">
+        <a href="#" class="list-group-item" style="font-size:large"><span class="glyphicon glyphicon-th-list"></span>  Menu</a>
+
+        <a href="" class="list-group-item" style="font-size:large"><strong>Sale</strong></a>
+        <a href="@Url.Action("NewSale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> New Sale</a>
+        <a href="@Url.Action("Index","Home")" class="list-group-item active"><span class="glyphicon glyphicon-eye-open"></span> View Today's Sales</a>
+        <a href="@Url.Action("S_Sale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Search Sale</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Stock</strong></a>
+        <a href="@Url.Action("ViewStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Stock</a>
+        <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Stock Details</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Invetory</strong></a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Invetory</a>
+        <a href="@Url.Action("Index","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Show Invetories</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Reports</strong> </a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Daily Report</a>
+        <a href="@Url.Action("","Report")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Retrieve Report</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Empties</strong> </a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> Record Emptiess</a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> Available Empties</a>
+        <a href="#" class="list-group-item"><span></span> Logout</a>
+    </div>
+    <div class="col-md-9">
+        @*<h4><strong>Customer Details:</strong></h4>
+        <br />*@
+        <div class="row">
+            <div class="col-md-3"><p style="font-weight:bold;text-decoration: underline">1. Customer Details</p></div>
+            <div class="col-md-3"><p style="color:grey">| 2. Order Details</p></div>
+            <div class="col-md-3"><p style="color:grey">| 3. Payment Details</p></div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="text" class="form-control" placeholder="Full Names" id="F_name" />
+                <h6 style="font-size:medium">Full Names*</h6>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" placeholder="Contact Number" id="C_Number" />
+                        <h6 style="font-size:medium">Contact Number*</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" placeholder="Alternate Number" id="Alternate" />
+                        <h6 style="font-size:medium">Alternative Number*</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="text" class="form-control" placeholder="e.g. P19 Bhejane Road" id="Address_line" />
+                <h6 style="font-size:medium">Street Name & House Number*</h6>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="text" class="form-control" placeholder="e.g. KwaMashu" id="Street" />
+                <h6 style="font-size:medium">Suburb*</h6>
+            </div>
+        </div>
+
+    </div>
+    @*<input type="button" value="Continue" id="btnNext"/>*@
+    <div class="col-md-offset-5">
+        <nav aria-label="...">
+            <ul class="pagination">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="">2 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="page-item">
+                    <a class="page-item" id="btnNext">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</div>
+
+@section scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnNext").click(function () {
+                var Order = {};
+
+                var FullName = $("#F_name").val();
+                var ContactNumber = $("#C_Number").val();
+                var AlternateNumber = $("#Alternate").val();
+                var Address_line = $("#Address_line").val();
+                var Street = $("#Street").val();
+                var alt = $("#Alternate").val();
+
+                Order.CustomerFullName = FullName;
+                Order.ContactNumber = ContactNumber;
+                Order.Address_Line1 = Address_line;
+                Order.StreetName_Number = Street;
+                Order.AltrenateContactNum = alt;
+
+                $.post('/Order/Capture_CustomerDetails/', Order, function () {
+                    alert('Customer Details Added');
+                    $.get('/Order/getLatestCapture/' + '', null, function (data) {
+                        var OrderId = data.Order_ID;
+                        location.href = "/Order/NextPage_Order/" + OrderId;
+                    });
+                });
+            })
+        })
+
+    </script>
+
+}

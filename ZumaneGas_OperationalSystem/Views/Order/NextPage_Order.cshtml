@@ -1,0 +1,522 @@
+﻿@model ZumaneGas_OperationalSystem.Models.Order
+
+<h3><strong>Order > New Order</strong></h3>
+<br />
+
+@*@using (Html.BeginForm("Capture_OrderDetails", "Order", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.HiddenFor(m => m.Order_ID)*@
+
+<div class="row">
+    <div class="col-md-3">
+        <a href="#" class="list-group-item" style="font-size:large"><span class="glyphicon glyphicon-th-list"></span>  Menu</a>
+
+        <a href="" class="list-group-item" style="font-size:large"><strong>Sale</strong></a>
+        <a href="@Url.Action("NewSale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> New Sale</a>
+        <a href="@Url.Action("Index","Home")" class="list-group-item active"><span class="glyphicon glyphicon-eye-open"></span> View Today's Sales</a>
+        <a href="@Url.Action("S_Sale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Search Sale</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Stock</strong></a>
+        <a href="@Url.Action("ViewStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Stock</a>
+        <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Stock Details</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Invetory</strong></a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Invetory</a>
+        <a href="@Url.Action("Index","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Show Invetories</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Reports</strong> </a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Daily Report</a>
+        <a href="@Url.Action("","Report")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Retrieve Report</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Empties</strong> </a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> Record Emptiess</a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> Available Empties</a>
+        <a href="#" class="list-group-item"><span></span> Logout</a>
+    </div>
+
+    <div class="col-md-9">
+        <div class="row">
+            <div class="row">
+                <div class="col-md-3"><p style="color:grey">1. Customer Details</p></div>
+                <div class="col-md-3"><p style="font-weight:bold;">2. Order Details</p></div>
+                <div class="col-md-3"><p style="color:grey">3. Payment Details</p></div>
+            </div>
+            <h4 id="Wording"></h4>
+            <br />
+            <div class="form-group">
+                <div class="col-md-10" style="padding-left:0px">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5 style="font-size:medium">Order Date:</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" name='datepicker' class="form-control" id="datepicker" placeholder="DD/MM/YYYY" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            @*Size1*@
+            <div class="form-group" id="Size1">
+                <div class="col-md-10" style="padding-left:0px">
+                    <h4><strong>Gas Information:</strong></h4>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5 style="font-size:medium">Gas Size:</h5>
+                        </div>
+                        <div class="col-md-3">
+                            @*<input type="text" class="form-control" id="Size" placeholder="e.g. 9" />*@
+                            <select class="form-control" id="Size">
+                                <option id="Select">Select Size</option>
+                                <option>9</option>
+                                <option>14</option>
+                                <option>19</option>
+                                <option>48</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*Price1*@
+            <div class="form-group" id="Price1">
+                <div class="col-md-10" style="padding-left:0px">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5 style="font-size:medium">Unit Price(R):</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="UnitPrice1" readonly="readonly" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*Quantity1*@
+            <div class="form-group" id="Quantiy1">
+                <div class="col-md-10" style="padding-left:0px">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5 style="font-size:medium">Quantity:</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="Qty1" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" id="UnitSize">
+                <div class="col-md-10" style="padding-left:0px">
+                    <button type="button" class="btn btn-secondary" id="submitDetails">Add Gas Details</button>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <h4><strong>Deposit Cylinder Details:</strong></h4>
+            <div class="col-md-10" style="padding-left:0px;">
+                <div class="checkbox" style="font-family:Abel;">
+                    <input type="checkbox" id="Deposit_Check" />
+                    <label for="Appliances"> Add Deposit</label>
+                </div>
+            </div>
+            <div class="form-group" id="DepositDetails">
+                <div class="col-md-10" style="padding-left:0px">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5 style="font-size:medium">Code:</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="Dep_Code" />
+                        </div>
+                    </div>
+                </div>
+
+                <div id="OtherDepositDetails">
+                    <div class="row" id="">
+                        <div class="col-md-10" style="padding-left:0px">
+                            <div class="col-md-3">
+                                <h5 style="font-size:medium">Item:</h5>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="Dep_Name" readonly="readonly" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="">
+                        <div class="col-md-10" style="padding-left:0px">
+                            <div class="col-md-3">
+                                <h5 style="font-size:medium">Price (R):</h5>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="Dep_Price" readonly="readonly" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="">
+                        <div class="col-md-10" style="padding-left:0px">
+                            <div class="col-md-3">
+                                <h5 style="font-size:medium">Quantity:</h5>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="Dep_Qty" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group" id="Summary" style="padding-left:0px;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>Order Summary</h4>
+                        </div>
+                        <div class="panel-body">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p style="font-size:medium" id="DateWording"></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p style="font-size:medium"><strong>Size (kg)</strong></p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p style="font-size:medium"><strong>Unit Price (R)</strong></p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p style="font-size:medium"><strong>Quantity</strong></p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p style="font-size:medium"><strong>Total Price (R)</strong></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p style="font-size:medium" id="SizeWording"></p>
+                                    <p style="font-size:medium" id="DepItemWording"></p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p style="font-size:medium" id="UPWording"></p>
+                                    <p style="font-size:medium" id="Dep_PriceWording"></p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p style="font-size:medium" id="QtyWording"></p>
+                                    <p style="font-size:medium" id="Dep_QtyWording"></p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p style="font-size:medium" id="TotalWording"></p>
+                                    <p style="font-size:medium" id="Dep_TotQtyWording"></p>
+                                </div>
+                            </div>
+                            @*<div class="row" id="No">
+                                    <h3>Contact Number: <span><p id="number"></p></span></h3>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-offset-5">
+        <br />
+        <br />
+        <nav aria-label="...">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-item" href="#" tabindex="-1" id="Previous">Previous</a>
+                </li>
+                <li class="page-item disabled"><a class="page-link" href="#">1</a></li>
+                <li class="page-item active">
+                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="page-item disabled"><a class="page-link" href="" id="">3</a></li>
+                <li class="page-item">
+                    <a class="page-item" id="btnNext">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+@*}*@
+
+@section scripts{
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var Items = [];
+            var Prices = [];
+            var Quantity = [];
+            var Tot_Arr = [];
+            var Tot_dep = [];
+
+            window.onload = function () {
+                var UrlSearch = window.location.pathname;
+                var parameters = UrlSearch.split("/");
+                console.log("Broken Down url: ", parameters);
+                var Order_id = parseFloat(parameters[3]);
+
+                $("#Size1").hide();
+                $("#Price1").hide();
+                $("#Quantiy1").hide();
+                $("#Summary").hide();
+                $("#OtherDepositDetails").hide();
+                $("#DepositDetails").hide();
+                $("#UnitSize").hide();
+                //$("#No").hide();
+
+                //console.log("OrderId", Order_id)
+                $.get('/Order/getOrder?OrderId=' + Order_id + '', null, function (data) {
+                    //console.log(data);
+                    $("#Wording").append("Order Information for ", data.CustomerFullName.bold());
+                });
+            }
+            $("#datepicker").datepicker({ dateFormat: 'dd/mm/yy', minDate: 0 });
+            $("#datepicker").change(function () {
+                $("#Size1").fadeIn(1000);
+            });
+
+            $("#Size1").change(function () {
+                var value = $("#Size").val();
+                $.get('/Sale/getGAS?Size=' + value + '', null, function (data) {
+                    console.log(data);
+                    $("#UnitPrice1").val(data.Cylinder_Price);
+                    $("#Price1").fadeIn(1000);
+                    $("#Quantiy1").fadeIn(1000);
+                });
+            });
+
+            $("#Quantiy1").change(function () {
+                $("#UnitSize").fadeIn(1000);
+                var Size1 = $("#Size").val();
+                var Price1 = $("#UnitPrice1").val();
+                var Qty1 = $("#Qty1").val();
+                var count = 0;
+
+                $("#submitDetails").click(function () {
+                    if ($("#Size1").val() != "Select Size") {
+                        if (Items.length == 0) {
+                            Items.push(Size1);
+                            Prices.push(parseFloat(Price1));
+                            Quantity.push(parseFloat(Qty1));
+
+
+                           $("#Summary").fadeIn(1000);
+                           var Date = $("#datepicker").val();
+                           $("#DateWording").html("");
+                           $("#DateWording").append("Order Date: ", Date);
+                           //$("#SizeWording").append(Size1, "KG", '<br>');
+                           //$("#UPWording").append("R", Price1, '<br>');
+                           //$("#QtyWording").append(Qty1, '<br>');
+
+                           var Tot = (Price1 * Qty1);
+                          // $("#TotalWording").after("R", Tot, '<br>');
+                           Tot_Arr.push(Tot);
+                           for (var i in Items) {
+                               $("#SizeWording").html("")
+                               $("#SizeWording").append(Items[i], 'KG', "<br>")
+                           }
+                           for (var i in Prices) {
+                               $("#UPWording").html("")
+                               $("#UPWording").append("R", Prices[i], "<br>")
+                           }
+                           for (var i in Quantity) {
+                               $("#QtyWording").html("")
+                               $("#QtyWording").append(Quantity[i], "<br>")
+                           }
+                           for (var i in Tot_Arr) {
+                               $("#TotalWording").html("")
+                               $("#TotalWording").append("R", Tot_Arr[i], "<br>")
+                           }
+                           alert("Added Succesfully(1)!!")
+
+
+                        } else if (!Items.includes(Size1)) {
+                            Items.push(Size1);
+                            Prices.push(parseFloat(Price1));
+                            Quantity.push(parseFloat(Qty1));
+
+
+                            $("#Summary").fadeIn(1000);
+                            var Date = $("#datepicker").val();
+                            $("#DateWording").html("");
+                            $("#DateWording").append("Order Date: ", Date);
+                            //$("#SizeWording").append(Items[Items.length - 1], "KG", '<br>');
+                            //$("#UPWording").append("R", Prices[Prices.length -1], '<br>');
+                            //$("#QtyWording").append(Quantity[Quantity.length - 1], '<br>');
+
+                            var Tot = (Prices[Prices.length - 1] * Quantity[Quantity.length - 1]);
+                            //$("#TotalWording").append("R", Tot, '<br>');
+                            Tot_Arr.push(Tot_Arr[Tot_Arr.length - 1])
+                            for (var i in Items) {
+                                $("#SizeWording").html("")
+                                $("#SizeWording").append(Items[i], 'KG', "<br>")
+                            }
+                            for (var i in Prices) {
+                                $("#UPWording").html("")
+                                $("#UPWording").append("R", Prices[i], "<br>")
+                            }
+                            for (var i in Quantity) {
+                                $("#QtyWording").html("")
+                                $("#QtyWording").append(Quantity[i], "<br>")
+                            }
+                            for (var i in Tot_Arr) {
+                                $("#TotalWording").html("")
+                                $("#TotalWording").append("R", Tot_Arr[i], "<br>")
+                            }
+                            alert("Added Succesfully(2)!!")
+                        }
+                        else if (Items.includes(Size1)) {
+                            for (var i in Items) {
+                                if (Items[i] === Size1) {
+                                    Quantity.splice(i, 1, parseFloat(Qty1))
+                                    var NewTot = Prices[i] * parseFloat(Qty1);
+                                    Tot_Arr.push(i, 1, NewTot)
+                                    $("#SizeWording").html("")
+                                    $("#SizeWording").append(Items[i], 'KG', "<br>")
+                                    for (var i in Prices) {
+                                        $("#UPWording").html("")
+                                        $("#UPWording").append("R", Prices[i], "<br>")
+                                    }
+                                    for (var i in Quantity) {
+                                        $("#QtyWording").html("")
+                                        $("#QtyWording").append(Quantity[i], "<br>")
+                                    }
+                                    for (var i in Tot_Arr) {
+                                        $("#TotalWording").html("")
+                                        $("#TotalWording").append("R", Tot_Arr[i], "<br>")
+                                    }
+                                    alert('Updated Succesful!!')
+                                }
+                            }
+                        }
+                        console.log("Items: ", Items);
+                        console.log("Prices: ", Prices);
+                        console.log("Qty: ", Quantity);
+                        //console.log("Tot: ", Tot_Arr);
+
+                        //$("#number").append('0614810059');
+                        //var eg = $("#number").toArray();
+                        //for (var i in eg) {
+                        //    console.log("New Array Value: ", eg[i].innerHTML)
+                        //}
+
+                        $("#Size").val("Select Size");
+                        $("#UnitPrice1").val("");
+                        $("#Qty1").val("");
+
+                    }
+                    else {
+                        alert("Gas size must selected")
+                    }
+                });
+            });
+
+            //Deposit Checkbox 
+            $("#Deposit_Check").change(function () {
+                var isChecked = $("#Deposit_Check").is(":checked");
+
+                if (isChecked === true) {
+                    $("#DepositDetails").fadeIn(1000);
+                }
+                else {
+                    $("#DepositDetails").fadeOut(1000);
+                }
+
+            });
+
+            $("#Dep_Code").change(function () {
+                $("#OtherDepositDetails").fadeIn(1000);
+            });
+
+            $("#Dep_Qty").change(function () {
+                $("#Summary").fadeIn(2000);
+                var DepItem = $("#Dep_Name").val();
+                $("#DepItemWording").append(DepItem, '<br>');
+
+                var Dep_Unit = $("#Dep_Price").val();
+                $("#Dep_PriceWording").append("R:", Dep_Unit);
+
+                var Dep_Qty = $("#Dep_Qty").val();
+                $("#Dep_QtyWording").append(Dep_Qty);
+
+                var Dep_Tot = Dep_Unit * Dep_Qty;
+                $("#Dep_TotQtyWording").append("R", Dep_Tot);
+            });
+
+            $("#Previous").click(function () {
+                //call Order/getLatest() method and populate the textboxes with values from Order/getLatest() method
+            });
+
+            $("#Size").click(function () {
+                $("#Select").hide(0);
+            });
+
+            //OnSubmit -> Call Next Page [Final Page to finalize the order details [Payment details]]
+            $("#btnNext").click(function () {
+
+                var UrlSearch = window.location.pathname;
+                var parameters = UrlSearch.split("/");
+                var Order_id = parseFloat(parameters[3]);
+
+                $.get('/Order/getOrder?OrderId=' + Order_id + '', null, function (data) {
+
+                    console.log('Row to be updated: ', data)
+                    Order = {};
+
+                    Order.Order_ID = data.Order_ID;
+                    Order.Order_item1 = Items[0];
+                    Order.Order_item2 = Items[1];
+                    Order.Order_price1 = Prices[0];
+                    Order.Order_price2 = Prices[1];
+                    Order.Order_Qty1 = Quantity[0];
+                    Order.Order_Qty2 = Quantity[1];
+                    Order.Order_Date = $("#datepicker").val();
+
+                    //Calc Final Price
+                    //Iterate through the price array (add everything inside that array) 
+                    //var finalprice;
+
+                    //for (var i in Prices) {
+                    //    finalprice += Prices[i];
+                    //    Order.finalprice = finalprice;
+                    //}
+
+                    //for (var i in Tot_Arr) {
+                    //    //for (var q in Tot_dep) {
+                    //    var depositfinal;
+
+                    //    //depositfinal += Tot_dep[q]
+                    //    finalprice += Tot_Arr[i]
+
+                    //    //f = finalprice + depositfinal;
+                    //    f = finalprice;
+                    //    Order.finalPrice = f;
+                    //    var vat = f * 0.15;
+                    //    Order.Vat = vat;
+                    //    //}
+                    //};
+
+                    $.post('/Order/Capture_OrderDetails/', Order, function (data) {
+                        alert("Order Details added");
+                    });
+                });
+            });
+        });
+    </script>
+
+}

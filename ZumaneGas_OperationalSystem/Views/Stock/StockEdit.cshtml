@@ -33,19 +33,21 @@
                 <h4>Gas Size/Product*</h4>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-md-10">
-                <div class="form-group">
-                    <input type="text" class="form-control" required name="" placeholder="Current Stock" id="Current" readonly="readonly" />
-                    <h4>Available Stock*</h4>
+        <div id="Information">
+            <div class="form-group">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <input type="text" class="form-control" required name="" placeholder="Current Stock" id="Current" readonly="readonly" />
+                        <h4>Available Stock*</h4>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-10">
-                <div class="form-group">
-                    <input type="text" class="form-control" required name="InvId" placeholder="New Stock Number" id="Number" />
-                    <h4>New Stock Number*</h4>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <input type="text" class="form-control" required name="InvId" placeholder="New Stock Number" id="Number" />
+                        <h4>New Stock Number*</h4>
+                    </div>
                 </div>
             </div>
         </div>
@@ -69,9 +71,20 @@
 
 @section Scripts{
     <script type="text/javascript">
+        $(document).ready(function () {
+            window.onload = function () {
+                $("#Information").hide()
+                $("#btnAdd").prop('disabled', true);
+
+            }
+        })
         function EditStock() {
             $("#Invetory_Id").change(function () {
+                $("#Information").fadeIn(1000);
                 var value = $("#Invetory_Id").val();
+
+             
+
                 $.get('/Stock/getStockDetails?InvID=' + value + '', null, function (data) {
                     console.clear();
                     console.log(data);

@@ -60,7 +60,16 @@ namespace ZumaneGas_OperationalSystem.Controllers
 
             //items
             sale.item1 = s.item1;
-            sale.item2 = s.item2;
+
+            if(s.item2 == "Select Size")
+            {
+                sale.item2 = null;
+            }
+            else
+            {
+                sale.item2 = s.item2;
+            }
+            
             sale.item3 = s.item3;
 
             //prices or unit price
@@ -208,6 +217,19 @@ namespace ZumaneGas_OperationalSystem.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }  
         }
+        public ActionResult GenerateInvoice_Reprint(int? id)
+        {
+            Sale sale = db.Sales.Find(id);
+            //Sale sale = db.Sales.Where(x => x.InvoiceId == id).FirstOrDefault();
+            if (sale != null)
+            {
+                return View(sale);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
 
         public ActionResult printMyPage(int id)
         {
@@ -264,14 +286,15 @@ namespace ZumaneGas_OperationalSystem.Controllers
             else
             {
                 
-                return Json("0", JsonRequestBehavior.AllowGet);
+                return Json("Error", JsonRequestBehavior.AllowGet);
             }
         }
 
         public ActionResult searchSale(string InvoiceId)
         {
             Sale sale = db.Sales.Where(x => x.InvoiceId == InvoiceId).FirstOrDefault();
-            ViewBag.InvoiceId = InvoiceId;
+            var SaleId = sale.Sale_Id;
+            ViewBag.InvoiceId = SaleId;
             if (InvoiceId != null && sale != null)
             {
                 return View(sale);

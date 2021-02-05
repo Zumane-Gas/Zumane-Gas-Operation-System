@@ -25,20 +25,26 @@ namespace ZumaneGas_OperationalSystem.Controllers
             //Steps. Return all sales from current Date, take those sales and add them up to come with a final total
             List<Sale> sales = db.Sales.Where(x => x.SaleD.Day.Equals(DateTime.Now.Day) && x.SaleD.Month.Equals(DateTime.Now.Month)
                                 && x.SaleD.Year.Equals(DateTime.Now.Year)).ToList();
+
+            var cancelled = sales.Where(x => x.SaleStatus == SaleStatus.Cancelled && x.SaleType != SaleType.EFT).Sum(x => x.finalPrice);
+            var cancelledEFT = sales.Where(x => x.SaleStatus == SaleStatus.Cancelled && x.SaleType == SaleType.EFT).Sum(x => x.finalPrice);
+
+
             //current sum/total
             var Eft = sales.Where(x => x.SaleType == SaleType.EFT).Sum(x => x.finalPrice);
-            ViewBag.eft = Eft;
+            ViewBag.eft = Eft - cancelledEFT;
 
             var cash = sales.Where(x => x.SaleType == SaleType.Cash).Sum(x => x.finalPrice);
-            ViewBag.Cash = cash;
+            ViewBag.Cash = cash - cancelled;
 
             var sum = sales.Sum(x => x.finalPrice);
-            var tot = sum;
-           
+            var tot = sum - cancelled;
+
 
             int deposits = sales.Where(x => x.DepositItem != null).Sum(x => x.DepositQuantity);
-            ViewBag.deposits = deposits;
-        
+            int Returned_deposits = sales.Where(x => x.DepositItem != null && x.DepositStatus == DepositStatus.Returned).Sum(x => x.DepositQuantity);
+            ViewBag.deposits = deposits - Returned_deposits;
+
             //
             int r1 = sales.Where(x => x.item1 == "2" || x.item1 == "3" || x.item1 == "4" || x.item1 == "5" || x.item1 == "6" || x.item1 == "7" || x.ServiceType == ServiceType.Refill).Sum(x => x.Qty1);
             int r2 = sales.Where(x => x.item2 == "2" || x.item2 == "3" || x.item2 == "4" || x.item2 == "5" || x.item2 == "6" || x.item2 == "7" || x.ServiceType == ServiceType.Refill).Sum(x => x.Qty2);
@@ -49,34 +55,51 @@ namespace ZumaneGas_OperationalSystem.Controllers
             //Exchanges Thorough Details
             int Nine1 = sales.Where(x => x.item1 == "9" && x.ServiceType != ServiceType.Refill).Sum(x => x.Qty1);
             int Nine2 = sales.Where(x => x.item2 == "9" && x.ServiceType != ServiceType.Refill).Sum(x => x.Qty2);
-            int NineTot = Nine1 + Nine2;
+            int Nine1_Cancelled = sales.Where(x => x.item1 == "9" && x.ServiceType != ServiceType.Refill && x.SaleStatus == SaleStatus.Cancelled).Sum(x => x.Qty1);
+            int Nine2_Cancelled = sales.Where(x => x.item2 == "9" && x.ServiceType != ServiceType.Refill && x.SaleStatus == SaleStatus.Cancelled).Sum(x => x.Qty2);
+
+            int NineTot = Nine1 + Nine2 - Nine1_Cancelled - Nine2_Cancelled;
             ViewBag.Nine = NineTot;
-          
+
             int Fourteen1 = sales.Where(x => x.item1 == "14").Sum(x => x.Qty1);
             int Fourteen2 = sales.Where(x => x.item2 == "14").Sum(x => x.Qty2);
-            int Fourteen = Fourteen1 + Fourteen2;
+            int Fourteen1_Cancelled = sales.Where(x => x.item1 == "14" && x.ServiceType != ServiceType.Refill && x.SaleStatus == SaleStatus.Cancelled).Sum(x => x.Qty1);
+            int Fourteen2_Cancelled = sales.Where(x => x.item2 == "14" && x.ServiceType != ServiceType.Refill && x.SaleStatus == SaleStatus.Cancelled).Sum(x => x.Qty2);
+            int Fourteen = Fourteen1 + Fourteen2 - Fourteen1_Cancelled - Fourteen2_Cancelled;
             ViewBag.Fourteen = Fourteen;
 
             int Nineteen1 = sales.Where(x => x.item1 == "19").Sum(x => x.Qty1);
             int Nineteen2 = sales.Where(x => x.item2 == "19").Sum(x => x.Qty2);
-            int Nineteen = Nineteen1 + Nineteen2;
+            int Nineteen1_Cancelled = sales.Where(x => x.item1 == "19" && x.ServiceType != ServiceType.Refill && x.SaleStatus == SaleStatus.Cancelled).Sum(x => x.Qty1);
+            int Nineteen2_Cancelled = sales.Where(x => x.item2 == "19" && x.ServiceType != ServiceType.Refill && x.SaleStatus == SaleStatus.Cancelled).Sum(x => x.Qty2);
+            int Nineteen = Nineteen1 + Nineteen2 - Nineteen1_Cancelled - Nineteen2_Cancelled;
             ViewBag.Nineteen = Nineteen;
 
 
+            //cancelled not done
             //products 
             int CookerTop = sales.Where(x => x.Product_Item1 == "Cooker Top").Sum(x => x.Product_Qty1);
-            ViewBag.CookerTop = CookerTop;
+            int CookerTop_Cancelled = sales.Where(x => x.Product_Item1 == "Cooker Top" && x.SaleStatus == SaleStatus.Cancelled).Sum(x => x.Product_Qty1);
+            int CT = CookerTop - CookerTop_Cancelled;
+            ViewBag.CookerTop = CT;
+
 
             int Regulator = sales.Where(x => x.Product_Item1 == "Regulator").Sum(x => x.Product_Qty1);
-            ViewBag.Regulator = Regulator;
+            int Regulator_Cancelled = sales.Where(x => x.Product_Item1 == "Regulator" && x.SaleStatus == SaleStatus.Cancelled).Sum(x => x.Product_Qty1);
+            int R = Regulator - Regulator_Cancelled;
+            ViewBag.Regulator = R;
 
             int Key = sales.Where(x => x.Product_Item1 == "Cylinder Key").Sum(x => x.Product_Qty1);
-            ViewBag.Key = Key;
+            int Key_Cancelled = sales.Where(x => x.Product_Item1 == "Cylinder Key" && x.SaleStatus == SaleStatus.Cancelled).Sum(x => x.Product_Qty1);
+            int K = Key - Key_Cancelled;
+            ViewBag.Key = K;
 
             //48 kg
             var used = sales.Where(x => x.New == true).Count();
             int Fourty1 = sales.Where(x => x.item1 == "48").Sum(x => x.Qty1);
             int Fourty2 = sales.Where(x => x.item2 == "48").Sum(x => x.Qty2);
+            int Fourty1_Cancelled = sales.Where(x => x.item1 == "48" && x.SaleStatus == SaleStatus.Cancelled).Sum(x => x.Qty1);
+            int Fourty2_Cancelled = sales.Where(x => x.item2 == "48" && x.SaleStatus == SaleStatus.Cancelled).Sum(x => x.Qty2);
             int Fourty = Fourty1 + Fourty2 + used;
             ViewBag.Fourty = Fourty;
 
@@ -190,11 +213,11 @@ namespace ZumaneGas_OperationalSystem.Controllers
             d.Search_Date = " " + d.Report_Date.ToShortDateString();
             //d.RecordedPayouts = db.payouts.ToList();
             //d.ClosingStock = db.Stockes.ToList();
-           
+
             //Adding
             db.reports.Add(d);
             db.SaveChanges();
-            
+
 
             return View("DailyReport");
 
@@ -236,13 +259,13 @@ namespace ZumaneGas_OperationalSystem.Controllers
         [HttpGet]
         public ActionResult RetrieveReport(string ReportDate)
         {
-            Daily_Report d = new Daily_Report();
+            //Daily_Report d = db.reports.SingleOrDefault();
             Daily_Report report = db.reports.Where(x => x.Search_Date == ReportDate /*&& x.Search_Shift == Shift*/).FirstOrDefault();
-           
+
             if (report != null)
             {
-                Daily_Report daily = db.reports.FirstOrDefault(report.Shift.Equals(d.Shift));
-                return View(daily);
+                //Daily_Report daily = db.reports.FirstOrDefault(report.Report_Date == d.Report_Date);
+                return View(report);
 
             }
             else
