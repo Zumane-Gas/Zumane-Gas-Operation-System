@@ -1,0 +1,215 @@
+﻿@model ZumaneGas_OperationalSystem.Models.Order
+
+@{
+    ViewBag.Title = "Proccess Order";
+}
+
+<div>
+    <div class="row">
+        <div class="col-md-6">
+            <img src='~/Images/Zumane Logo.jpg'>
+            <h2 style="padding-left:12px">TAX Invoice</h2>
+            <br/>
+            <div class="row" style="padding-left:25px">
+                <h4><strong>Order Details</strong></h4>
+                <h4 id="f_name"></h4>
+                <h4 id="Number"></h4>
+                <h4 id="Addr_1"></h4>
+                <h4 id="Addr_2"></h4>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <br/>
+            <br/>
+            <br/>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4><strong>Order Number:</strong></h4>
+                    <h4><strong>Tax Invoice No:</strong></h4>
+                    <h4><strong>Tax Invoice Date:</strong></h4>
+                    <h4><strong>Invoice Currency:</strong></h4>
+                </div>
+              <div class="col-md-6">
+                  <h4 id="Order_Number"></h4>
+                  <h4 id="inv"></h4>
+                  <h4>@DateTime.Now.Day/@DateTime.Now.Month/@DateTime.Now.Year</h4>
+                  <h4>ZAR</h4>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding-left:20px">
+        <br/>
+        <br/>
+        <div class="row" style="background-color:lightgrey; color:black;" >
+            <div class="col-md-3" style="padding-top:20px;">
+                <p>Description</p>
+            </div>
+            <div class="col-md-2" style="padding-top:20px">
+                <p>Unit Price</p>
+            </div>
+            <div class="col-md-1" style="padding-top:20px;">
+                <p>Qty</p>
+            </div>
+            <div class="col-md-2" style="padding-top:20px;">
+                <p>Before VAT</p>
+            </div>
+            <div class="col-md-2" style="padding-top:20px;">
+                <p>VAT 15%</p>
+            </div>
+            <div class="col-md-2" style="padding-top:20px;">
+                <p>Amount</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3" style="padding-top:20px;">
+                <p id="item1"></p>
+                <p id="item2"></p>
+                <hr/>
+                <p><strong>Total</strong></p>
+            </div>
+            <div class="col-md-2" style="padding-top:20px">
+                <p id="Unit1"></p>
+                <p id="Unit2"></p>
+                
+            </div>
+            <div class="col-md-1" style="padding-top:20px;">
+                <p id="qty1"></p>
+                <p id="qty2"></p>
+            </div>
+            <div class="col-md-2" style="padding-top:20px;">
+                <p id="B_Vat1"></p>
+                <p id="B_Vat2"></p>
+                <hr/>
+                <p ><strong id="B_Vat_Total"></strong></p>
+            </div>
+            <div class="col-md-2" style="padding-top:20px;">
+                <p id="VAT1"></p>
+                <p id="VAT2"></p>
+                <hr/>
+                <p ><strong id="VAT_Total"></strong></p>
+            </div>
+            <div class="col-md-2" style="padding-top:20px;">
+                <p id="F_Price1"></p>
+                <p id="F_Price2"></p>
+                <hr/>
+                <p><strong id="Total_Price"></strong></p>
+            </div>
+            
+        </div>
+        <hr />
+        <div class="row" style="color:grey">
+            <br />
+            <br />
+            <h5>Zumane Gas</h5>
+            <h5>Tel: 0603509968</h5>
+            <h5>P7 Bhejane Road, KwaMashu</h5>
+            <h5>VAT REGISTRATION NO. 4860273384</h5>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            var OrderPrice;
+            window.onload = function () {
+                var UrlSearch = window.location.pathname;
+                var parameters = UrlSearch.split("/");
+                console.log("Broken Down url: ", parameters);
+                var Order_id = parseFloat(parameters[3]);
+                $.get('/Order/getOrder?OrderId=' + Order_id + '', null, function (data) {
+                    console.log(data);
+                    $("#O_Amt").append(data.finalPrice);
+                    $("#f_name").append(data.CustomerFullName)
+                    $("#Number").append(data.ContactNumber)
+                    $("#Order_Number").append(data.Order_Number)
+                    $("#Addr_1").append(data.Address_Line1)
+                    $("#Addr_2").append(data.StreetName_Number)
+                    $("#inv").append(data.Order_InvoiceNumber)
+                   
+                    var Gas_Size1 = data.Order_item1;
+                    var Gas_Size2 = data.Order_item2;
+
+                    if (Gas_Size2 != null) {
+                        $.get('/Order/getItemInformation?Size=' + Gas_Size1 + '', null, function (Item1_Information) {
+                            console.log("Gas 1 Information: ", Item1_Information)
+                            $("#item1").append(Item1_Information.ProductName);
+                        });
+
+                        $.get('/Order/getItemInformation?Size=' + Gas_Size2 + '', null, function (Item2_Information) {
+                            console.log("Gas 2 Information: ", Item2_Information)
+                            $("#item2").append(Item2_Information.ProductName);
+                            var qty1 = data.Order_Qty1;
+                            $("#qty1").append(qty1);
+                            var price1 = data.Order_price1;
+                            var F_Price1 = price1 * qty1;
+                            $("#F_Price1").append(F_Price1);
+
+                            var VAT1 = price1 * data.Vat;
+                            $("#VAT1").append(VAT1);
+                            var Before_Vat1 = price1 - VAT1;
+                            $("#B_Vat1").append(Before_Vat1);
+                            var UnitPrice1 = price1 / parseFloat(data.Order_item1);
+                            $("#Unit1").append(UnitPrice1.toFixed());
+
+                            var qty2 = data.Order_Qty2;
+                            $("#qty2").append(qty2);
+                            var price2 = data.Order_price2;
+                            var F_Price2 = price2 * qty2;
+                            $("#F_Price2").append(F_Price2);
+
+                            var VAT2 = price2 * data.Vat;
+                            $("#VAT2").append(VAT2);
+                            var Before_Vat2 = price2 - VAT2;
+                            $("#B_Vat2").append(Before_Vat2);
+                            var UnitPrice2 = price2 / parseFloat(data.Order_item2);
+                            $("#Unit2").append(UnitPrice2.toFixed());
+
+                            var VAT_Total = VAT1 + VAT2;
+                            $("#VAT_Total").append(VAT_Total);
+                            var B_V_Total = Before_Vat1 + Before_Vat2;
+                            $("#B_Vat_Total").append(B_V_Total);
+
+                            var Total = data.finalPrice;
+                            $("#Total_Price").append(Total)
+
+                        });
+                    }
+                    else {
+                        $.get('/Order/getItemInformation?Size=' + Gas_Size1 + '', null, function RunItem1(Item1_Information) {
+                            console.log("Gas 1 Information: ", Item1_Information)
+                            $("#item1").append(Item1_Information.ProductName);
+
+                            var qty1 = data.Order_Qty1;
+                            $("#qty1").append(qty1);
+                            var price1 = data.Order_price1;
+                            var F_Price1 = price1 * qty1;
+                            $("#F_Price1").append(F_Price1);
+
+                            var VAT1 = price1 * data.Vat;
+                            $("#VAT1").append(VAT1);
+                            var Before_Vat1 = price1 - VAT1;
+                            $("#B_Vat1").append(Before_Vat1);
+                            var UnitPrice1 = price1 / parseFloat(data.Order_item1);
+                            $("#Unit1").append(UnitPrice1.toFixed());
+
+                            $("#VAT_Total").append(VAT1);
+                            $("#B_Vat_Total").append(Before_Vat1);
+
+                            var Total = data.finalPrice;
+                            $("#Total_Price").append(Total)
+                        });
+                    }
+                });
+                
+            };
+            setTimeout(function () {
+                window.print();
+            }, 3000);
+        });
+</script>
+}

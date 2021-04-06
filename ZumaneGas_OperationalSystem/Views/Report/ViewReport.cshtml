@@ -12,7 +12,7 @@
 
     @*Top Part start*@
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-6">
             <p>
                 <strong style="font-size: larger">ZUMANE GAS</strong> <br />
                 P7 Bhejane Road, KwaMashu, 4359 <br />
@@ -74,7 +74,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <p>
                                 9kg  <br />
                                 14kg <br />
@@ -110,7 +110,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <p>
                                 9kg  <br />
                                 14kg <br />
@@ -146,7 +146,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <p>
                                 9kg  <br />
                                 14kg <br />
@@ -192,6 +192,9 @@
                 $.get('/Report/getReport?ReportID=' + ReportID, null, function (data) {
                     console.log(data);
                 })
+                setTimeout(function () {
+                    window.print();
+                }, 3000);
             }
         })
     </script>    

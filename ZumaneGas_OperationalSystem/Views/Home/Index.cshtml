@@ -42,16 +42,16 @@
                         <tr>
                             <th></th>
                             <th>
-                                <h5 style="font-family:Abel;font-weight:bolder;"><strong>Invoice No</strong></h5>
+                                <h5 style="font-weight:bolder;"><strong>Invoice No</strong></h5>
                             </th>
                             <th>
-                                <h5 style="font-family:Abel;font-weight:bolder;"><strong>Size(kg)</strong></h5>
+                                <h5 style="font-weight:bolder;"><strong>Size(kg)</strong></h5>
                             </th>
                             <th>
-                                <h5 style="font-family:Abel;font-weight:bolder;"><strong>Appliances/Other Goods</strong></h5>
+                                <h5 style="font-weight:bolder;"><strong>Appliances/Other Goods</strong></h5>
                             </th>
                             <th>
-                                <h5 style="font-family:Abel;font-weight:bolder;"><strong>Price</strong></h5>
+                                <h5 style="font-weight:bolder;"><strong>Price</strong></h5>
                             </th>
                             <th></th>
                         </tr>
@@ -73,10 +73,10 @@
                                             <p></p>
                                         }
                                     </td>
-                                    <td style="font-family:Abel;">
+                                    <td>
                                         @Html.DisplayFor(modelItem => item.InvoiceId)
                                     </td>
-                                    <td style="font-family:Abel;">
+                                    <td>
                                         @if (item.item1 != null || item.item2 != null || item.item3 != null)
                                         {
                                             if (item.item1 != null)
@@ -97,7 +97,7 @@
                                             </p>
                                         }
                                     </td>
-                                    <td style="font-family:Abel;">
+                                    <td>
                                         @if (item.Product_Item1 != null || item.Product_Item2 != null || item.DepositItem != null)
                                         {
                                             if (item.Product_Item1 != null)
@@ -122,7 +122,7 @@
                                             </p>
                                         }
                                     </td>
-                                    <td style="font-family:Abel;">
+                                    <td>
                                         R @Html.DisplayFor(modelItem => item.finalPrice)
                                     </td>
                                     <td>
@@ -130,13 +130,18 @@
                                         {
                                             <p>EFT</p>
                                         }
+                                        @if (item.SaleStatus == ZumaneGas_OperationalSystem.Models.SaleStatus.Order)
+                                        {
+                                            <p>Order</p> 
+                                            <p>@item.Order_Number</p>
+                                        }
                                         @if (item.ServiceType == ZumaneGas_OperationalSystem.Models.ServiceType.Refill)
                                         {
-                                            <p>Refill</p>
+                                            <p>Refill</p> 
                                         }
                                         @if (item.Delivery == true)
                                         {
-                                            <p>Delivery</p>
+                                            <p>Delivered</p>
                                         }
                                     </td>
                                 </tr>
@@ -146,6 +151,7 @@
                     </tbody>
 
                 </table>
+                @* Need to revisit this - wrong implementation *@
                 <h4>Current Total: R @ViewBag.c.00 <br/>
                     Total Sales: @ViewBag.CurrTotSales
                 </h4>

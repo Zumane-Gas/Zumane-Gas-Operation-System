@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -25,6 +26,7 @@ namespace ZumaneGas_OperationalSystem.Models
         public PaymentStatus PaymentStatus { get; set; }
         public PaymentType PaymentType { get; set; }
         public OrderStatus OrderStatus { get; set; }
+        public DeliveryStatus DeliveryStatus { get; set; }
         public double Order_cashReceived { get; set; }
         public double Order_change { get; set; }
         //Gas Appliances
@@ -35,7 +37,10 @@ namespace ZumaneGas_OperationalSystem.Models
         //public int Product_Qty1 { get; set; }
         //public int Product_Qty2 { get; set; }
         public string SaleDate { get; set; }
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? Order_Date { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime Alias_Order_Date { get; set; }
         public string Order_DepositItem { get; set; }
         public int Order_DepositPrice { get; set; }
         public int Order_DepositQuantity { get; set; }
@@ -46,30 +51,30 @@ namespace ZumaneGas_OperationalSystem.Models
         public string CustomerFullName { get; set; }
         public string Address_Line1 { get; set; }
         public string StreetName_Number { get; set; }
-
-        //public Order()
-        //{
-
-        //}
-        //public Order(int OrderID, int Qty1, int price1, DateTime? Date){
-        //    this.Order_ID = Order_ID;
-        //    this.Order_Qty1 = Qty1;
-        //    this.Order_price1 = price1;
-        //    this.Order_Date = Date;
-        //}
+        public int Order_Counter { get; set; }
+        public bool isViewed { get; set; }
+        public string[] notes { get; set; }
+        //[ForeignKey("Sale_Id")]
+        //public virtual Sale sale { get; set; }
+        public int? Sale_Id { get; set; }
+        public string Order_InvoiceNumber { get; set; }
 
     }
     public enum PaymentStatus
     {
         NotPaid, Paid
     }
-
     public enum PaymentType
     {
-        Cash, EFT
+       Cash, EFT, NotPaid
     }
     public enum OrderStatus
     {
-        Processed, NotProcessed, Cancelled
+        Processed, Processing, Cancelled
+    }
+    public enum DeliveryStatus
+    {
+
+        NotDelivered, Delivered 
     }
 }

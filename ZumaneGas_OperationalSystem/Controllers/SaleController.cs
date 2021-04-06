@@ -116,7 +116,7 @@ namespace ZumaneGas_OperationalSystem.Controllers
                 
             if (sale.ServiceType == ServiceType.Refill)
             {
-
+                //need to make vakue dynamic
                 Tot = Tot + 20;
             }
             else if(sale.ServiceType == ServiceType.Exchange)
@@ -185,6 +185,7 @@ namespace ZumaneGas_OperationalSystem.Controllers
                 sale.change = 0;
                 sale.InvoiceId = db.Sales.Count().ToString();
                 sale.SaleD = DateTime.Now;
+                sale.Alias_SaleD = sale.SaleD;
                 db.Sales.Add(sale);
                 db.SaveChanges();
             }
@@ -194,6 +195,7 @@ namespace ZumaneGas_OperationalSystem.Controllers
                     sale.change = (rec - Tot);
                     sale.InvoiceId = db.Sales.Count().ToString();
                     sale.SaleD = DateTime.Now;
+                    sale.Alias_SaleD = sale.SaleD;
                     db.Sales.Add(sale);
                     db.SaveChanges();
 
@@ -310,9 +312,9 @@ namespace ZumaneGas_OperationalSystem.Controllers
         {
             return View();
         }
-        public JsonResult getGAS(int Size)
+        public JsonResult getGAS(double? Size)
         {
-            Invetory v = db.Goods.ToList().Where(x => x.Cylinder_Size == Size).FirstOrDefault();
+            Invetory v = db.Goods.ToList().Where(x => Convert.ToDouble(x.Cylinder_Size) == Size).FirstOrDefault();
 
             if (v != null)
             {

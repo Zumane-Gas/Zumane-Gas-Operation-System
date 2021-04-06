@@ -1,0 +1,194 @@
+﻿@model ZumaneGas_OperationalSystem.Models.Order
+
+@{
+    ViewBag.Title = "Outstanding_Order";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <a href="#" class="list-group-item" style="font-size:large"><span class="glyphicon glyphicon-th-list"></span>  Menu</a>
+
+        <a href="" class="list-group-item" style="font-size:large"><strong>order</strong></a>
+        <a href="@Url.Action("Neworder","order")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> New order</a>
+        <a href="@Url.Action("Index","Home")" class="list-group-item active"><span class="glyphicon glyphicon-eye-open"></span> View Today's orders</a>
+        <a href="@Url.Action("S_order","order")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Search order</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Stock</strong></a>
+        <a href="@Url.Action("ViewStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Stock</a>
+        <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Stock Details</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Invetory</strong></a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Invetory</a>
+        <a href="@Url.Action("Index","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Show Invetories</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Reports</strong> </a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Daily Report</a>
+        <a href="@Url.Action("","Report")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Retrieve Report</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Empties</strong> </a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> data Emptiess</a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> Available Empties</a>
+        <a href="#" class="list-group-item"><span></span> Logout</a>
+    </div>
+    <div class="col-md-9">
+        <div id="PayNow">
+            <div class="row">
+                <hr />
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>Payment Details</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group" id="orderType">
+                                <h5>Payment Type</h5>
+                                @Html.EnumDropDownListFor(model => model.PaymentType, htmlAttributes: new { @class = "form-control" })
+                            </div>
+
+                            <div class="form-group">
+                                <span><h4>Cash Received</h4> <input type="text" class="form-control" required name="" placeholder="Amount" id="cash" /></span>
+                            </div>
+                            <br />
+                            <div id="Total">
+
+                            </div>
+                        </div>
+                    </div>
+                    <h4 id="EFT_Message"></h4>
+                </div>
+                <div class="col-md-6" id="Information">
+                    <div class="form-group" id="OrderInformation">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4>Order Information</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <h5> Item</h5>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h5> QTY</h5>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h5> Price (R)</h5>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <h5 id="Item1"></h5>
+                                        <h5 id="Item2"></h5>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h5 id="qty1"></h5>
+                                        <h5 id="qty2"></h5>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h5 id="price1"></h5>
+                                        <h5 id="price2"></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <button type="button" class="btn btn-success" id="Process_Order">
+                Complete Order
+            </button>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            window.onload = function () {
+                var UrlSearch = window.location.pathname;
+                var parameters = UrlSearch.split("/");
+                console.log("Broken Down url: ", parameters);
+                var Order_id = parseFloat(parameters[3]);
+
+                $.get('/Order/getOrder?OrderId=' + Order_id + '', null, function (data) {
+                    console.log(data);
+                    $("#qty1").append(data.Order_Qty1)
+                    $("#price1").append("R", data.Order_price1)
+
+                    if (data.Order_item2 != null) {
+                        $("#qty2").append(data.Order_Qty2)
+                        $("#price2").append("R", data.Order_price2)
+                    }
+
+                    $("#Total").append("<h3>" + "Total Due: " + "<strong>" + data.finalPrice + "</strong>" + "</h3>")
+
+                    if (data.Order_Date != null) {
+                        var n = data.Order_Date.match(/\d+/g);
+                        var date = new Date(parseFloat(n))
+                        var day = date.getMonth() + 1;
+                        var dateString = day + '/' + +date.getDate() + '/' + date.getFullYear()
+                        var am = "R" + data.finalPrice.toString();
+                        OrderPrice = data.finalPrice;
+                        $("#payment_message").append("*Payment of ", am.bold(), " to be settled on: ", dateString.bold())
+                    }
+
+
+                    var Gas_Size1 = data.Order_item1;
+                    var Gas_Size2 = data.Order_item2;
+
+                    //get Gas1
+                    $.get('/Order/getItemInformation?Size=' + Gas_Size1 + '', null, function (Item1_Information) {
+                        console.log("Gas 1 Information: ", Item1_Information)
+                        $("#Item1").append(Item1_Information.ProductName)
+                    });
+
+                    if (Gas_Size2 != null) {
+                        $.get('/Order/getItemInformation?Size=' + Gas_Size2 + '', null, function (Item2_Information) {
+                            console.log("Gas 2 Information: ", Item2_Information)
+                            $("#Item2").append(Item2_Information.ProductName)
+                        });
+                    }
+                    $("#Process_Order").click(function () {
+                        if (data.isToday == false) {
+                            var order = {};
+                            order.cashReceived = data.Order_cashReceived;
+                            order.change = data.Order_change;
+                            order.finalPrice = data.finalPrice;
+                            order.item1 = data.Order_item1;
+                            order.item2 = data.Order_item2;
+                            order.price1 = data.Order_price1;
+                            order.price2 = data.Order_price2;
+                            order.Qty1 = data.Order_Qty1;
+                            order.Qty2 = data.Order_Qty2;
+                            order.Order_ID = data.Order_ID;
+                            var PaymentType = $("#PaymentType").val();
+                            order.PaymentType = PaymentType;
+                          
+                            $.post('/order/complete_order_outstanding', order, function () {
+                                alert("payment succesfull");
+                                var id = order.Order_ID;
+                                location.href = "/order/a4_order/" + id;
+                            });
+                        }
+                    });
+                });
+            }
+            $("#PaymentType").change(function () {
+                document.getElementById('cash').readOnly = false;
+                $("#EFT_Message").html("");
+                console.clear();
+                var value = $("#PaymentType").val();
+                console.log(value);
+                if (value == 1) {
+                    document.getElementById('cash').readOnly = true;
+                    $("#EFT_Message").append("<h4><strong>" + "*Complete Payment on EFTPOS Machine" + "</strong></h4>")
+                }
+            })
+
+
+        });
+    </script>
+    }
+

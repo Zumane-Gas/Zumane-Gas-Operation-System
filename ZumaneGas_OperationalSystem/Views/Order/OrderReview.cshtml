@@ -1,0 +1,181 @@
+﻿@model ZumaneGas_OperationalSystem.Models.Order
+
+@{
+    ViewBag.Title = "OrderReview";
+}
+
+<h5><strong>Order / New Order / Review  </strong></h5>
+<br />
+
+
+<div class="row">
+    <div class="col-md-3">
+        <a href="#" class="list-group-item" style="font-size:large"><span class="glyphicon glyphicon-th-list"></span>  Menu</a>
+
+        <a href="" class="list-group-item" style="font-size:large"><strong>Sale</strong></a>
+        <a href="@Url.Action("NewSale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> New Sale</a>
+        <a href="@Url.Action("Index","Home")" class="list-group-item active"><span class="glyphicon glyphicon-eye-open"></span> View Today's Sales</a>
+        <a href="@Url.Action("S_Sale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Search Sale</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Stock</strong></a>
+        <a href="@Url.Action("ViewStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Stock</a>
+        <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Stock Details</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Invetory</strong></a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Invetory</a>
+        <a href="@Url.Action("Index","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Show Invetories</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Reports</strong> </a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Daily Report</a>
+        <a href="@Url.Action("","Report")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Retrieve Report</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Empties</strong> </a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> Record Emptiess</a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> Available Empties</a>
+        <a href="#" class="list-group-item"><span></span> Logout</a>
+    </div>
+
+    <div class="col-md-9">
+        <div class="row">
+            <div class="row">
+                <div class="col-md-3"><p style="color:grey">1. Customer Details</p></div>
+                <div class="col-md-3"><p style="color:grey">2. Order Details</p></div>
+                <div class="col-md-3"><p style="color:grey">3. Payment Details</p></div>
+                <div class="col-md-3"><p style="font-weight:bold;">4. Review</p></div>
+            </div>
+            <div class="form-group">
+               <h4>Order Summary</h4><br/>  
+               <div class="row">
+                   <div class="col-md-3">
+                       <h5>Order Number:</h5>
+                       <h5>Customer Name:</h5>
+                       <h5>Contact Number:</h5>
+                       <h5>Alternate Number:</h5>
+                       <h5>Delivery Address:</h5>
+                       <h5>Order Date:</h5>
+                       <h5>Order Amount (R):</h5>
+                       <h5>Payment Date:</h5>
+                   </div>
+                   <div class="col-md-8">
+                       <h5 id="O_number"></h5>
+                       <h5 id="C_Name"></h5>
+                       <h5 id="C_No"></h5>
+                       <h5 id="C_Alt"></h5>
+                       <h5 id="C_Add"></h5>
+                       <h5 id="O_Date"></h5>
+                       <h5 id="O_Amt"></h5>
+                       <h5 id="P_Date"></h5>
+                   </div>
+               </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-offset-5">
+        <br />
+        <br />
+        <nav aria-label="...">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-item" href="#" tabindex="-1" id="Previous">Previous</a>
+                </li>
+                <li class="page-item disabled"><a class="page-link" href="#">1</a></li>
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="page-item"><a class="page-linky" href="" id="">3</a></li>
+                <li class="page-item active"><a class="page-linky" href="" id="">4</a></li>
+
+            </ul>
+        </nav>
+    </div>
+</div>
+@*}*@
+
+@section scripts{
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var OrderPrice;
+
+            window.onload = function () {
+                var UrlSearch = window.location.pathname;
+                var parameters = UrlSearch.split("/");
+                console.log("Broken Down url: ", parameters);
+                var Order_id = parseFloat(parameters[3]);
+                $("#PayNow").hide();
+                $("#Pay_Later").hide();
+                $("#Wording").hide();
+                $("#OrderID").hide();
+                $("#OrderID").append(Order_id)
+                //console.log("OrderId", Order_id)
+                $.get('/Order/getOrder?OrderId=' + Order_id + '', null, function (data) {
+                    console.log(data);
+
+                    $("#O_Amt").append(data.finalPrice);
+                    $("#C_Name").append(data.CustomerFullName)
+                    $("#C_No").append(data.ContactNumber)
+                    $("#O_number").append(data.Order_Number)
+                    if (data.AltrenateContactNum != null) {
+                        $("#C_Alt").append(data.AltrenateContactNum)
+                    }
+                    else {
+                        $("#C_Alt").append("N/A")
+                    }
+                    $("#C_Add").append(data.Address_Line1, ',', ' ', data.StreetName_Number)
+                    
+                    if (data.ProcessingDate != null) {
+                        var n = data.ProcessingDate.match(/\d+/g);
+                        var date = new Date(parseFloat(n))
+                        var day = date.getMonth() + 1;
+                        var dateString = date.getDate() + '/' + day + '/' + date.getFullYear()
+                        $("#P_Date").append(dateString)
+                    }
+
+                    $("#qty1").append(data.Order_Qty1)
+                    $("#price1").append("R", data.Order_price1)
+
+                    if (data.Order_item2 != null) {
+                        $("#qty2").append(data.Order_Qty2)
+                        $("#price2").append("R", data.Order_price2)
+                    }
+
+                    if (data.SaleDate != null) {
+                        //var n = data.SaleDate.match(/\d+/g);
+                        //var date = new Date(parseFloat(n))
+                        //var day = date.getMonth() + 1;
+                        //var dateString = date.getDate() + '/' + day +  '/' + date.getFullYear()
+                        $("#O_Date").append(data.SaleDate)
+                    }
+                    else {
+                        $("#payment_message").append("Order Date is ", data.SaleDate)
+                    }
+
+
+                    var Gas_Size1 = data.Order_item1;
+                    var Gas_Size2 = data.Order_item2;
+
+                    //get Gas1
+                    $.get('/Order/getItemInformation?Size=' + Gas_Size1 + '', null, function (Item1_Information) {
+                        console.log("Gas 1 Information: ", Item1_Information)
+                        $("#Item1").append(Item1_Information.ProductName)
+                    });
+
+                    if (Gas_Size2 != null) {
+                        $.get('/Order/getItemInformation?Size=' + Gas_Size2 + '', null, function (Item2_Information) {
+                            console.log("Gas 2 Information: ", Item2_Information)
+                            $("#Item2").append(Item2_Information.ProductName)
+                        });
+                    }
+                });
+            };
+        });
+    </script>
+
+}
+
+
+
+

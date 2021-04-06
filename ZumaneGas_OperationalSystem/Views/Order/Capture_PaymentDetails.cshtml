@@ -1,0 +1,351 @@
+﻿@model ZumaneGas_OperationalSystem.Models.Order
+
+<h5><strong>Order / New Order</strong></h5>
+<br />
+
+@*@using (Html.BeginForm("Capture_OrderDetails", "Order", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.HiddenFor(m => m.Order_ID)*@
+
+<div class="row">
+    <div class="col-md-3">
+        <a href="#" class="list-group-item" style="font-size:large"><span class="glyphicon glyphicon-th-list"></span>  Menu</a>
+
+        <a href="" class="list-group-item" style="font-size:large"><strong>Sale</strong></a>
+        <a href="@Url.Action("NewSale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> New Sale</a>
+        <a href="@Url.Action("Index","Home")" class="list-group-item active"><span class="glyphicon glyphicon-eye-open"></span> View Today's Sales</a>
+        <a href="@Url.Action("S_Sale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Search Sale</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Stock</strong></a>
+        <a href="@Url.Action("ViewStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Stock</a>
+        <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Stock Details</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Invetory</strong></a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Invetory</a>
+        <a href="@Url.Action("Index","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Show Invetories</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Reports</strong> </a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Daily Report</a>
+        <a href="@Url.Action("","Report")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Retrieve Report</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Empties</strong> </a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> Record Emptiess</a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> Available Empties</a>
+        <a href="#" class="list-group-item"><span></span> Logout</a>
+    </div>
+
+    <div class="col-md-9">
+        <div class="row">
+            <div class="row">
+                <div class="col-md-3"><p style="color:grey">1. Customer Details</p></div>
+                <div class="col-md-3"><p style="color:grey">2. Order Details</p></div>
+                <div class="col-md-3"><p style="font-weight:bold;">3. Payment Details</p></div>
+                <div class="col-md-3"><p style="color:grey;">4. Review</p></div>
+            </div>
+            <h4 id="Wording"></h4>
+            <h4 id="OrderID"></h4>
+            <br />
+            <div class="form-group">
+                    <div class="row" style="padding-left: 15px;">
+                        <div class="checkbox">
+                            <input type="checkbox" name="payment" id="Now" />
+                            <label> Pay Now</label>
+                        </div>
+                        
+                        @*Pay now section*@
+                        @*Payment type {Cash/EFT}*@
+                        <div id="PayNow">
+                            <div class="row">
+                               <hr/>
+                                <div class="col-md-4">  
+                                     <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4>Payment Details</h4>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="form-group" id="SaleType">
+                                                        <h5>Payment Type</h5>
+                                                        @Html.EnumDropDownListFor(model => model.PaymentType, htmlAttributes: new { @class = "form-control" })
+                                                </div>
+                                              
+                                                <div class="form-group">
+                                                    <span><h4>Cash Received</h4> <input type="text" class="form-control" required name="" placeholder="Amount" id="cash" /></span>
+                                                </div>
+                                                <br />
+                                                <div id="Total">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <h4 id="EFT_Message">
+
+                                    </h4>
+                                </div>
+                                <div class="col-md-6" id="Information">
+                                    <div class="form-group" id="OrderInformation">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4>Order Information</h4>
+                                            </div>
+                                            <div class="panel-body">                    
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                         <h5> Item</h5>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                         <h5> QTY</h5>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <h5> Price (R)</h5>
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <h5 id="Item1"></h5> 
+                                                        <h5 id="Item2"></h5>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <h5 id="qty1"></h5> 
+                                                        <h5 id="qty2"></h5>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <h5 id="price1"></h5>
+                                                        <h5 id="price2"></h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="checkbox">
+                            <input type="checkbox" name="payment" id="Later" />
+                            <label> Payment Date same as Order Date </label>
+                        </div>
+
+                        <div id="Pay_Later">
+                            <hr/>
+                            <div class="row">
+                                <div class="col-md-7" id="Pay_Later_Info">
+                                </div>
+                               
+                            </div>
+                            <div class="row" style="padding-left: 15px;">
+                                <h4 id="payment_message"></h4>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+    <div class="col-md-offset-5">
+        <br />
+        <br />
+        <nav aria-label="...">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-item" href="#" tabindex="-1" id="Previous">Previous</a>
+                </li>
+                <li class="page-item disabled"><a class="page-link" href="#">1</a></li>
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">2</a>
+                </li>
+                <li class="page-item active"><a class="page-linky" href="" id="">3</a></li>
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">4</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-item" id="btnNext">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+@*}*@
+
+@section scripts{
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var OrderPrice; 
+
+            window.onload = function () {
+                var UrlSearch = window.location.pathname;
+                var parameters = UrlSearch.split("/");
+                console.log("Broken Down url: ", parameters);
+                var Order_id = parseFloat(parameters[3]);
+                $("#PayNow").hide();
+                $("#Pay_Later").hide();
+                $("#Wording").hide();
+                $("#OrderID").hide();
+                $("#OrderID").append(Order_id)
+                //console.log("OrderId", Order_id)
+                $.get('/Order/getOrder?OrderId=' + Order_id + '', null, function (data) {
+                    console.log(data);
+                    var today = new Date();
+                    if (data.SaleDate == today.toDateString()) {
+                        $("#Pay_Later").hide();
+                    }
+                        
+                    $("#Wording").append("Total Due: R", data.finalPrice);
+                    $("#Total").append("Total Due: R", data.finalPrice);
+                    
+                    $("#qty1").append(data.Order_Qty1)
+                    $("#price1").append("R", data.Order_price1)
+
+                    if (data.Order_item2 != null) {
+                        $("#qty2").append(data.Order_Qty2)
+                        $("#price2").append("R", data.Order_price2)
+                    }
+                    
+                    if (data.Order_Date != null) {
+                        var n = data.Order_Date.match(/\d+/g);
+                        var date = new Date(parseFloat(n))
+                        var day = date.getMonth() + 1;
+                        var dateString = day + '/' + +date.getDate() + '/' + date.getFullYear()
+                        var am = "R" + data.finalPrice.toString();
+                        OrderPrice =  data.finalPrice;
+                        $("#payment_message").append("*Payment of ", am.bold(), " to be settled on: ", dateString.bold())
+                    }
+                    else {
+                        $("#payment_message").append("Order Date was not captured")
+                    }
+
+
+                    var Gas_Size1 = data.Order_item1;
+                    var Gas_Size2 = data.Order_item2;
+
+                    //get Gas1
+                    $.get('/Order/getItemInformation?Size=' + Gas_Size1 + '', null, function (Item1_Information) {
+                        console.log("Gas 1 Information: ", Item1_Information)
+                        $("#Item1").append(Item1_Information.ProductName)       
+                    });
+
+                    if (Gas_Size2 != null) {
+                        $.get('/Order/getItemInformation?Size=' + Gas_Size2 + '', null, function (Item2_Information) {
+                            console.log("Gas 2 Information: ", Item2_Information)
+                            $("#Item2").append(Item2_Information.ProductName)
+                        });
+                    }
+                });
+            }
+
+            OrderPrice = OrderPrice;
+            console.log("Updated value R", OrderPrice);
+
+            $("#PaymentType").change(function () {
+                document.getElementById('cash').readOnly = false;
+                $("#EFT_Message").html("");
+                console.clear();
+                var value = $("#PaymentType").val();
+                console.log(value);
+                if (value == 1) {
+                    document.getElementById('cash').readOnly = true;
+                    $("#EFT_Message").append("<h4><strong>" + "*Complete Payment on EFTPOS Machine" + "</strong></h4>")
+                }
+            })
+
+            $("#Now").change(function () {
+                var isChecked = $(this).is(":checked");
+
+                if (isChecked == true) {
+                    $("#Later").prop('checked', false)
+                    $("#Information").append($("#OrderInformation"))
+                    $("#PayNow").fadeIn(1000);
+                }
+                else if ($("#Now").prop('checked', false)) {
+                    $("#PayNow").fadeOut(1000);
+                }
+            });
+            $("#Later").change(function () {
+                var isChecked = $(this).is(":checked");
+                $("#Pay_Later_Info").append($("#OrderInformation"))
+                if (isChecked == true) {
+                    $("#Now").prop('checked', false)
+                    $("#Pay_Later").fadeIn(1000);
+                }
+                else if ($("#Later").prop('checked', false)) {
+                    $("#Pay_Later").fadeOut(1000);
+                }
+            });
+            $("#btnNext").click(function () {
+                var Order = {};
+
+                //First Step - Check which checkbox is checked (Pay Now or Pay Later) -> Only one is allowed to be checked
+                if ($("#Now").prop('checked') == true) {
+                    /*Rules to follow: 
+                    1. No stock will be minused
+                    2. Payment must reflect as a sale 
+                    3. Order must be reserved (need to think about this)*/
+
+                    //Sub step 1 - check if payment type is cash or eft
+                    var getAmount = document.getElementById('Wording').innerText;
+                    var Amt = parseFloat(getAmount.substring(12))
+
+                    var value = $("#PaymentType").val();
+                    //CASH
+                    if (value == 0) {
+                        Order.PaymentType = 0;
+                        Order.PaymentStatus = 1;
+                        var cashReceived = $("#cash").val();
+                        var totalDue = Amt;
+                        Order.Order_cashReceived = cashReceived;
+                        Order.Order_change = (cashReceived - totalDue);
+                        Order.isToday = true;
+                        Order.OrderStatus = 1;
+                        //var date = new Date();
+                        //Order.ProcessingDate = date.toLocaleDateString();
+                    }
+                    //EFT
+                    else if (value == 1) {
+                        Order.PaymentType = 1;
+                        Order.PaymentStatus = 1;
+                        var totalDue = Amt;
+                        Order.Order_cashReceived = 0;
+                        Order.Order_change = 0;
+                        Order.isToday = true;
+                        Order.OrderStatus = 1;
+                        //var date = new Date();
+                       // Order.ProcessingDate = date.toLocaleDateString();
+                    }
+                }
+                    //Pay later
+                else if ($("#Later").prop('checked') == true) {
+                    var getDate = document.getElementById('payment_message').innerText;
+                    var date = getDate.substring(35);
+                    Order.ProcessingDate = date;
+                    Order.PaymentStatus = 0; 
+                    Order.isToday = false;
+                    Order.PaymentType = 3;
+                    Order.OrderStatus = 1;
+                }
+
+                var getId = document.getElementById('OrderID').innerText;
+                Order.Order_ID = parseFloat(getId);
+
+                
+                $.post('/Order/FinalisePayment/',Order, function () {
+                    alert('Payment info updated')
+                    $.get('/Order/getLatestCapture/' + '', null, function (data) {
+                        var OrderId = data.Order_ID;
+                        location.href = "/Order/OrderReview/" + OrderId;
+                    });
+                });
+            }); 
+        });
+    </script>
+
+}
+
+
+
+

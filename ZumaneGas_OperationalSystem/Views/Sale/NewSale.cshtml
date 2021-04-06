@@ -34,8 +34,8 @@
             <h4><strong>LPG GAS Details:</strong></h4>
             @*FIRST ROW: ITEM 1 DETAILS*@
             <div class="row">
-                <div class="col-md-3" style="font-family:Abel;">
-                    <div class="form-group" style="font-family:Abel;">
+                <div class="col-md-3" style="">
+                    <div class="form-group" style="">
                         <span><h4>Gas Size1:</h4> 
                             <select class="form-control" id="GasSize1">
                                 <option id="Select">Select Size</option>
@@ -55,18 +55,18 @@
                         @*<input type="text" class="form-control" name="" placeholder="Gas Size" id="GasSize1" /></span>*@
                     </div>
                     <div id="Other">
-                        <div class="form-group" style="font-family:Abel;">
+                        <div class="form-group" style="">
                             <span><h4>Price</h4> <input type="text" class="form-control" name="" placeholder="Price" id="price1" readonly="readonly" /></span>
                         </div>
-                        <div class="form-group" style="font-family:Abel;">
+                        <div class="form-group" style="">
                             <span><h4>Quantity</h4> <input type="text" class="form-control" name="" placeholder="Quntity" id="qty1" /></span>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-3" style="font-family:Abel;">
+                <div class="col-md-3" style="">
                     <div id="item2">
-                        <div class="form-group" style="font-family:Abel;">
+                        <div class="form-group" style="">
                             <span>
                                 <h4>Gas Size2:</h4>
                                 <select class="form-control" id="GasSize2">
@@ -87,10 +87,10 @@
                         </div>
                     </div>
                         <div id="Other2">
-                            <div class="form-group" style="font-family:Abel;">
+                            <div class="form-group" style="">
                                 <span><h4>Price2</h4> <input type="text" class="form-control" name="" placeholder="Price" id="price2" readonly="readonly" /></span>
                             </div>
-                            <div class="form-group" style="font-family:Abel;">
+                            <div class="form-group" style="">
                                 <span><h4>Quantity</h4> <input type="text" class="form-control" name="" placeholder="Quntity" id="qty2" /></span>
                             </div>
                         </div>
@@ -101,47 +101,47 @@
                 </div>
 
                 @*Item 3 - to be added at later stage when everything else works the way its should*@
-                @*<div class="col-md-3" style="font-family:Abel;">
+                @*<div class="col-md-3" style="">
                 <div id="item2">
-                    <div class="form-group" style="font-family:Abel;">
+                    <div class="form-group" style="">
                         <span><h4>Gas Size2:</h4> <input type="text" class="form-control" required name="InvId" placeholder="Gas Size" id="GasSize2" /></span>
                     </div>
-                    <div class="form-group" style="font-family:Abel;">
+                    <div class="form-group" style="">
                         <span><h4>Price2</h4> <input type="text" class="form-control" required name="" placeholder="Price" id="price2" readonly="readonly" /></span>
                     </div>
-                    <div class="form-group" style="font-family:Abel;">
+                    <div class="form-group" style="">
                         <span><h4>Quntity</h4> <input type="text" class="form-control" required name="" placeholder="Quntity" id="qty2" /></span>
                     </div>
                 </div>
             </div>*@
                 @* ADDITIONAL INFO: PANEL *@
-               <div class="col-md-3" style="font-family:Abel;" id="Add_Info">
+               <div class="col-md-3" style="" id="Add_Info">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4>Additional Information</h4>
                         </div>
                         <div class="panel-body">
-                            <div class="col-md-10" style="font-family:Abel;">
+                            <div class="col-md-10" style="">
                                 <div class="checkbox">
                                     @Html.DisplayNameFor(model => model.New)
                                     @Html.EditorFor(model => model.New)
                                 </div>
                             </div>
                             <div class="form-group" id="SaletType">
-                                <div class="col-md-10" style="font-family:Abel;">
+                                <div class="col-md-10" style="">
                                     @Html.DisplayNameFor(model => model.SaleType)
                                     @Html.EnumDropDownListFor(model => model.SaleType, htmlAttributes: new { @class = "form-control" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-md-10" style="font-family:Abel;" id="Del">
+                                <div class="col-md-10" style="" id="Del">
                                     <div class="checkbox">
                                         @Html.DisplayNameFor(model => model.Delivery)
                                         @Html.EditorFor(model => model.Delivery)
                                     </div>
                                 </div>
                                 <div  id="Service">
-                                    <div class="col-md-10" style="font-family:Abel;">
+                                    <div class="col-md-10" style="">
                                         @Html.DisplayNameFor(model => model.ServiceType)
                                         @Html.EnumDropDownListFor(model => model.ServiceType, htmlAttributes: new { @class = "form-control" })
                                     </div>
@@ -156,30 +156,30 @@
   
             @*APPLIANCES DETAILS*@
             <div class="row">
-                <div class="col-md-10" style="font-family:Abel;">
+                <div class="col-md-10" style="">
                     <div class="checkbox">
                         <input type="checkbox" id="Appliances" />
                         <label for="Appliances"> Add Appliance</label>
                     </div>
                 </div>
                 <div class="row" id="ApplianceRow">
-                    <div class="col-md-3" style="font-family:Abel;">
-                        <div class="form-group" style="font-family:Abel;">
+                    <div class="col-md-3" style="">
+                        <div class="form-group" style="">
                             <span><h4>Appliance Code:</h4> <input type="text" class="form-control" name="" placeholder="Gas Appliance Code" id="AppCode1" /></span>
                         </div>
                     </div>
-                    <div class="col-md-3" style="font-family:Abel;">
-                        <div class="form-group" style="font-family:Abel;">
+                    <div class="col-md-3" style="">
+                        <div class="form-group" style="">
                             <span><h4>Product Name</h4> <input type="text" class="form-control" name="" placeholder="Product" id="Prod_Name1" readonly="readonly" /></span>
                         </div>
                     </div>
-                    <div class="col-md-3" style="font-family:Abel;">
-                        <div class="form-group" style="font-family:Abel;">
+                    <div class="col-md-3" style="">
+                        <div class="form-group" style="">
                             <span><h4>Price</h4> <input type="text" class="form-control" name="" placeholder="Price" id="AppPrice1" readonly="readonly" /></span>
                         </div>
                     </div>
-                    <div class="col-md-3" style="font-family:Abel;">
-                        <div class="form-group" style="font-family:Abel;">
+                    <div class="col-md-3" style="">
+                        <div class="form-group" style="">
                             <span><h4>Quantity</h4> <input type="text" class="form-control" name="" placeholder="Quntity" id="AppQty1" /></span>
                         </div>
                     </div>
@@ -190,30 +190,30 @@
 
             @*DEPOSIT*@
             <div class="row">
-                <div class="col-md-10" style="font-family:Abel;">
+                <div class="col-md-10" style="">
                     <div class="checkbox">
                         <input type="checkbox" id="Deposit_Check" />
                         <label for="Appliances"> Add Deposit</label>
                     </div>
                 </div>
                     <div class="row" id="Dep_Check">
-                        <div class="col-md-3" style="font-family:Abel;">
-                            <div class="form-group" style="font-family:Abel;">
+                        <div class="col-md-3" style="">
+                            <div class="form-group" style="">
                                 <span><h4>Deposit Code:</h4> <input type="text" class="form-control" name="" placeholder="Deposit Code" id="DepCode" /></span>
                             </div>
                         </div>
-                        <div class="col-md-3" style="font-family:Abel;">
-                            <div class="form-group" style="font-family:Abel;">
+                        <div class="col-md-3" style="">
+                            <div class="form-group" style="">
                                 <span><h4>Deposit</h4> <input type="text" class="form-control" name="" placeholder="Deposit" id="DepNames" readonly="readonly" /></span>
                             </div>
                         </div>
-                        <div class="col-md-3" style="font-family:Abel;">
-                            <div class="form-group" style="font-family:Abel;">
+                        <div class="col-md-3" style="">
+                            <div class="form-group" style="">
                                 <span><h4>Deposit Fee</h4> <input type="text" class="form-control" name="" placeholder="Deposit Fee" id="DepFee" readonly="readonly" /></span>
                             </div>
                         </div>
-                        <div class="col-md-3" style="font-family:Abel;">
-                            <div class="form-group" style="font-family:Abel;">
+                        <div class="col-md-3" style="">
+                            <div class="form-group" style="">
                                 <span><h4>Quantity</h4> <input type="text" class="form-control" name="" placeholder="No.of Deposit" id="DepQuantity" /></span>
                             </div>
                         </div>
@@ -230,7 +230,7 @@
                                     <h4>Amount Details</h4>
                                 </div>
                                 <div class="panel-body">
-                                    <div class="form-group" style="font-family:Abel;">
+                                    <div class="form-group" style="">
                                         <span><h4>Cash Received</h4> <input type="text" class="form-control" required name="" placeholder="Amount" id="cash" /></span>
                                     </div>
                                     <br />
@@ -379,9 +379,7 @@
                             }
                             $("#Other").fadeIn(1000);
                             $.get('/Sale/getGAS?Size=' + value + '', null, function (data) {
-                                console.clear();
                                 console.log(data);
-
                                 var Price = document.getElementById('price1');
                                 Price.value = data.Cylinder_Price;
                             })

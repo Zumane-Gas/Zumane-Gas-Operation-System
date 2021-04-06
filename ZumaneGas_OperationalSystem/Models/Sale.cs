@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -25,7 +26,7 @@ namespace ZumaneGas_OperationalSystem.Models
         public int price2 { get; set; }
         public int price3 { get; set; }
         public int Qty1 { get; set; }
-        public int Qty2 { get; set; }
+        public int Qty2 { get; set; } 
         public int Qty3 { get; set; }
         public double UnitPrice { get; set; }
         public double Vat { get; set; }
@@ -48,6 +49,7 @@ namespace ZumaneGas_OperationalSystem.Models
         public int Product_Qty2 { get; set; }
         public string SaleDate { get; set; }
         public DateTime SaleD { get; set; }
+        public DateTime Alias_SaleD { get; set; }
         public string DepositItem { get; set; }
         public int DepositPrice { get; set; }
         public int DepositQuantity { get; set; }
@@ -56,6 +58,10 @@ namespace ZumaneGas_OperationalSystem.Models
         public bool New { get; set; }
         public bool Delivery { get; set; }
         public int TotalItems { get; set; }
+        //[ForeignKey("Order_ID")]
+        //public Order Order { get; set; }
+        public int? Order_ID { get; set; }
+        public string Order_Number { get; set; }
 
     }
     public enum SaleType
@@ -69,7 +75,7 @@ namespace ZumaneGas_OperationalSystem.Models
     }
     public enum SaleStatus
     {
-        Sold, Cancelled
+        Sold, Cancelled, Order
     }
     public enum DepositStatus
     {

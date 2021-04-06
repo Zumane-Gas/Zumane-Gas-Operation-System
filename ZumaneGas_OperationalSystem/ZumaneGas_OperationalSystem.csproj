@@ -194,6 +194,10 @@
     <Compile Include="Migrations\202004181921310_Zumane.Designer.cs">
       <DependentUpon>202004181921310_Zumane.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103081751482_LatestMigration.cs" />
+    <Compile Include="Migrations\202103081751482_LatestMigration.Designer.cs">
+      <DependentUpon>202103081751482_LatestMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Company_Feed.cs" />
@@ -221,7 +225,12 @@
     <Content Include="Icons\comment.jpg" />
     <Content Include="Icons\signs %281%29.png" />
     <Content Include="Icons\signs.png" />
+    <Content Include="Images\check.png" />
+    <Content Include="Images\exclamation-mark%281%29.png" />
+    <Content Include="Images\exclamation-mark%282%29.png" />
+    <Content Include="Images\exclamation-mark.png" />
     <Content Include="Images\hnet.com-image.ico" />
+    <Content Include="Images\Loader.gif" />
     <Content Include="Images\Zumane Logo.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -299,6 +308,11 @@
     <Content Include="Views\Sale\GenerateInvoice_Reprint.cshtml" />
     <Content Include="Views\Empty_Cylinder\NewSet.cshtml" />
     <Content Include="Views\Company_Feed\LatestFeeds.cshtml" />
+    <Content Include="Views\Order\Capture_PaymentDetails.cshtml" />
+    <Content Include="Views\Order\OrderReview.cshtml" />
+    <Content Include="Views\Order\getOrders_Due.cshtml" />
+    <Content Include="Views\Order\A4_Order.cshtml" />
+    <Content Include="Views\Order\Outstanding_Order.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -318,6 +332,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004181921310_Zumane.resx">
       <DependentUpon>202004181921310_Zumane.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103081751482_LatestMigration.resx">
+      <DependentUpon>202103081751482_LatestMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -341,7 +358,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1267</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1902/</IISUrl>
+          <IISUrl>http://localhost:2548/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
