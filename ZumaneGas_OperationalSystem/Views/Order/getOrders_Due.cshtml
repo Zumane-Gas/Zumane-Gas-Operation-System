@@ -51,7 +51,7 @@
                     <li><a data-toggle="tab" id="Overdue">Overdue @if (ViewBag.Overdue > 0)
                     { <span class="badge">  @ViewBag.Overdue</span> }</a></li>
                     @*All Deliveries that have been processed and made today*@
-                    <li><a data-toggle="tab" id="ViewAll_Feeds">Deliveries Made</a></li>
+                    <li><a data-toggle="tab" id="Deliveries">Deliveries Made</a></li>
 
                 </ul>
             </div>
@@ -199,6 +199,7 @@
 
            $(document).ready(function () {
                $("#Today_Feeds").click(function Run() {
+                   console.clear();
                    var Number_Of_Cards = 2;
                    var i = 0;
                    $("#Card_Section").empty();
@@ -207,50 +208,56 @@
                    $.get('/Order/getViewStatus' + '', null, function Run(data) {
                        console.log(data);
                        for (i; i < Number_Of_Cards ; i++) {
-
-                           var OrderNumber = "Order Number: " + "<strong>" + data[i].Order_Number + "</strong>";
-                           var CustomerName = "Customer Name: " + "<strong>" + data[i].CustomerFullName + "</strong>";
-                           var ContactNumber = "Contact Number: " + "<strong>" + data[i].ContactNumber + "</strong>";
-                           var AltContact = "Alt Contact Number: " + "<strong>" + data[i].AltrenateContactNum + "</strong>";
-                           var Address = "Delivery Address: " + "<strong>" + data[i].Address_Line1 + ', ' + data[i].StreetName_Number + "</strong>";
+                           var OrderNumber = "<strong>" + data[i].Order_Number + "</strong>";
+                           var CustomerName = "<strong>" + data[i].CustomerFullName + "</strong>";
+                           var ContactNumber = "<strong>" + data[i].ContactNumber + "</strong>";
+                           var AltContact = "<strong>" + data[i].AltrenateContactNum + "</strong>";
+                           //var Address = "<strong>" + data[i].Address_Line1 + ', ' + data[i].StreetName_Number + "</strong>";
                            var Del_Date;
 
                            if (data[i].Order_Date != null) {
                                var n = data[i].Order_Date.match(/\d+/g);
                                var date = new Date(parseFloat(n))
                                var day = date.getMonth() + 1;
-                               var dateString = day + '/' + +date.getDate() + '/' + date.getFullYear();
-                               Del_Date = "Delivery Date: " + "<strong>" + dateString + "</strong>";
+                               var dateString = day + '/' + date.getDate() + '/' + date.getFullYear();
+                               Del_Date = "<strong>" + dateString + "</strong>";
                            }
 
-                           $("#Card_Section").append("<div class='card bg-light col-md-4' style='width: 32rem;  border-radius: 3px; box-shadow: 0 5px 9px 0 rgba(0,0,0,0.2); transition: 0.3s;'>"
-                              + "<div class='card-body' style='padding-left: 2px'>" +
+                           $("#Card_Section").append("<div class='card bg-light col-md-4' style='border-radius: 3px; box-shadow: 0 5px 9px 0 rgba(0,0,0,0.2); transition: 0.3s;'>"
+                              + "<div class='card-body' style='padding-left: 2px;'>" +
                               "<img src='/Images/Zumane Logo.jpg' class='img-circle' style='width: 17%;height:20%'>" +
                               "<span class='card-title'>" + "<b>" + "ORDER DUE" + "</b>" + "</span>" +
-                              "<h6  class='card-subtitle mb-2 text-muted' style='padding-left: 2px'>" + "" + "</h6>" + "<hr/ style='padding-left: 2px; padding-right:2px;'> " +
-                              "<p class='card-text' style='padding-left: 3px'>" + OrderNumber + "<br/>" + CustomerName + "<br/>" + ContactNumber + "<br/>" +
-                              AltContact + "<br/>" + Address + "<br/>" + Del_Date + "</p>" + "<hr/ style='padding-left: 2px; padding-right:2px;'> " + "<div style='padding-left: 5px;'>" + "<img src='/Icons/chat.jpg' style='padding-bottom:12px;'>" +
-                              "<span text-muted id='comment_Section'>" + " Comment..." + "</span>" + "<span style='float: right; padding-right: 10px; padding-bottom: 0px !important;'>" + "0 comments" + "</span>" +
-                               "</div>" + "</div>" + "</div>");
+                              "<h6 class='card-subtitle mb-2 text-muted' style='padding-left: 2px'>" + "" + "</h6>" + "<hr/ style='padding-left: 2px; padding-right:2px;'> " +
+                              "<p class='card-text' style='padding-left: 3px'>" + "<div class='row'>" + "<div class='col-md-5'>" + "Order No:" + "<br/>" + "Name:" + "<br/>" + "Cell No:" + "<br/>" +
+                              "Alt No:" + "<br/>" + "Due Date:" + "</div>" + "<div class='col-md-7'>" + OrderNumber + "<br/>" + CustomerName + "<br/>" + ContactNumber + "<br/>" +
+                              AltContact + "<br/>" + Del_Date + "</div>" + "</div>" + "</p>" + "<hr/ style='padding-left: 2px; padding-right:2px;'>" + "<div style='padding-bottom:15px; padding-left:5px; float:right;'>" +
+                              "<button type='button' class='btn btn-light btn-sm' id='View_Order' data-toggle='modal' data-target='myModal'>" + "View Order" + "</button>" + "</div>" + "</div>" + "</div>");
                        }
                    });
-                   $("#Next").click(function () {
-                       i = Number_Of_Cards;
-                       Number_Of_Cards = Number_Of_Cards + 2;
-                       $("#Card_Section").empty();
-                       Run();
-                       console.log(data.length);
+                   //$("#Next").click(function () {
+                   //    i = Number_Of_Cards;
+                   //    Number_Of_Cards = Number_Of_Cards + 2;
+                   //    $("#Card_Section").empty();
+                   //    Run();
+                   //    console.log(data.length);
 
-                   });
+                   //});
+                   var ActiveTab = $(".tab-content .active").attr('id');
+                   console.log(ActiveTab);
+                   if (ActiveTab == "Today_Feeds") {
+                       var myT = setTimeout(function () {
+                           Run();
+                           console.clear();
+                       }, 3000);
+                       //window.clearTimeout(myT);
+                   }
                });
            });
-
            $(document).ready(function () {
                $("#ViewAll_Feeds").click(function Cards() {
+                   console.clear();
                    var i = 0;
                    var Number_Of_Cards = 5;
-                   //$("#ViewAll_Feeds").css("font-weight", "bold")
-                   //$("#Today_Feeds").css("color", "grey")
 
                    $("#Card_Section").empty();
                    //console.log('Start: ', i);
@@ -295,6 +302,56 @@
                    //});
                });
            });
+           $(document).ready(function () {
+               $("#Deliveries").click(function Cards() {
+                   console.clear();
+                   var i = 0;
+                   var Number_Of_Cards = 5;
+
+                   $("#Card_Section").empty();
+                   //console.log('Start: ', i);
+                   //console.log('End: ', Number_Of_Cards);
+                   $.get('/Order/getDelivered' + '', function (data) {
+                       console.log("Due: ", data);
+
+                       for (i; i < Number_Of_Cards ; i++) {
+                           var OrderNumber = "<strong>" + data[i].Order_Number + "</strong>";
+                           var CustomerName = "<strong>" + data[i].CustomerFullName + "</strong>";
+                           var ContactNumber = "<strong>" + data[i].ContactNumber + "</strong>";
+                           var AltContact = "<strong>" + data[i].AltrenateContactNum + "</strong>";
+                           var processed_message = "Sale was created on " + data[i].SaleDate;
+                           //var Address = "<strong>" + data[i].Address_Line1 + ', ' + data[i].StreetName_Number + "</strong>";
+                           var Del_Date;
+
+                           if (data[i].Order_Date != null) {
+                               var n = data[i].Order_Date.match(/\d+/g);
+                               var date = new Date(parseFloat(n))
+                               var day = date.getMonth() + 1;
+                               var dateString = day + '/' + date.getDate() + '/' + date.getFullYear();
+                               Del_Date = "<strong>" + dateString + "</strong>";
+                           }
+
+                           $("#Card_Section").append("<div class='card bg-light col-md-4' style='border-radius: 3px; box-shadow: 0 5px 9px 0 rgba(0,0,0,0.2); transition: 0.3s;'>"
+                              + "<div class='card-body' style='padding-left: 2px;'>" +
+                              "<img src='/Images/Zumane Logo.jpg' class='img-circle' style='width: 17%;height:20%'>" +
+                              "<span class='card-title'>" + "<b>" + "DELIVERY DETAILS" + "</b>" + "</span>" +
+                              "<h6 class='card-subtitle mb-2 text-muted' style='padding-left: 2px'>" + processed_message + "</h6>" + "<hr/ style='padding-left: 2px; padding-right:2px;'> " +
+                              "<p class='card-text' style='padding-left: 3px'>" + "<div class='row'>" + "<div class='col-md-5'>" + "Order No:" + "<br/>" + "Name:" + "<br/>" + "Cell No:" + "<br/>" +
+                              "Alt No:" + "<br/>" + "Due Date:" + "</div>" + "<div class='col-md-7'>" + OrderNumber + "<br/>" + CustomerName + "<br/>" + ContactNumber + "<br/>" +
+                              AltContact + "<br/>" + Del_Date + "</div>" + "</div>" + "</p>" + "<hr/ style='padding-left: 2px; padding-right:2px;'>" + "<div style='padding-bottom:15px; padding-left:5px; float:right;'>" +
+                              "<button type='button' class='btn btn-light btn-sm' id='View_Order' data-toggle='modal' data-target='myModal'>" + "View Order" + "</button>" + "</div>" + "</div>" + "</div>");
+                       }
+                   });
+                   //$("#Next").click(function () {
+                   //    i = Number_Of_Cards;
+                   //    Number_Of_Cards = Number_Of_Cards + 2;
+                   //    $("#Card_Section").empty();
+                   //    Cards();
+                   //    console.log(data.length);
+
+                   //});
+               });
+           });
 
            $(document).on("click", "#View_Order", function () {
                //get Order Number of selected card -> use the Order Number to search for Record
@@ -320,17 +377,30 @@
                    $("#TotalWording").html('');
                    
                    var status;
-                   if (data.PaymentStatus == 0) {
-                       $("#Status").append("<div class='alert alert-danger' role='alert'>" + "<img src='/Images/exclamation-mark(2).png' class='img-circle' style='padding-bottom: 2px;'>" + "<span>" + " Total Payment of R" + data.finalPrice + " is Due!!" + "</span>" + "</div>")
-                       $("#Payment").show();
+                   if (data.PaymentStatus == 1 && data.OrderStatus == 0 && data.DeliveryStatus == 1) {
+                       $("#Status").append("<div class='alert alert-success' role='alert'>" + "<img src='/Images/check.png' class='img-circle' style='padding-bottom: 2px;'>" + "<span>" + " Delivery Made" + "</span>" + "</div>")
+                       $("#area").hide();
+                       $("#add_note").hide();
+                       $("#save_note").hide();
+                       $("#close_items").hide();
+                       $("#items").hide();
+                       $("#Payment").hide();
                        $("#process_order").hide();
+                       $("#notes").hide();
                    }
-                   
-                   else {
+         
+                   else if (data.PaymentStatus == 1) {
                        $("#Status").append("<div class='alert alert-success' role='alert'>" + "<img src='/Images/check.png' class='img-circle' style='padding-bottom: 2px;'>" + "<span>" + " Total Payment of R" + data.finalPrice + " is Settled!!" + "</span>" + "</div>")
                        $("#process_order").show();
                        $("#Payment").hide();
                    }
+                   else if (data.PaymentStatus == 0) {
+                       $("#Status").append("<div class='alert alert-danger' role='alert'>" + "<img src='/Images/exclamation-mark(2).png' class='img-circle' style='padding-bottom: 2px;'>" + "<span>" + " Total Payment of R" + data.finalPrice + " is Due!!" + "</span>" + "</div>")
+                       $("#Payment").show();
+                       $("#process_order").hide();
+                   }
+
+                   
                    $("#Modal_Title").append(Modal_Title)
                    $("#C_name").append(data.CustomerFullName);
                    $("#Cell").append(data.ContactNumber);
@@ -387,6 +457,14 @@
                    console.clear()
                    console.log(data)
 
+                   $("#process_order").click(function () {
+                       order.Order_ID = data.Order_ID;
+                       $.post('/Order/Complete_Order_Paid/', order, function (data) {
+                           var id = order.Order_ID;
+                           location.href = "/Order/A4_Order/" + id;
+                       });
+                   });
+
                    $("#save_note").click(function () {
                        var new_comment = $("#text_area").val();
                        comment.push(new_comment);
@@ -396,18 +474,7 @@
                            alert('Notes added');
                        });
                    });
-
-                   $("#process_order").click(function () {
-                       order.Order_ID = data.Order_ID;
-                       
-                       $.post('/Order/Complete_Order_Paid/', order, function (data) {
-                           var id = order.Order_ID;
-                           location.href = "/Order/A4_Order/" + id;
-                       });
-                   });
-
                    $("#Payment").click(function () {
-                       
                        var id = data.Order_ID;
                        location.href = "/Order/Outstanding_Order/" + id;
                        console.log('Clicked')
@@ -434,30 +501,30 @@
                        console.log("Over Due: ", data);
                       
                        for (i; i < Number_Of_Cards ; i++) {
-                           var OrderNumber = "Order Number: " + "<strong>" + data[i].Order_Number + "</strong>";
-                           var CustomerName = "Customer Name: " + "<strong>" + data[i].CustomerFullName + "</strong>";
-                           var ContactNumber = "Contact Number: " + "<strong>" + data[i].ContactNumber + "</strong>";
-                           var AltContact = "Alternate Contact Number: " + "<strong>" + data[i].AltrenateContactNum + "</strong>";
-                           var Address = "Delivery Address: " + "<strong>" + data[i].Address_Line1 + ', ' + data[i].StreetName_Number + "</strong>";
+                           var OrderNumber = "<strong>" + data[i].Order_Number + "</strong>";
+                           var CustomerName = "<strong>" + data[i].CustomerFullName + "</strong>";
+                           var ContactNumber = "<strong>" + data[i].ContactNumber + "</strong>";
+                           var AltContact = "<strong>" + data[i].AltrenateContactNum + "</strong>";
+                           //var Address = "<strong>" + data[i].Address_Line1 + ', ' + data[i].StreetName_Number + "</strong>";
                            var Del_Date;
 
                            if (data[i].Order_Date != null) {
                                var n = data[i].Order_Date.match(/\d+/g);
                                var date = new Date(parseFloat(n))
                                var day = date.getMonth() + 1;
-                               var dateString = day + '/' + +date.getDate() + '/' + date.getFullYear();
-                               Del_Date = "Delivery Date: " + "<strong style='color:red'>" + dateString + "</strong>";
+                               var dateString = day + '/' + date.getDate() + '/' + date.getFullYear();
+                               Del_Date = "<strong>" + dateString + "</strong>";
                            }
 
-                           $("#Card_Section").append("<div class='card bg-light col-md-4' style='width: 32rem;  border-radius: 3px; box-shadow: 0 5px 9px 0 rgba(0,0,0,0.2); transition: 0.3s;'>"
-                              + "<div class='card-body' style='padding-left: 2px'>" +
+                           $("#Card_Section").append("<div class='card bg-light col-md-4' style='border-radius: 3px; box-shadow: 0 5px 9px 0 rgba(0,0,0,0.2); transition: 0.3s;'>"
+                              + "<div class='card-body' style='padding-left: 2px;'>" +
                               "<img src='/Images/Zumane Logo.jpg' class='img-circle' style='width: 17%;height:20%'>" +
                               "<span class='card-title'>" + "<b>" + "ORDER DUE" + "</b>" + "</span>" +
-                              "<h6  class='card-subtitle mb-2 text-muted' style='padding-left: 2px'>" + "" + "</h6>" + "<hr/ style='padding-left: 2px; padding-right:2px;'> " +
-                              "<p class='card-text' style='padding-left: 3px'>" + OrderNumber + "<br/>" + CustomerName + "<br/>" + ContactNumber + "<br/>" +
-                              AltContact + "<br/>" + Address + "<br/>" + Del_Date + "</p>" + "<hr/ style='padding-left: 2px; padding-right:2px;'> " + "<div style='padding-left: 5px;'>" + "<img src='/Icons/chat.jpg' style='padding-bottom:12px;'>" +
-                              "<span text-muted id='comment_Section'>" + " Comment..." + "</span>" + "<span style='float: right; padding-right: 10px; padding-bottom: 0px !important;'>" + "0 comments" + "</span>" +
-                               "</div>" + "</div>" + "</div>");
+                              "<h6 class='card-subtitle mb-2 text-muted' style='padding-left: 2px'>" + "" + "</h6>" + "<hr/ style='padding-left: 2px; padding-right:2px;'> " +
+                              "<p class='card-text' style='padding-left: 3px'>" + "<div class='row'>" + "<div class='col-md-5'>" + "Order No:" + "<br/>" + "Name:" + "<br/>" + "Cell No:" + "<br/>" +
+                              "Alt No:" + "<br/>" + "Due Date:" + "</div>" + "<div class='col-md-7'>" + OrderNumber + "<br/>" + CustomerName + "<br/>" + ContactNumber + "<br/>" +
+                              AltContact + "<br/>" + Del_Date + "</div>" + "</div>" + "</p>" + "<hr/ style='padding-left: 2px; padding-right:2px;'>" + "<div style='padding-bottom:15px; padding-left:5px; float:right;'>" +
+                              "<button type='button' class='btn btn-light btn-sm' id='View_Order' data-toggle='modal' data-target='myModal'>" + "View Order" + "</button>" + "</div>" + "</div>" + "</div>");
                        }
                    });
                    $("#Next").click(function () {

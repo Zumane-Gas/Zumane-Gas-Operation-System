@@ -1,0 +1,161 @@
+﻿@model ZumaneGas_OperationalSystem.Models.Empty_Cylinder
+
+@{
+    ViewBag.Title = "Decrement_Empties";
+}
+
+<h4><strong>Empties / Order / Decrement Empties</strong></h4>
+<br />
+<div class="row">
+    <div class="col-md-3">
+        <a href="#" class="list-group-item" style="font-size:large"><span class="glyphicon glyphicon-th-list"></span>  Menu</a>
+
+        <a href="" class="list-group-item" style="font-size:large"><strong>Sale</strong></a>
+        <a href="@Url.Action("NewSale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> New Sale</a>
+        <a href="@Url.Action("Index","Home")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Today's Sales</a>
+        <a href="@Url.Action("S_Sale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Search Sale</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Stock</strong></a>
+        <a href="@Url.Action("ViewStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Stock</a>
+        <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Stock Details</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Invetory</strong></a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Invetory</a>
+        <a href="@Url.Action("Index","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Show Invetories</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Reports</strong> </a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span>  Daily Report</a>
+        <a href="@Url.Action("RetrieveReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Retrieve Report</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Empties</strong> </a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item active"><span class="glyphicon glyphicon-plus"></span> Record Emptiess</a>
+        <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> Available Empties</a>
+        <a href="#" class="list-group-item"><span></span> Logout</a>
+    </div>
+    <div class="col-md-9">
+        <h4><strong>Minus Empties:</strong></h4>
+        <br />
+        <div class="form-group">
+            <div class="col-md-10">
+                <small class="form-text text-muted">Total Empties (Used for order)</small>
+                <input type="text" id="Total_Empties" class="form-control" placeholder="Total Empties" />
+            </div>
+        </div>
+        <br/>
+        <hr/>
+        <div id="Single_Add">
+            <div class="form-group">
+                <div class="col-md-10" id="Total_Wording">
+                    
+                </div>
+            </div>
+            <br />
+            <hr />
+            <div class="form-group">
+               <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.EmptiesID, ViewBag.Inv as SelectList, "Cylinder Size", new { @class = "form-control" })
+                   <h5>Select Size*</h5>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <input type="text" class="form-control" required name="" placeholder="Current Empties" id="Current" readonly="readonly" />
+                        <h5>Available Empties*</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <input type="text" class="form-control" required name="" placeholder="New Empties" id="New" />
+                        <h5>Quantity*</h5>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <br />
+            <br/>
+            <div class="form-group">
+                <div class="col-md-10" style="padding-left:0px">
+                    <button type="button" class="btn btn-secondary" id="capture">Capture DetailsS</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var Items = [];
+            var quantity = [];
+            var Total = 0;
+
+            window.onload = function () {
+                $("#Single_Add").hide();
+            }
+
+            $("#Total_Empties").change(function () {
+                var Current_Total = $(this).val();
+                Total = Current_Total - Total;
+                $("#Total_Wording").html("");
+                $("#Total_Wording").append('<h4>' + 'Total Empties: ' + '<strong>' + Total + '</strong>' + '</h4>');
+                $("#Single_Add").fadeIn(1000);
+            });
+
+            $("#EmptiesID").change(function () {
+                var value = $("#EmptiesID :selected").text().toString();
+                $.get("/Empty_Cylinder/GetCurrent_Quantity?Size=" + value, function (data) {
+                    var current_quantity = data.Empty_Size_Quantity;
+                    console.log(current_quantity)
+                    $("#Current").append(current_quantity);
+                });
+            });
+
+            $("#capture").click(function () {
+              
+                var qty = $("#New").val();
+                var size = $("#EmptiesID :selected").text().toString();
+
+                //1. No Items
+                if (Items.length <= 0) {
+                    Items.push(size);
+                    quantity.push(qty);
+                    alert('Condition 1');
+                }
+                //2. length > 0
+                else if (!Items.includes(size)) {
+                    Items.push(size);
+                    quantity.push(qty);
+                    alert('Condition 2');
+                }
+                //3. Update Array
+                else if (Items.includes(size)) {
+                    for (var i in Items) {
+                        if (Items[i] === size) {
+                            quantity.splice(i, 1, parseFloat(qty));
+                            alert('Condition 3: Updated succesfully');
+                        }
+                    }
+                }
+
+                //get array total 
+                for (var i = 0; i < quantity.length; i++) {
+                    Total += quantity[i];
+                }
+
+                console.log(Items);
+                console.log(quantity);
+            });
+
+
+
+        });
+
+
+    </script>
+   
+}

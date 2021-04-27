@@ -143,6 +143,23 @@ namespace ZumaneGas_OperationalSystem.Controllers
 
             var record = db.orders.Where(x => x.Order_ID == order.Order_ID).First();
             var sale = db.Sales.Where(x => x.Order_ID == order.Order_ID).First();
+
+            var getEmpty1 = db.Empties.Where(x => x.Empty_Size == record.Order_item1).First();
+            var getEmpty2 = db.Empties.Where(x => x.Empty_Size == record.Order_item2).First();
+
+            if (getEmpty1 != null)
+            {
+                getEmpty1.Empty_Size_Quantity = getEmpty1.Empty_Size_Quantity + record.Order_Qty1;
+                db.Entry(getEmpty1).State = EntityState.Modified;
+            }
+
+            if (getEmpty2 != null)
+            {
+                getEmpty2.Empty_Size_Quantity = getEmpty2.Empty_Size_Quantity + record.Order_Qty2;
+                db.Entry(getEmpty2).State = EntityState.Modified;
+            }
+
+
             //Minus stock
             var GasSize1 = db.Stockes.Where(x => x.C_Size == record.Order_item1).FirstOrDefault();
             var GasSize2 = db.Stockes.Where(x => x.C_Size == record.Order_item2).FirstOrDefault();
@@ -213,6 +230,27 @@ namespace ZumaneGas_OperationalSystem.Controllers
                 sale.SaleType = SaleType.EFT;
                 sale.cashReceived = 0;
                 sale.change = 0;
+            }
+
+            var getEmpty1 = db.Empties.Where(x => x.Empty_Size == record.Order_item1).First();
+
+
+            if (getEmpty1 != null)
+            {
+                getEmpty1.Empty_Size_Quantity = getEmpty1.Empty_Size_Quantity + record.Order_Qty1;
+                db.Entry(getEmpty1).State = EntityState.Modified;
+            }
+
+            if (order.Order_item2 != null)
+            {
+                var getEmpty2 = db.Empties.Where(x => x.Empty_Size == record.Order_item2).First();
+                if (getEmpty2 != null)
+                {
+                    getEmpty2.Empty_Size_Quantity = getEmpty2.Empty_Size_Quantity + record.Order_Qty2;
+                    db.Entry(getEmpty2).State = EntityState.Modified;
+                }
+
+
             }
 
 
@@ -470,6 +508,21 @@ namespace ZumaneGas_OperationalSystem.Controllers
 
 
             return View();
+        }
+
+        public JsonResult getDelivered()
+        {
+            var orders = db.orders.Where(x => x.ProcessingDate.Value.Day == DateTime.Now.Day && x.ProcessingDate.Value.Month == DateTime.Now.Month 
+            && x.ProcessingDate.Value.Year == DateTime.Now.Year && x.DeliveryStatus == DeliveryStatus.Delivered && x.PaymentStatus == PaymentStatus.Paid).ToList();
+
+            if(orders != null)
+            {
+                return Json(orders, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("No Deliveries Made", JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

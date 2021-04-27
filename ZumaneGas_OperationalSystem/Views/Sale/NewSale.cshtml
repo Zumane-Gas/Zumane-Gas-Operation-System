@@ -3,7 +3,7 @@
     ViewBag.Title = "NewSale";
 }
 
-<h3><strong>Sale > New Sale</strong></h3>
+<h5><strong>Sale / New Sale</strong></h5>
 <br/>
     <div class="row">
         <div class="col-md-3">
@@ -300,18 +300,55 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group" id="Complete">
+                    <div class="form-group">
                         <div class="col-md-10" style="padding-left:0px">
                             <button type="button" class="btn btn-secondary" id="submit">Complete Sale</button>
+                            <button type="button" class="btn btn-secondary" id="empties">Capture Empty</button>
                         </div>
+                        
                     </div>
                 </div>
             </div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="Modal_Title">Capture Received Emptie(s)</h3>
+            </div>
+            <div class="modal-body" id="body">
+                <div class="row">
+                    <div class="col-md-4" id="section1"> 
+                        <h4>Empty Size:</h4>
+                        <select class="form-control" id="EmptySize1">
+                            <option id="Select">Select Empty Size</option>
+                            <option>9</option>
+                            <option>14</option>
+                            <option>19</option>
+                            <option>48</option>
+                        </select>
+                        <h4>Quantity</h4>
+                        <input type="text" id="Empty_Qty" class="form-control"/>
+                    </div>
+                    <div class="col-md-4" id="EmptiesDue">
+                        <br/>
+                        <br/>
+                        <p id="Empties_text"></p>
+                    </div>
+                </div>
+               
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="close">Close</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="Empties">Save Empties</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section Scripts{
-
                 <script type="text/javascript">
-
                     window.onload = function () {
                         $("#item2").hide();
                         $("#ApplianceRow").hide();
@@ -323,14 +360,15 @@
                         $("#Other2").hide();
                         $("#Overview").hide();
                         $("#Complete").hide();
+                        $("#submit").hide();
+                        $("#empties").hide();
                     }
+
+
                     $(document).ready(function () {
                         $("#Deposit_Check").change(function () {
                             var isChecked = $("#Deposit_Check").is(":checked");
                             var GasSize1 = $("#GasSize1").val();
-
-                            
-
                             if (isChecked === true) {
                                 $("#Dep_Check").fadeIn(1000);
                             }
@@ -356,8 +394,8 @@
 
                     $(document).ready(function () {
                         $("#GasSize1").change(function () {
-                            $("#price1").html("");
-                            $("#qty1").html("");
+                            $("#price1").html('');
+                            $("#qty1").html('');
                             var key = event.key || event.keyCode;
 
                             if (key === 'Backspace') {
@@ -370,12 +408,16 @@
                             var value = $(this).val();
                             if (value == 14 || value == 19 || value == 48) {
                                 $("#Del").show();
+                                //$("#empties").show();
                                 
                             }
                             else if (value == 9) {
                                 $("#Service").fadeIn(1000);
                                 $("#Del").fadeIn(1000);
-                               
+                                //$("#empties").show();
+                            }
+                            else {
+                                $("#submit").hide();
                             }
                             $("#Other").fadeIn(1000);
                             $.get('/Sale/getGAS?Size=' + value + '', null, function (data) {
@@ -389,8 +431,8 @@
                     $(document).ready(function () {
                         $("#GasSize2").change(function () {
                             //If gassize1 is not equals to Exchanges, and if Gassize2 is key pressed Backspace than hide
-                            $("#price2").html("");
-                            $("#qty2").html("");
+                            $("#price2").html('');
+                            $("#qty2").html('');
                             var key = event.key || event.keyCode;
                             var GasSize1 = $("#GasSize1").val();
 
@@ -404,6 +446,7 @@
                             else if (GasSize1 == 14 && key === "Backspace") {
                                 $("#Service").show();
                                 $("#Del").show();
+                                
                             }
 
                             else {
@@ -413,10 +456,12 @@
                             var value = $(this).val();
                             if (value == 14 || value == 19 || value == 48) {
                                 $("#Delivery").show();
+                                //$("#empties").show();
                             }
                             else if (value == 9) {
                                 $("#Service").show();
                                 $("#Del").show();
+                                
                             }
                             $("#Other2").fadeIn(1000);
                             $.get('/Sale/getGAS?Size=' + value + '', null, function (data) {
@@ -429,15 +474,23 @@
                         })
                     })
 
-
-
                     $(document).ready(function () {
                         $("#qty1").change(function () {
-
                             $("#Add_Info").fadeIn(1000);
                             $("#Overview").fadeIn(1000);
-                            $("#Complete").fadeIn(1000);
+                            
+                            $("#empties").hide();
+                            $("#submit").hide();
                             var value = $("#GasSize1").val();
+                            if (value == 9 || value == 14 || value == 19 || value == 48) {
+                                //$("#Complete").fadeIn(1000);
+                                $("#empties").fadeIn(1000);
+
+                            }
+                            else {
+                                //$("#Complete").fadeIn(1000);
+                                $("#submit").fadeIn(1000);
+                            }
                             $.get('/Sale/getGAS?Size=' + value + '', null, function (data) {
 
                                 $("#code1").html("");
@@ -472,6 +525,8 @@
                     $(document).ready(function () {
                         $("#qty2").change(function () {
                             var value = $("#GasSize2").val();
+                            $("#empties").hide();
+                            $("#submit").hide();
                             $.get('/Sale/getGAS?Size=' + value + '', null, function (data) {
 
                                 $("#code2").html("");
@@ -488,6 +543,18 @@
 
                                 var tot = "R" + data.Cylinder_Price * $("#qty2").val()
                                 var Tot2 = ((data.Cylinder_Price * $("#qty2").val()));
+
+                                var value1 = $("#GasSize1").val();
+                                var value2 = $("#GasSize2").val();
+                                if (value1 == 9 || value1 == 14 || value1 == 19 || value1 == 48) {
+                                    $("#empties").fadeIn(1000);
+                                }
+                                else if (value2 == 9 || value2 == 14 || value2 == 19 || value2 == 48) {
+                                    $("#empties").fadeIn(1000);
+                                }
+                                else {
+                                    $("#submit").fadeIn(1000);
+                                }
 
                             })
                         })
@@ -545,9 +612,9 @@
                                 $("#unit3").append("R", data.Product_Price - (data.Product_Price * 0.15));
                                 $("#qy3").append($("#AppQty1").val());
                                 $("#tot3").append("R", data.Product_Price * $("#AppQty1").val())
-                            })
-                        })
-                    })
+                            });
+                        });
+                    });
 
                     $(document).ready(function () {
                         $("#DepQuantity").keyup(function () {
@@ -568,9 +635,9 @@
 
                                 //var Tot4 = ((data.DepositFee * $("#qy4").val()));
 
-                            })
-                        })
-                    })
+                            });
+                        });
+                    });
 
                     $("#cash").click(function () {
                         $("#total").html("");
@@ -634,6 +701,52 @@
                     })
 
                     $(document).ready(function () {
+                        $("#empties").click(function () {
+                            $("#Empties_text").html('');
+                           
+                            $('#myModal').modal({ show: true });
+                            //check items (1 and 2) -> 
+                            var item1_value = $("#GasSize1").val();
+                            var item2_value = $("#GasSize2").val();
+                            var Qty1_Empties = parseInt($("#qty1").val());
+                            var Qty2_Empties = parseInt($("#qty2").val());
+                            var Dep_quantity = 0;
+                            if ($("#DepQuantity").val() != '') {
+                                Dep_quantity = parseInt($("#DepQuantity").val());
+                            }
+                            var tot_quantity = 0;
+
+                            //if both have exchanges
+                            if (item1_value == 9 || item1_value == 14 || item1_value == 19 || item1_value == 48 ) {
+                                if (item2_value == 9 || item2_value == 14 || item2_value == 19 || item2_value == 48) {
+                                    tot_quantity = Qty1_Empties + Qty2_Empties - Dep_quantity;
+                                }
+                                else {
+                                    tot_quantity = Qty1_Empties - Dep_quantity;
+                                }
+                            }
+                            else if (item2_value == 9 || item2_value == 14 || item2_value == 19 || item2_value == 48) {
+                                tot_quantity = Qty2_Empties - Dep_quantity;
+                            }
+                            if (tot_quantity == 0) {
+                                $("#Empties_text").append("<p>" + "Outstanding Empties: " + "<strong>" + tot_quantity + "</strong>" + "</p>")
+                                $("#section1").hide();
+                            }
+                            else {
+                                $("#section1").show();
+                                $("#Empties_text").append("<p>" + "Outstanding Empties: " + "<strong>" + tot_quantity + "</strong>" + "</p>")
+                            }
+                        });
+                    });
+
+                    $(document).ready(function () {
+                        $("#EmptySize1").change(function () {
+                            var value = $(this).val();
+                            console.log(value);
+                        });
+                    });
+
+                    $(document).ready(function () {
                         $("#submit").click(function () {
                             var sale = {};
 
@@ -690,10 +803,6 @@
                                     location.href = "/Sale/GenerateInvoice/" + newS;
                                     
                                 })
-                                //$.get('/Sale/CreatePdf/' + '', null, function () {
-
-                                //})
-
                             })
                         })
                     })

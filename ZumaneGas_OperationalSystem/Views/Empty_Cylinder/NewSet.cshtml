@@ -66,15 +66,15 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-10" style="">
+        @*<div class="col-md-10" style="">
             <div class="checkbox">
                 <input type="checkbox" id="Bulk" />
                 <label> Bulk </label>
             </div>
-        </div>
+        </div>*@
 
         @* Checkbox: Bulk Add *@
-        <div id="Bulk_Add">
+        @*<div id="Bulk_Add">
             <div class="form-group">
                 <div class="col-md-10">
                     <div class="form-group">
@@ -83,7 +83,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
         <br/>
         <br/>
         <div class="form-group">
@@ -106,7 +106,6 @@
                 $("#submit").prop('disabled', true);
 
             }
-
             //Hide/Show Checkbox: Add based on Size 
             $("#Single").change(function () {
                 var isChecked = $(this).is(":checked");
@@ -126,56 +125,53 @@
                     $("#submit").prop('disabled', true);
                 }
             });
+            //$("#Bulk").change(function () {
+            //    var isChecked = $(this).is(":checked");
 
-            $("#Bulk").change(function () {
-                var isChecked = $(this).is(":checked");
+            //    if (isChecked == true) {
+            //        $("#Bulk_Add").fadeIn(1000);
 
-                if (isChecked == true) {
-                    $("#Bulk_Add").fadeIn(1000);
-
-                    if ($("#Single").is(":checked", true)) {
-                        $("#Single_Add").fadeOut(1000);
-                        $("#Single").prop('checked', false);
-                    }
-                    $("#submit").prop('disabled', false);
+            //        if ($("#Single").is(":checked", true)) {
+            //            $("#Single_Add").fadeOut(1000);
+            //            $("#Single").prop('checked', false);
+            //        }
+            //        $("#submit").prop('disabled', false);
                     
-                }
-                else {
-                    $("#Bulk_Add").fadeOut(1000);
-                    $("#submit").prop('disabled', true);
-                }
-            });
+            //    }
+            //    else {
+            //        $("#Bulk_Add").fadeOut(1000);
+            //        $("#submit").prop('disabled', true);
+            //    }
+            //});
 
             $("#Invetory_Id").change(function () {
                 var value = $("#Invetory_Id :selected").text();
+                var v = value.toString();
+                console.log('Empty Size', v);
+                $.get("/Empty_Cylinder/GetCurrent_Quantity?Size=" + v, function (data) {
+                    console.log('Testing:', data);
+                    $("#Current").append(data.Empty_Size_Quantity);
+                    $("#submit").click(function () {
+                        var Empty = {};
+                        //Single add
+                        var Size = $("#Invetory_Id :selected").text();
+                        var New = $("#New").val();
 
-                console.log(value);
-                $.get("/Empty_Cylinder/GetCurrent_Quantity?Size=" + value, '', null, function (data) {
-                    console.log(data); 
+                        //Bulk
+                        var Bulk_add = $("#New_Bulk").val();
 
+                        Empty.EmptiesID = data.EmptiesID;
+                        Empty.Empty_Size = Size;
+                        Empty.Empty_Size_Quantity = New;
+
+                        $.post('/Empty_Cylinder/Add_Empties/', Empty, function () {
+                            alert('New Empties recorded')
+                        });
+                    });
                 });
             });
 
-            $("#submit").click(function () {
-                var Empty = {};
 
-                //Single add
-                var Size = $("#Invetory_Id :selected").text();
-                var New = $("#New").val();
-
-                //Bulk
-                var Bulk_add = $("#New_Bulk").val();
-
-                Empty.Empty_Size = Size;
-                Empty.Empty_Size_Quantity = New;
-
-                $.post('/Empty_Cylinder/Add_Empties/', Empty, function () {
-                    alert('New Empties recorded')
-                });
-
-
-
-            });
         });
     </script>
 

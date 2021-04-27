@@ -146,6 +146,26 @@ namespace ZumaneGas_OperationalSystem.Controllers
             var GasSize2 = db.Stockes.Where(x => x.C_Size == sale.item2).FirstOrDefault();
             var GasS = db.Stockes.Where(x => x.ProductName == P_Name).FirstOrDefault();
 
+            var getEmpty1 = db.Empties.Where(x => x.Empty_Size == sale.item1).First();
+
+            if (getEmpty1 != null)
+            {
+                getEmpty1.Empty_Size_Quantity = getEmpty1.Empty_Size_Quantity + sale.Qty1;
+                db.Entry(getEmpty1).State = EntityState.Modified;
+            }
+
+            if (sale.item2 != null)
+            {
+                var getEmpty2 = db.Empties.Where(x => x.Empty_Size == sale.item2).First();
+                if(getEmpty2 != null)
+                {
+                    getEmpty2.Empty_Size_Quantity = getEmpty2.Empty_Size_Quantity + sale.Qty2;
+                    db.Entry(getEmpty2).State = EntityState.Modified;
+                }
+               
+            }
+            
+
 
             //product1
             if (Product1 != null)
