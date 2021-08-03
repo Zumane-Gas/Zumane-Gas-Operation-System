@@ -17,5 +17,7 @@ namespace ZumaneGas_OperationalSystem.Models
         public Sale SaleDetails { get; set; }
         public virtual Invetory GoodDetails { get; set; }
         public int? Invetory_Id { get; set; }
+        public string[] getSize { get; set; }
+        public int[] getQuantity { get; set; }
     }
 }

@@ -25,6 +25,42 @@ namespace ZumaneGas_OperationalSystem.Controllers
             int CurrTotSales = sales.Count();
             ViewBag.CurrTotSales = CurrTotSales;
 
+          
+            var order = db.orders.Where(x => x.Order_Date.Value.Day.Equals(DateTime.Now.Day) && x.Order_Date.Value.Month.Equals(DateTime.Now.Month) && x.Order_Date.Value.Year.Equals(DateTime.Now.Year) && x.OrderStatus == OrderStatus.Processing && x.DeliveryStatus == DeliveryStatus.NotDelivered && x.isViewed == false).Count();
+            int OrderCount = order;
+            if (OrderCount > 0)
+            {
+                ViewBag.Orders = OrderCount;
+            }
+
+            //getOverdue similar logic
+            var o = db.orders.Where(x => x.Order_Date != null && x.OrderStatus == OrderStatus.Processing && x.DeliveryStatus == DeliveryStatus.NotDelivered).ToList();
+            int result;
+            int overdue_Count = 0;
+            List<Order> overdue = new List<Order>();
+
+            foreach (var item in o)
+            {
+                result = DateTime.Compare(item.Order_Date.Value, DateTime.Today);
+                if (result < 0)
+                {
+                    overdue.Add(item);
+                    overdue_Count = overdue.Count();
+                }
+            }
+
+            if (overdue_Count > 0)
+            {
+                ViewBag.Overdue = overdue_Count;
+            }
+
+            //Notification badge
+            var totalCount = OrderCount + overdue_Count;
+            if (totalCount > 0)
+            {
+                ViewBag.total = totalCount;
+            }
+
             return View(db.Sales.ToList());
         }
         //Reports

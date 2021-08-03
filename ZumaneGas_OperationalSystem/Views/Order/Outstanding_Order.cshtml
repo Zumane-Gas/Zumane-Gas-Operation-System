@@ -8,14 +8,22 @@
     <div class="col-md-3">
         <a href="#" class="list-group-item" style="font-size:large"><span class="glyphicon glyphicon-th-list"></span>  Menu</a>
 
-        <a href="" class="list-group-item" style="font-size:large"><strong>order</strong></a>
-        <a href="@Url.Action("Neworder","order")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> New order</a>
-        <a href="@Url.Action("Index","Home")" class="list-group-item active"><span class="glyphicon glyphicon-eye-open"></span> View Today's orders</a>
-        <a href="@Url.Action("S_order","order")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Search order</a>
+        <a href="" class="list-group-item" style="font-size:large"><strong>Sale</strong></a>
+        <a href="@Url.Action("NewSale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> New Sale</a>
+        <a href="@Url.Action("Index","Home")" class="list-group-item "><span class="glyphicon glyphicon-eye-open"></span> View Today's Sales</a>
+        <a href="@Url.Action("S_Sale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Search Sale</a>
 
         <a href="#" class="list-group-item" style="font-size:large"><strong>Stock</strong></a>
         <a href="@Url.Action("ViewStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Stock</a>
         <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Stock Details</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Order</strong></a>
+        <a href="@Url.Action("ViewStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Order</a>
+        <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Order Details</a>
+        <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item active">
+            <span class="glyphicon glyphicon-eye-open"></span> Outstanding Order @if (ViewBag.total > 0)
+            { <span class="badge"> @ViewBag.total</span> }
+        </a>
 
         <a href="#" class="list-group-item" style="font-size:large"><strong>Invetory</strong></a>
         <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Invetory</a>
@@ -26,9 +34,122 @@
         <a href="@Url.Action("","Report")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Retrieve Report</a>
 
         <a href="#" class="list-group-item" style="font-size:large"><strong>Empties</strong> </a>
-        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> data Emptiess</a>
+        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> Record Emptiess</a>
         <a href="@Url.Action("DailyReport","Report")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> Available Empties</a>
         <a href="#" class="list-group-item"><span></span> Logout</a>
+    </div>
+    <div class="container">
+        <h4>Outstanding Orders:</h4>
+        <br />
+        <div class="col-md-9">
+            <div class="row">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a data-toggle="tab" id="Today_Feeds">
+                            Due Today  @if (ViewBag.Orders > 0)
+                            { <span class="badge">  @ViewBag.Orders</span> }
+                        </a>
+                    </li>
+                    <li><a data-toggle="tab" id="ViewAll_Feeds">View All</a></li>
+                    <li>
+                        <a data-toggle="tab" id="Overdue">
+                            Overdue @if (ViewBag.Overdue > 0)
+                            { <span class="badge">  @ViewBag.Overdue</span> }
+                        </a>
+                    </li>
+                    @*All Deliveries that have been processed and made today*@
+                    <li><a data-toggle="tab" id="Deliveries">Deliveries Made</a></li>
+
+                </ul>
+            </div>
+            <br />
+            <div class="row" id="Card_Section">
+            </div>
+            @*<div class="form-group">
+                    <div class="col-md-10" style="padding-left:0px">
+                        <button type="button" class="btn btn-secondary" id="Next">Next</button>
+
+                    </div>
+                </div>*@
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="Modal_Title"></h3>
+            </div>
+            <div class="modal-body" id="body">
+                <h4>Order Details:</h4>
+                <div class="row" id="Status">
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5>Customer Name: <br /></h5>
+                        <h5>Cell Number: <br /></h5>
+                        <h5>Alt Number: <br /></h5>
+                        <h5>Order Date: <br /></h5>
+                        <h5>Delivery Address: <br /></h5>
+                    </div>
+                    <div class="col-md-6" id="bodys">
+                        <h5 id="C_name"> <br /></h5>
+                        <h5 id="Cell"> <br /></h5>
+                        <h5 id="Alt"> <br /></h5>
+                        <h5 id="o_date"> <br /></h5>
+                        <h5 id="Address"> <br /></h5>
+                    </div>
+                </div>
+                <br />
+                <button type="button" class="btn btn-secondary btn-sm" id="open_items"> View Item(s)</button>
+                <button type="button" class="btn btn-secondary btn-sm" id="close_items"> Close Item(s)</button>
+                <div class="row" id="items">
+                    <div class="col-md-9" style="padding-left: 10px;">
+                        <h5 style="font-weight:bold">Order Items:</h5>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <p style="font-size:small"><strong>Size (kg)</strong></p>
+                            </div>
+                            <div class="col-md-3">
+                                <p style="font-size:small"><strong>Unit Price</strong></p>
+                            </div>
+                            <div class="col-md-3">
+                                <p style="font-size:small"><strong>Quantity</strong></p>
+                            </div>
+                            <div class="col-md-3">
+                                <p style="font-size:small"><strong>Total Price</strong></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <p style="font-size:small" id="SizeWording"></p>
+                            </div>
+                            <div class="col-md-3">
+                                <p style="font-size:small" id="UPWording"></p>
+                            </div>
+                            <div class="col-md-3">
+                                <p style="font-size:small" id="QtyWording"></p>
+                            </div>
+                            <div class="col-md-3">
+                                <p style="font-size:small" id="TotalWording"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="close">Close</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="notes">Add Notes</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="save_note">Save Note</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="process_order">Process Order</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="Payment">Make Payment</button>
+                    <br />
+                </div>
+                <div class="row" id="area">
+                    <span><textarea style="overflow: auto;" rows="4" cols="100" id="text_area"></textarea></span>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-md-9">
         <div id="PayNow">
@@ -94,7 +215,7 @@
                 </div>
             </div>
         </div>
-        <br/>
+        <br />
         <div class="row">
             <button type="button" class="btn btn-success" id="Process_Order">
                 Complete Order

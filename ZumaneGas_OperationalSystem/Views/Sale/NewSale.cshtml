@@ -34,9 +34,24 @@
             <h4><strong>LPG GAS Details:</strong></h4>
             @*FIRST ROW: ITEM 1 DETAILS*@
             <div class="row">
-                <div class="col-md-3" style="">
-                    <div class="form-group" style="">
-                        <span><h4>Gas Size1:</h4> 
+                <div class="col-md-8" style="">
+                    @*<form>
+                        <small class="form-text text-muted">Enter Size</small>
+                        <input type="text" id="GasSize1" class="form-control" placeholder="Gas Size" /> <span class="glyphicon glyphicon-search"></span> 
+                    </form>*@
+                    <form>
+                        @*<span><input name="submit" class="glyphicon-search"  value="Search"></span>*@
+                        <p>
+                           <span> <input type="text" name="text" class="form-control" placeholder="Enter Gas Size!" id="GasSize1">
+                            <button type="button" class="btn btn-default" id="Add_item">
+                                <span class="glyphicon glyphicon-search"></span> Search
+                            </button> </span>
+                        </p>
+                    </form> 
+                   
+
+                    @*<div class="form-group" style="">
+                        <h4>Gas Size1:</h4> 
                             <select class="form-control" id="GasSize1">
                                 <option id="Select">Select Size</option>
                                 <option>1.3</option>
@@ -52,7 +67,7 @@
                                 <option>19</option>
                                 <option>48</option>
                             </select>
-                        @*<input type="text" class="form-control" name="" placeholder="Gas Size" id="GasSize1" /></span>*@
+                        
                     </div>
                     <div id="Other">
                         <div class="form-group" style="">
@@ -61,13 +76,12 @@
                         <div class="form-group" style="">
                             <span><h4>Quantity</h4> <input type="text" class="form-control" name="" placeholder="Quntity" id="qty1" /></span>
                         </div>
-                    </div>
+                    </div>*@
                 </div>
 
-                <div class="col-md-3" style="">
-                    <div id="item2">
+                @*<div class="col-md-3" style="">*@
+                    @*<div id="item2">
                         <div class="form-group" style="">
-                            <span>
                                 <h4>Gas Size2:</h4>
                                 <select class="form-control" id="GasSize2">
                                     <option id="Select">Select Size</option>
@@ -95,10 +109,10 @@
                             </div>
                         </div>
                    
-                </div>
-                <div class="col-md-3">
+                </div>*@
+                @*<div class="col-md-3">
 
-                </div>
+                </div>*@
 
                 @*Item 3 - to be added at later stage when everything else works the way its should*@
                 @*<div class="col-md-3" style="">
@@ -127,12 +141,7 @@
                                     @Html.EditorFor(model => model.New)
                                 </div>
                             </div>
-                            <div class="form-group" id="SaletType">
-                                <div class="col-md-10" style="">
-                                    @Html.DisplayNameFor(model => model.SaleType)
-                                    @Html.EnumDropDownListFor(model => model.SaleType, htmlAttributes: new { @class = "form-control" })
-                                </div>
-                            </div>
+
                             <div class="form-group">
                                 <div class="col-md-10" style="" id="Del">
                                     <div class="checkbox">
@@ -227,13 +236,23 @@
                         <div class="col-md-4">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4>Amount Details</h4>
+                                    <h4>Payment Section </h4>
                                 </div>
+                                <br/>
+                                <div class="form-group" id="SaletType">
+                                    <div class="col-md-10" style="">
+                                        @Html.DisplayNameFor(model => model.SaleType)
+                                        @Html.EnumDropDownListFor(model => model.SaleType, htmlAttributes: new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <br/>
+                                <br />
                                 <div class="panel-body">
                                     <div class="form-group" style="">
-                                        <span><h4>Cash Received</h4> <input type="text" class="form-control" required name="" placeholder="Amount" id="cash" /></span>
+                                        <span><h5>Cash Received</h5> <input type="text" class="form-control" required name="" placeholder="Amount" id="cash" /></span>
                                     </div>
                                     <br />
+                                   
                                     <h4 id="total"></h4>
                                 </div>
                             </div>
@@ -263,31 +282,31 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <h5 id="code1"></h5>
+                                            <h5 id="arrayItems_Codes"></h5>
                                             <h5 id="code2"></h5>
                                             <h5 id="code3"></h5>
                                             <h5 id="code4"></h5>
                                         </div>
                                         <div class="col-md-2">
-                                            <h5 id="size1"></h5>
+                                            <h5 id="ArrayItems_Size"></h5>
                                             <h5 id="size2"></h5>
                                             <h5 id="size3"></h5>
                                             <h5 id="size4"></h5>
                                         </div>
                                         <div class="col-md-2">
-                                            <h5 id="unit1"></h5>
+                                            <h5 id="ArrayItems_Unit"></h5>
                                             <h5 id="unit2"></h5>
                                             <h5 id="unit3"></h5>
                                             <h5 id="unit4"></h5>
                                         </div>
                                         <div class="col-md-2">
-                                            <h5 id="qy1"></h5>
+                                            <h5 id="ArrayItems_Qty"></h5>
                                             <h5 id="qy2"></h5>
                                             <h5 id="qy3"></h5>
                                             <h5 id="qy4"></h5>
                                         </div>
                                         <div class="col-md-2">
-                                            <h5 id="tot1"></h5>
+                                            <h5 id="ArrayItems_Total"></h5>
                                             <h5 id="tot2"></h5>
                                             <h5 id="tot3"></h5>
                                             <h5 id="tot4"></h5>
@@ -309,7 +328,7 @@
                     </div>
                 </div>
             </div>
-<!-- Modal -->
+<!-- Modal -  Empties-->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -339,7 +358,61 @@
                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="close">Close</button>
-                    <button type="button" class="btn btn-primary btn-sm" id="Empties">Save Empties</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="add">Add Empty</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="submit">Complete Sale</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -  Items -->
+<div class="modal fade" id="myModal_Items" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="Modal_Title">Capture Sale Item</h3>
+            </div>
+            <div class="modal-body" id="body">
+                <div class="row" id="items">
+                    <div class="col-md-9" style="padding-left: 10px;">
+                        <h5 style="font-weight:bold">Order Items:</h5>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <p style="font-size:small"><strong>Size (kg)</strong></p>
+                            </div>
+                            <div class="col-md-3">
+                                <p style="font-size:small"><strong>Unit Price</strong></p>
+                            </div>
+                            <div class="col-md-3">
+                                <p style="font-size:small"><strong>S Price</strong></p>
+                            </div>
+                            <div class="col-md-3">
+                                <p style="font-size:small"><strong>Qty</strong></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <p style="font-size:small" id="SizeWording"></p>
+                            </div>
+                            <div class="col-md-3">
+                                <p style="font-size:small" id="UPWording"></p>
+                            </div>
+                            <div class="col-md-3">
+                                <p style="font-size:small" id="TotalWording"></p>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" name="text" class="form-control" placeholder="" id="qty1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="close">Close</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="add_item_modal">Add Item</button>
+                    @*<button type="button" class="btn btn-primary btn-sm" id="submit">Complete Sale</button>*@
                 </div>
             </div>
         </div>
@@ -349,235 +422,396 @@
 
 @section Scripts{
                 <script type="text/javascript">
-                    window.onload = function () {
-                        $("#item2").hide();
-                        $("#ApplianceRow").hide();
-                        $("#Dep_Check").hide();
-                        $("#Del").hide();
-                        $("#Service").hide();
-                        $("#Add_Info").hide();
-                        $("#Other").hide();
-                        $("#Other2").hide();
-                        $("#Overview").hide();
-                        $("#Complete").hide();
-                        $("#submit").hide();
-                        $("#empties").hide();
-                    }
-
-
                     $(document).ready(function () {
-                        $("#Deposit_Check").change(function () {
-                            var isChecked = $("#Deposit_Check").is(":checked");
-                            var GasSize1 = $("#GasSize1").val();
-                            if (isChecked === true) {
-                                $("#Dep_Check").fadeIn(1000);
-                            }
-                            else {
-                                $("#Dep_Check").fadeOut(1000);
-                            }
-                        })
-                    })
+                    
+                        // Exchanges and Refills arrays
+                        var size = [];
+                        var price = [];
+                        var quantity = [];
+                        var itemCode = [];
 
-                    $(document).ready(function () {
-                        $("#Appliances").change(function () {
-                            var isChecked = $("#Appliances").is(":checked");
-
-                            if (isChecked === true) {
-                                $("#ApplianceRow").fadeIn(1000);
-                            }
-                            else {
-                                $("#ApplianceRow").fadeOut(1000);
-                            }
-                        })
-                    })
+                        // Empties arrays
+                        var array_items = [];
+                        var array_qty = [];
 
 
-                    $(document).ready(function () {
-                        $("#GasSize1").change(function () {
-                            $("#price1").html('');
-                            $("#qty1").html('');
-                            var key = event.key || event.keyCode;
+                        var product_Name = [];
+                        var product_price = [];
+                        var product_quantity = [];
 
-                            if (key === 'Backspace') {
-                                $("#Service").hide();
-                                $("#Del").hide();
-                                $("#price1").html("");
-                                $("#qty1").html("");
-                                $("#total").html("");
-                            }
-                            var value = $(this).val();
-                            if (value == 14 || value == 19 || value == 48) {
-                                $("#Del").show();
-                                //$("#empties").show();
-                                
-                            }
-                            else if (value == 9) {
-                                $("#Service").fadeIn(1000);
-                                $("#Del").fadeIn(1000);
-                                //$("#empties").show();
-                            }
-                            else {
-                                $("#submit").hide();
-                            }
-                            $("#Other").fadeIn(1000);
-                            $.get('/Sale/getGAS?Size=' + value + '', null, function (data) {
-                                console.log(data);
-                                var Price = document.getElementById('price1');
-                                Price.value = data.Cylinder_Price;
-                            })
+                        var runOnce = 0;
+                        var runMultiple = 1;
+
+                        
+                         
+                        window.onload = function () {
+                            $("#item2").hide();
+                            $("#ApplianceRow").hide();
+                            $("#Dep_Check").hide();
+                            $("#Del").hide();
+                            $("#Service").hide();
+                            $("#Add_Info").hide();
+                            $("#Other").hide();
+                            $("#Other2").hide();
+                            $("#Overview").hide();
+                            $("#Complete").hide();
+                            //$("#submit").hide();
+                            $("#empties").hide();
+                            $("#submit").hide();
+                        };
+
+
+                    $("#Deposit_Check").change(function () {
+                        var isChecked = $("#Deposit_Check").is(":checked");
+                        var GasSize1 = $("#GasSize1").val();
+                        if (isChecked === true) {
+                            $("#Dep_Check").fadeIn(1000);
+                        }
+                        else {
+                            $("#Dep_Check").fadeOut(1000);
+                        }
+                    });
+                    
+                    $("#Appliances").change(function () {
+                        var isChecked = $("#Appliances").is(":checked");
+
+                        if (isChecked === true) {
+                            $("#ApplianceRow").fadeIn(1000);
+                        }
+                        else {
+                            $("#ApplianceRow").fadeOut(1000);
+                        }
+                    });
+                    
+                    $("#Add_item").click(function () {
+                        $("#SizeWording").html('');
+                        $("#TotalWording").html('');
+                        $("#UPWording").html('');
+                        var key = event.key || event.keyCode;
+
+                        if (key === 'Backspace') {
+                            $("#Service").hide();
+                            $("#Del").hide();
+                            $("#price1").html("");
+                            $("#qty1").html("");
+                            $("#total").html("");
+                        }
+                        var value = $("#GasSize1").val();
+                        if (value == 14 || value == 19 || value == 48) {
+                            $("#Del").show();
+                            //$("#empties").show();
+                        }
+                        else if (value == 9) {
+                            $("#Service").fadeIn(1000);
+                            $("#Del").fadeIn(1000);
+                            //$("#empties").show();
+                        }
+                        else {
+                            $("#submit").hide();
+                        }
+                        $("#Other").fadeIn(1000);
+
+                        // Populating modal view with gas details 
+                        $.get('/Sale/getGAS?Size=' + value + '', null, function (data) {
+                            console.log(data);
+
+                            $("#SizeWording").append(value, " KG");
+                            $("#UPWording").append("R", data.Cylinder_Price - (data.Cylinder_Price * 0.15));
+                            $("#TotalWording").append("R", data.Cylinder_Price)
+
+                            //var Price = document.getElementById('price1');
+                            //Price.value = data.Cylinder_Price;
                         })
                     });
 
-                    $(document).ready(function () {
-                        $("#GasSize2").change(function () {
-                            //If gassize1 is not equals to Exchanges, and if Gassize2 is key pressed Backspace than hide
-                            $("#price2").html('');
-                            $("#qty2").html('');
-                            var key = event.key || event.keyCode;
-                            var GasSize1 = $("#GasSize1").val();
+ 
+                    $("#add_item_modal").click(function () {
+                        add_item();
+                        SaleOverview();
+                        $("#qty1").val('')
+                        $("#GasSize1").val('')
+                        //getSaleTotal();
+                    });
 
-                            if ((GasSize1 == 14 || GasSize1 == 19 || GasSize1 == 48) && (key === "Backspace")) {
-                                //document.getElementById("ServiceType").style.visibility = "visible";
-                                $("#Delivery").show();
-                                $("#price2").html("");
-                                $("#qty2").html("");
-                                $("#total").html("");
-                            }
-                            else if (GasSize1 == 14 && key === "Backspace") {
-                                $("#Service").show();
-                                $("#Del").show();
-                                
-                            }
+                    function add_product() {
+                        //add to arrays
+                        //var product_Name = [];
+                        //var product_price = [];
+                        //var product_quantity = [];
 
-                            else {
-                                $("#ServiceType").hide();
-                            }
 
-                            var value = $(this).val();
-                            if (value == 14 || value == 19 || value == 48) {
-                                $("#Delivery").show();
-                                //$("#empties").show();
-                            }
-                            else if (value == 9) {
-                                $("#Service").show();
-                                $("#Del").show();
-                                
-                            }
-                            $("#Other2").fadeIn(1000);
-                            $.get('/Sale/getGAS?Size=' + value + '', null, function (data) {
-                                console.clear();
-                                console.log(data);
-                                var Price2 = document.getElementById('price2');
-                                Price2.value = data.Cylinder_Price;
-                            })
-
-                        })
-                    })
-
-                    $(document).ready(function () {
-                        $("#qty1").change(function () {
+                    }
+                    
+                    function add_item() {
+                        console.clear();
+                        var value = $("#GasSize1").val();
+                        var qty = $("#qty1").val();
+                        
+                        //working perfectly 
+                        $.get('/Sale/getGAS?Size=' + value + '', null, function (data) {
                             $("#Add_Info").fadeIn(1000);
                             $("#Overview").fadeIn(1000);
-                            
-                            $("#empties").hide();
-                            $("#submit").hide();
-                            var value = $("#GasSize1").val();
-                            if (value == 9 || value == 14 || value == 19 || value == 48) {
-                                //$("#Complete").fadeIn(1000);
-                                $("#empties").fadeIn(1000);
+                            var currSize = value;
+  
+                                if (size.length == 0) {
+                                    size.push(currSize);
+                                    price.push(data.Cylinder_Price * parseInt(qty))
+                                    quantity.push(parseInt(qty));
+                                    itemCode.push(data.Size_Code);
+                                    alert('Condition 1');
 
-                            }
-                            else {
-                                //$("#Complete").fadeIn(1000);
-                                $("#submit").fadeIn(1000);
-                            }
-                            $.get('/Sale/getGAS?Size=' + value + '', null, function (data) {
+                                }
+                                    //2. length > 0
+                                else if (!size.includes(currSize)) {
+                                    size.push(currSize);
+                                    price.push(data.Cylinder_Price * parseInt(qty))
+                                    quantity.push(parseInt(qty));
+                                    itemCode.push(data.Size_Code);
+                                    alert('Condition 2');
 
-                                $("#code1").html("");
-                                $("#size1").html("");
-                                $("#unit1").html("");
-                                $("#qy1").html("");
-                                $("#tot1").html("");
-
-                                $("#code1").append(data.Size_Code);
-                                $("#size1").append(value);
-                                $("#unit1").append("R", data.Cylinder_Price - (data.Cylinder_Price * 0.15));
-                                $("#qy1").append($("#qty1").val());
-
-                                var ServiceType = $("#ServiceType").val();
-                                if (ServiceType == 0) {
-                                    $("#tot1").append("R", data.Cylinder_Price * $("#qty1").val())
+                                }
+                                    //3. Update Array
+                                else if (size.includes(currSize)) {
+                                    for (var i in size) {
+                                        if (size[i] === value) {
+                                            quantity.splice(i, 1, parseInt(qty));
+                                            price.splice(i, 1, data.Cylinder_Price * parseInt(qty));
+                                            alert('Condition 3: Updated succesfully');
+                                        }
+                                    }
                                 }
 
-                                else if(ServiceType == 1) {
-                                    $("#tot1").append("R", data.Cylinder_Price * $("#qty1").val() + 20)
+                            //buttons (complete and capture) -  working perfectly 
+                                if (size.length > 0) {
+                                    for (var i = 0; i < size.length; i++) {
+                                        if (size.includes('9') || size.includes('14') || size.includes('19') || size.includes('48')) {
+                                            $("#submit").hide();
+                                            $("#empties").fadeIn(1000);
+
+                                        }
+                                        else {
+                                            $("#empties").hide();
+                                            $("#submit").fadeIn(1000);
+                                        }
+                                    }
                                 }
+
+                            SaleOverview();
+                            console.log(size);
+                            console.log(quantity);
+                            console.log(price);
+                            console.log('Size Length: ', size.length)
+                        });
+
+                       
+                    }
+                    
+                    //$(document).ready(function () {
+                    //    Add_item
+                    //    $("#GasSize1").change(function () {
+                    //        $("#price1").html('');
+                    //        $("#qty1").html('');
+                    //        var key = event.key || event.keyCode;
+                    //        if (key === 'Backspace') {
+                    //            $("#Service").hide();
+                    //            $("#Del").hide();
+                    //            $("#price1").html("");
+                    //            $("#qty1").html("");
+                    //            $("#total").html("");
+                    //        }
+                    //        var value = $(this).val();
+                    //        if (value == 14 || value == 19 || value == 48) {
+                    //            $("#Del").show();
+                    //            //$("#empties").show();
+                    //        }
+                    //        else if (value == 9) {
+                    //            $("#Service").fadeIn(1000);
+                    //            $("#Del").fadeIn(1000);
+                    //            //$("#empties").show();
+                    //        }
+                    //        else {
+                    //            $("#submit").hide();
+                    //        }
+                    //        $("#Other").fadeIn(1000);
+                    //        $.get('/Sale/getGAS?Size=' + value + '', null, function (data) {
+                    //            console.log(data);
+                    //            var Price = document.getElementById('price1');
+                    //            Price.value = data.Cylinder_Price;
+                    //        })
+                    //    })
+                        //});
+
+                    //$(document).ready(function () {
+                    //    $("#GasSize2").change(function () {
+                    //        //If gassize1 is not equals to Exchanges, and if Gassize2 is key pressed Backspace than hide
+                    //        $("#price2").html('');
+                    //        $("#qty2").html('');
+                    //        var key = event.key || event.keyCode;
+                    //        var GasSize1 = $("#GasSize1").val();
+                    //        if ((GasSize1 == 14 || GasSize1 == 19 || GasSize1 == 48) && (key === "Backspace")) {
+                    //            //document.getElementById("ServiceType").style.visibility = "visible";
+                    //            $("#Delivery").show();
+                    //            $("#price2").html("");
+                    //            $("#qty2").html("");
+                    //            $("#total").html("");
+                    //        }
+                    //        else if (GasSize1 == 14 && key === "Backspace") {
+                    //            $("#Service").show();
+                    //            $("#Del").show();          
+                    //        }
+                    //        else {
+                    //            $("#ServiceType").hide();
+                    //        }
+                    //        var value = $(this).val();
+                    //        if (value == 14 || value == 19 || value == 48) {
+                    //            $("#Delivery").show();
+                    //            //$("#empties").show();
+                    //        }
+                    //        else if (value == 9) {
+                    //            $("#Service").show();
+                    //            $("#Del").show();          
+                    //        }
+                    //        $("#Other2").fadeIn(1000);
+                    //        $.get('/Sale/getGAS?Size=' + value + '', null, function (data) {
+                    //            console.clear();
+                    //            console.log(data);
+                    //            var Price2 = document.getElementById('price2');
+                    //            Price2.value = data.Cylinder_Price;
+                    //        })
+                    //    })
+                    //})
+
+                     // changes / updates to screen components/text
+                    //$(document).on("click", "#add_item_modal", function () {
+
+                    //    var value = $("#GasSize1").val();
+                    //    $.get('/Sale/getGAS?Size=' + value + '', null, function (data) {
+
+                    //        //$("#code1").html("");
+                    //        //$("#size1").html("");
+                    //        //$("#unit1").html("");
+                    //        //$("#qy1").html("");
+                    //        //$("#tot1").html("");
+
+                    //        //$("#code1").append(data.Size_Code);
+                    //        //$("#size1").append(value);
+                    //        //$("#unit1").append("R", data.Cylinder_Price - (data.Cylinder_Price * 0.15));
+                    //        //$("#qy1").append($("#qty1").val());
+
+                    //        //REFILLS (9KG)
+                    //        var ServiceType = $("#ServiceType").val();
+                    //        if (ServiceType == 0) {
+                    //            $("#tot1").append("R", data.Cylinder_Price * $("#qty1").val())
+                    //        }
+
+                    //        else if (ServiceType == 1) {
+                    //            $("#tot1").append("R", data.Cylinder_Price * $("#qty1").val() + 20)
+                    //        }
+
+                    //        $("#item2").fadeIn(1000);
+
+                    //        //  $("#total").append(tot);
+                    //        //  var Tot1 = ((data.Cylinder_Price * $("#qty1").val()));
+
+                    //    })
+
+                    //    $("#qty1").val('');
+                    //    $("#GasSize1").val('');
+                    //});
+                    var currPrice = 0; 
+                    function SaleOverview() {
+
+                        // Write to sale overview panel 
+                        // Clear current text 
+                        // Insert new / updated 
+                        $("#arrayItems_Codes").html('');
+                        $("#ArrayItems_Unit").html('');
+                        $("#ArrayItems_Qty").html('');
+                        $("#ArrayItems_Total").html('');
+                        $("#ArrayItems_Size").html('');
+
+                        //iterate through arrays 
+                        if (size.length > 0) {
+                            //for (var i = 0; i < size.length; i++) {
+                            //    $("#ArrayItems_Unit").append('R', price[i] - (price[i] * 0.15), '<br>')
+                            //    $("#ArrayItems_Total").append(price[i], '<br>')
+                            //}
+                            for (var i in itemCode) {
+                                ///$("#arrayItems_Codes").html("");
+                                $("#arrayItems_Codes").append(itemCode[i], '<br>')
                                
-                                $("#item2").fadeIn(1000);
-     
-                                //  $("#total").append(tot);
-                                //  var Tot1 = ((data.Cylinder_Price * $("#qty1").val()));
+                            }
+                            for (var i in size) {
+                              //  $("#ArrayItems_Size").html('');
+                                $("#ArrayItems_Size").append(size[i], ' kg', '<br>')
+                            }
+                            for (var i in price) {
+                               // $("#ArrayItems_Unit").html('');
+                                $("#ArrayItems_Unit").append('R', price[i] - (price[i] * 0.15), '<br>')
 
-                            })
+                               // $("#ArrayItems_Total").html('');
+                                $("#ArrayItems_Total").append('R', price[i], '<br>')
+                                currPrice += price[i];
+                                
+                            }
+                            for (var i in quantity) {
+                             //   $("#ArrayItems_Qty").html('');
+                                $("#ArrayItems_Qty").append(quantity[i], '<br>')
+
+                            }
+                        }
+                    };
+
+                    //function getSaleTotal() {
+                    //    $("#total").append('R', currPrice)
+                    //};
+
+                    //$(document).ready(function () {
+                    //    $("#qty2").change(function () {
+                    //        var value = $("#GasSize2").val();
+                    //        $("#empties").hide();
+                    //        $("#submit").hide();
+                    //        $.get('/Sale/getGAS?Size=' + value + '', null, function (data) {
+                    //            $("#code2").html("");
+                    //            $("#size2").html("");
+                    //            $("#unit2").html("");
+                    //            $("#qy2").html("");
+                    //            $("#tot2").html("");
+                    //            $("#code2").append(data.Size_Code);
+                    //            $("#size2").append(value);
+                    //            $("#unit2").append("R", data.Cylinder_Price - (data.Cylinder_Price * 0.15));
+                    //            $("#qy2").append($("#qty2").val());
+                    //            $("#tot2").append("R", data.Cylinder_Price * $("#qty2").val())
+                    //            var tot = "R" + data.Cylinder_Price * $("#qty2").val()
+                    //            var Tot2 = ((data.Cylinder_Price * $("#qty2").val()));
+                    //            var value1 = $("#GasSize1").val();
+                    //            var value2 = $("#GasSize2").val();
+                    //            if (value1 == 9 || value1 == 14 || value1 == 19 || value1 == 48) {
+                    //                $("#empties").fadeIn(1000);
+                    //            }
+                    //            else if (value2 == 9 || value2 == 14 || value2 == 19 || value2 == 48) {
+                    //                $("#empties").fadeIn(1000);
+                    //            }
+                    //            else {
+                    //                $("#submit").fadeIn(1000);
+                    //            }
+                    //        })
+                    //    })
+                    //})
+                    $("#AppCode1").keyup(function () {
+                        var value = $(this).val();
+                        $.get('/Sale/getProduct?Code=' + value + '', null, function (data) {
+                            console.clear();
+                            console.log(data);
+
+                            var Name = document.getElementById('Prod_Name1');
+                            Name.value = data.ProductName;
+
+                            var Price = document.getElementById('AppPrice1');
+                            Price.value = data.Product_Price;
                         })
-                    })
-
-                    $(document).ready(function () {
-                        $("#qty2").change(function () {
-                            var value = $("#GasSize2").val();
-                            $("#empties").hide();
-                            $("#submit").hide();
-                            $.get('/Sale/getGAS?Size=' + value + '', null, function (data) {
-
-                                $("#code2").html("");
-                                $("#size2").html("");
-                                $("#unit2").html("");
-                                $("#qy2").html("");
-                                $("#tot2").html("");
-
-                                $("#code2").append(data.Size_Code);
-                                $("#size2").append(value);
-                                $("#unit2").append("R", data.Cylinder_Price - (data.Cylinder_Price * 0.15));
-                                $("#qy2").append($("#qty2").val());
-                                $("#tot2").append("R", data.Cylinder_Price * $("#qty2").val())
-
-                                var tot = "R" + data.Cylinder_Price * $("#qty2").val()
-                                var Tot2 = ((data.Cylinder_Price * $("#qty2").val()));
-
-                                var value1 = $("#GasSize1").val();
-                                var value2 = $("#GasSize2").val();
-                                if (value1 == 9 || value1 == 14 || value1 == 19 || value1 == 48) {
-                                    $("#empties").fadeIn(1000);
-                                }
-                                else if (value2 == 9 || value2 == 14 || value2 == 19 || value2 == 48) {
-                                    $("#empties").fadeIn(1000);
-                                }
-                                else {
-                                    $("#submit").fadeIn(1000);
-                                }
-
-                            })
-                        })
-                    })
-
-                    $(document).ready(function () {
-                        $("#AppCode1").keyup(function () {
-                            var value = $(this).val();
-                            $.get('/Sale/getProduct?Code=' + value + '', null, function (data) {
-                                console.clear();
-                                console.log(data);
-
-                                var Name = document.getElementById('Prod_Name1');
-                                Name.value = data.ProductName;
-
-                                var Price = document.getElementById('AppPrice1');
-                                Price.value = data.Product_Price;
-                            })
-                        })
-                    })
-
-
-                    $(document).ready(function () {
+                    });
+                   
                         $("#DepCode").keyup(function () {
                             var value = $(this).val();
                             $.get('/Sale/getProduct?Code=' + value + '', null, function (data) {
@@ -591,12 +825,10 @@
                                 Price.value = data.DepositFee;
 
 
-                            })
-                        })
-                    })
+                            });
+                        });
+                   
 
-
-                    $(document).ready(function () {
                         $("#AppQty1").keyup(function () {
                             var value = $("#AppCode1").val();
                             $.get('/Sale/getProduct?Code=' + value + '', null, function (data) {
@@ -614,9 +846,9 @@
                                 $("#tot3").append("R", data.Product_Price * $("#AppQty1").val())
                             });
                         });
-                    });
+                
 
-                    $(document).ready(function () {
+                    
                         $("#DepQuantity").keyup(function () {
                             var value = $("#DepCode").val();
                             $.get('/Sale/getProduct?Code=' + value + '', null, function (data) {
@@ -637,57 +869,56 @@
 
                             });
                         });
-                    });
+                    
 
-                    $("#cash").click(function () {
-                        $("#total").html("");
+                        $("#cash").click(function () {
+                            $("#total").html("");
 
-                        var price1 = $("#price1").val();
-                        var price2 = $("#price2").val();
-                        var qty1 = $("#qty1").val();
-                        var qty2 = $("#qty2").val();
-                        var prod_price1 = $("#AppPrice1").val();
-                        var prod_qty1 = $("#AppQty1").val();
-                        var DeepFee = $("#DepFee").val();
-                        var DeepQty = $("#DepQuantity").val();
-                        var ServiceType = $("#ServiceType").val();
-                        console.log(ServiceType);
+                            var price1 = $("#price1").val();
+                            var price2 = $("#price2").val();
+                            var qty1 = $("#qty1").val();
+                            var qty2 = $("#qty2").val();
+                            var prod_price1 = $("#AppPrice1").val();
+                            var prod_qty1 = $("#AppQty1").val();
+                            var DeepFee = $("#DepFee").val();
+                            var DeepQty = $("#DepQuantity").val();
+                            var ServiceType = $("#ServiceType").val();
+                            console.log(ServiceType);
 
-                        if (ServiceType == 1) {
-                            var finalTot = (price1 * qty1) + (price2 * qty2) + (prod_price1 * prod_qty1) + (DeepFee * DeepQty) + 20;
-                            $("#total").append("<h4><strong>" + "Total Due: R", finalTot + "</strong></h4>");
+                            //Check final total value
+                            if (ServiceType == 1) {
+                                var finalTot = (price1 * qty1) + (price2 * qty2) + (prod_price1 * prod_qty1) + (DeepFee * DeepQty) + 20;
+                                $("#total").append("<h4><strong>" + "Total Due: R", currPrice + "</strong></h4>");
 
-                        }
-                            
-                        else if(ServiceType == 0) {
-                            var finalTot = (price1 * qty1) + (price2 * qty2) + (prod_price1 * prod_qty1) + (DeepFee * DeepQty);
-                            $("#total").append("<h4><strong>" + "Total Due: R", finalTot + "</strong></h4>");
-                        }
-                    })
-
-                    $(document).ready(function () {
-                        $("#SaleType").change(function () {
-                            document.getElementById('cash').readOnly = false;
-                            $("#EFT_Message").html("");
-                            console.clear();
-                            var value = $("#SaleType").val();
-                            console.log(value);
-                            if (value == 1) {
-                                document.getElementById('cash').readOnly = true;
-                                $("#EFT_Message").append("<h4><strong>" + "Complete Payment on EFTPOS Machine" + "</strong></h4>")
                             }
-                        })
-                    })
 
-                    $(document).ready(function () {                     
+                            else if (ServiceType == 0) {
+                                //var finalTot = (price1 * qty1) + (price2 * qty2) + (prod_price1 * prod_qty1) + (DeepFee * DeepQty);
+                                $("#total").append("<h4><strong>" + "Total Due: R", currPrice + "</strong></h4>");
+                            }
+                        });
+
+                 
+                    $("#SaleType").change(function () {
+                        document.getElementById('cash').readOnly = false;
+                        $("#EFT_Message").html("");
+                        console.clear();
+                        var value = $("#SaleType").val();
+                        console.log(value);
+                        if (value == 1) {
+                            document.getElementById('cash').readOnly = true;
+                            $("#EFT_Message").append("<h4><strong>" + "Complete Payment on EFTPOS Machine" + "</strong></h4>")
+                        }
+                    });
+                    
+
+                                      
                         $("#ServiceType").change(function () {
                             console.clear();
                             var value = $("#ServiceType").val();
-                           
-                        })
-                    })
 
-                    $(document).ready(function () {
+                        });
+                    
                         $("#Delivery").change(function () {
                             var isChecked = $("#Delivery").is(":checked");
 
@@ -698,36 +929,47 @@
                                 document.getElementById('cash').readOnly = false;
                             }
                         })
-                    })
+                    
+                    $("#Add_item").click(function () {
+                        $('#myModal_Items').modal({ show: true });
+                    });
 
-                    $(document).ready(function () {
-                        $("#empties").click(function () {
+
+                    // opening modal viw 
+                    $("#empties").click(function () {
+                            $("#submit").hide();
                             $("#Empties_text").html('');
-                           
                             $('#myModal').modal({ show: true });
                             //check items (1 and 2) -> 
-                            var item1_value = $("#GasSize1").val();
-                            var item2_value = $("#GasSize2").val();
-                            var Qty1_Empties = parseInt($("#qty1").val());
-                            var Qty2_Empties = parseInt($("#qty2").val());
+                            // Need to change this iterate through array to look for items 
+                            
+                            var tempItem;
+                            var tempQty;
+                            var tot_quantity = 0;
                             var Dep_quantity = 0;
+
                             if ($("#DepQuantity").val() != '') {
                                 Dep_quantity = parseInt($("#DepQuantity").val());
                             }
-                            var tot_quantity = 0;
-
-                            //if both have exchanges
-                            if (item1_value == 9 || item1_value == 14 || item1_value == 19 || item1_value == 48 ) {
-                                if (item2_value == 9 || item2_value == 14 || item2_value == 19 || item2_value == 48) {
-                                    tot_quantity = Qty1_Empties + Qty2_Empties - Dep_quantity;
+                            
+                            for (var i = 0; i < size.length; i++) {
+                                //set #temp variables 
+                                tempItem = size[i];
+                                tempQty = quantity[i]
+                                
+                                //check #temp variable
+                                if (tempItem == 9 || tempItem == 14 || tempItem == 19 || tempItem == 48) {  
+                                    tot_quantity += tempQty
                                 }
                                 else {
-                                    tot_quantity = Qty1_Empties - Dep_quantity;
+                                    //skip or do nothing - no change required on tot_quantity variable
+                                    continue;
                                 }
                             }
-                            else if (item2_value == 9 || item2_value == 14 || item2_value == 19 || item2_value == 48) {
-                                tot_quantity = Qty2_Empties - Dep_quantity;
-                            }
+
+                            //final emptiesDue
+                            tot_quantity = tot_quantity - Dep_quantity;
+
                             if (tot_quantity == 0) {
                                 $("#Empties_text").append("<p>" + "Outstanding Empties: " + "<strong>" + tot_quantity + "</strong>" + "</p>")
                                 $("#section1").hide();
@@ -737,74 +979,183 @@
                                 $("#Empties_text").append("<p>" + "Outstanding Empties: " + "<strong>" + tot_quantity + "</strong>" + "</p>")
                             }
                         });
-                    });
 
-                    $(document).ready(function () {
+                        function checKEmptiesDue() {
+
+                        }
+
+
                         $("#EmptySize1").change(function () {
                             var value = $(this).val();
                             console.log(value);
                         });
+
+
+                        //adding empty details to array 
+                        $("#add").click(function () {
+                        //need to decrement empties due text on #add click function/method
+                        var size = $("#EmptySize1 :Selected").text().toString();
+                        var qty_value = $("#Empty_Qty").val();
+                        //var tot_quantity;
+
+                        if (array_items.length <= 0) {
+                            if (array_qty.length <= 0) {
+                                array_items.push(size);
+                                array_qty.push(qty_value);
+                            }
+                        }
+                        else if (array_items.length > 0 && !array_items.includes(size)) {
+                            if (array_qty.length > 0) {
+                                array_items.push(size);
+                                array_qty.push(qty_value);
+                            }
+                        }
+                        else if (array_items.length > 0 && array_items.includes(size)) {
+                            if (array_qty.length > 0) {
+                                for (var i in array_items) {
+                                    if (array_items[i] === size) {
+                                        array_qty.splice(i, 1, parseFloat(qty_value));
+                                    }
+                                };
+                            };
+                        };
+
+                        if (total == 0) {
+                            //Hide add item button
+                            //unhide submit button 
+                            //writing needs to be updated on modal view 
+                        }
+
+                         // need to decrement {tot_quantity}
+                        //tot_quantity = tot_quantity - qty_value;
+                        //console.log('Captured Empty Size: ',array_items)
+                        //console.log(array_qty)
+                        //console.log("empties due:", tot_quantity)
                     });
 
-                    $(document).ready(function () {
-                        $("#submit").click(function () {
-                            var sale = {};
+                    $("#submit").click(function () {
+                        var sale = {};
+                        var Empty = {};
 
-                            var Item1 = $("#GasSize1").val();
-                            var Item2 = $("#GasSize2").val();
-                            var price1 = $("#price1").val();
-                            var price2 = $("#price2").val();
-                            var qty1 = $("#qty1").val();
-                            var qty2 = $("#qty2").val();
-                            var product1 = $("#Prod_Name1").val();
-                            var prod_price1 = $("#AppPrice1").val();
-                            var prod_qty1 = $("#AppQty1").val();
-                            var cash = $("#cash").val();
-                            var DeepItem = $("#DepNames").val();
-                            var DeepFee = $("#DepFee").val();
-                            var DeepQty = $("#DepQuantity").val();
-                            var new48 = $("#New").is(":checked");
-                            var delivery = $("#Delivery").is(":checked");
-                            var SaleType = $("#SaleType").val();
-                            var ServiceType = $("#ServiceType").val();
-                            console.log("Service Type", ServiceType);
-                          
-                            console.log(new48);
+                        Empty.getSize = array_items;
+                        Empty.getQuantity = array_qty;
 
-                            var items;
-                            sale.item1 = Item1;
-                            sale.item2 = Item2;
-                            sale.price1 = price1;
-                            sale.price2 = price2;
-                            sale.Qty1 = qty1;
-                            sale.Qty2 = qty2;
-                            sale.Product_Item1 = product1;
-                            sale.Product_Price1 = prod_price1;
-                            sale.Product_Qty1 = prod_qty1;
-                            sale.cashReceived = cash;
-                            sale.DepositItem = DeepItem;
-                            sale.DepositPrice = DeepFee;
-                            sale.DepositQuantity = DeepQty;
-                            sale.New = new48;
-                            sale.ServiceType = ServiceType;
-                            sale.SaleType = SaleType;
-                            sale.Delivery = delivery;
-                            //items = parseFloat(qty1) + parseFloat(qty2) + parseFloat(prod_qty1) + parseFloat(prod_qty1);
-                            //console.log("Sale Items: ", items);
-                            sale.TotalItems = items;
-                            // console.log("New 48 checked:", new48);
+                        var Item1 = $("#GasSize1").val();
+                        var Item2 = $("#GasSize2").val();
+                        var price1 = $("#price1").val();
+                        var price2 = $("#price2").val();
+                        var qty1 = $("#qty1").val();
+                        var qty2 = $("#qty2").val();
+                        var product1 = $("#Prod_Name1").val();
+                        var prod_price1 = $("#AppPrice1").val();
+                        var prod_qty1 = $("#AppQty1").val();
+                        var cash = $("#cash").val();
+                        var DeepItem = $("#DepNames").val();
+                        var DeepFee = $("#DepFee").val();
+                        var DeepQty = $("#DepQuantity").val();
+                        var new48 = $("#New").is(":checked");
+                        var delivery = $("#Delivery").is(":checked");
+                        var SaleType = $("#SaleType").val();
+                        var ServiceType = $("#ServiceType").val();
+                        console.log("Service Type", ServiceType);
 
-                            $.post('/Sale/RecordSale/', sale, function () {
-                                alert('New Sale Added');
-             
-                                $.get('/Sale/getLatestSale/' + '', null, function (data) {
+                        console.log(new48);
 
-                                    var newS = data.Sale_Id;
-                                    location.href = "/Sale/GenerateInvoice/" + newS;
-                                    
-                                })
-                            })
-                        })
-                    })
+                        //Need to iterate through arrays and extract all items
+
+                        var items;
+                        sale.item1 = Item1;
+                        sale.item2 = Item2;
+                        sale.price1 = price1;
+                        sale.price2 = price2;
+                        sale.Qty1 = qty1;
+                        sale.Qty2 = qty2;
+                        sale.Product_Item1 = product1;
+                        sale.Product_Price1 = prod_price1;
+                        sale.Product_Qty1 = prod_qty1;
+                        sale.cashReceived = cash;
+                        sale.DepositItem = DeepItem;
+                        sale.DepositPrice = DeepFee;
+                        sale.DepositQuantity = DeepQty;
+                        sale.New = new48;
+                        sale.ServiceType = ServiceType;
+                        sale.SaleType = SaleType;
+                        sale.Delivery = delivery;
+                        //items = parseFloat(qty1) + parseFloat(qty2) + parseFloat(prod_qty1) + parseFloat(prod_qty1);
+                        //console.log("Sale Items: ", items);
+                        sale.TotalItems = items;
+                        sale.items = array_items;
+                        sale.quanties = array_qty;
+                        // console.log("New 48 checked:", new48);
+
+
+                        //check empty length before passing values to emptyController 
+                        if (array_items.length > 0) {
+                            $.post('/Empty_Cylinder/Order_DecrementEmpies/', Empty, function () {
+                                alert('Empties updated')
+                            });
+                        }
+
+                        $.post('/Sale/RecordSale/', sale, function () {
+                            alert('New Sale Added');
+
+
+                            $.get('/Sale/getLatestSale/' + '', null, function (data) {
+                                var newS = data.Sale_Id;
+                                location.href = "/Sale/GenerateInvoice/" + newS;
+
+                            });
+                        });
+                    });
+                    });
+
+                    //Need decrement stock -> implement stockController?
+
+
+
+                    //function CheckDup() {
+
+                    //    var name = "Lungelo";
+                    //    var Dup_characters = [];
+                    //    var Single_characters = [];
+                    //    var Non_Dup_Char = '';
+
+                    //    for (var i = 0; i < name.length; i++) {
+                    //        //check if characters array is empty
+                    //        if (Single_characters.length == 0) {
+                    //            Single_characters.push(name[i]);
+                    //        }
+                    //        else {
+                    //            //Need to check current name[i] character and see if it is included in Single array
+                    //            if (Single_characters.includes(name[i])) {
+                    //                //add to dup_array
+                    //                Dup_characters.push(name[i]);
+                    //                //remove char from single array
+                    //                Single_characters.splice(Single_characters.indexOf(name[i]), 1);
+                    //            }
+                    //            else {
+                    //                Single_characters.push(name[i]);
+                    //            }
+                    //        }
+                    //    }
+
+                    //    Non_Dup_Char = Single_characters[0];
+
+                    //    return Non_Dup_Char;
+                    //}
+
+
+
                 </script>
+                @*$("#Save").click(function () {
+                var Empty = {}
+
+                Empty.getSize = Items;
+                Empty.getQuantity = quantity;
+
+                $.post('/Empty_Cylinder/Order_DecrementEmpies/', Empty, function () {
+                    alert('Empties updated')
+                });
+            });*@
+
             }

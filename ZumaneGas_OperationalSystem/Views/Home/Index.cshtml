@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<ZumaneGas_OperationalSystem.Models.Sale>
 
-<h3><strong>Sale > View Today's sales</strong></h3>
+<h5><strong>Sale / View Today's Sales </strong></h5>
 <br/>
 
 
@@ -17,6 +17,14 @@
         <a href="#" class="list-group-item" style="font-size:large"><strong>Stock</strong></a>
         <a href="@Url.Action("ViewStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Stock</a>
         <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Stock Details</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Order</strong></a>
+        <a href="@Url.Action("Capture_CustomerDetails", "Order")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Order</a>
+        <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Order Details</a>
+        <a href="@Url.Action("getOrders_Due", "Order")" class="list-group-item">
+            <span class="glyphicon glyphicon-eye-open"></span> Outstanding Order @if (ViewBag.total > 0)
+            { <span class="badge"> @ViewBag.total</span> }
+        </a>
 
        <a href="#" class="list-group-item" style="font-size:large"><strong>Invetory</strong></a>
        <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Invetory</a>

@@ -1,0 +1,208 @@
+﻿
+@{
+    ViewBag.Title = "getQuote";
+}
+
+<div>
+    <div class="row">
+        <div class="col-md-6">
+            <img src='~/Images/Zumane Logo.jpg'>
+            <h2 style="padding-left:12px">Quotation</h2>
+            <br />
+            <div class="row" style="padding-left:25px">
+           
+                <h4><strong>Customer Details</strong></h4>
+                <br />
+                <h4>Full Name: <strong>Mr Africa</strong></h4>
+                <h4>Cell No.: <strong>081 841 7637</strong></h4>
+                <h4>Address: <strong>Hillcrest, Durban</strong></h4>
+                @*<h4></h4>*@
+            </div>
+        </div>
+        <div class="col-md-6">
+            <br />
+            <br />
+            <br />
+            <div class="row">
+                <div class="col-md-6">
+                    <h4><strong>Quotation Number:</strong></h4>
+                    <h4><strong>Page No:</strong></h4>
+                    <h4><strong>Date:</strong></h4>
+                    <h4><strong>Quote Currency:</strong></h4>
+                </div>
+                <div class="col-md-6">
+                    <h4>QU00012</h4>
+                    <h4>1</h4>
+                    @if (DateTime.Now.Month < 10)
+                    {
+                        <h4>@DateTime.Now.Day/@DateTime.Now.Month/@DateTime.Now.Year</h4>
+                    }
+                    else
+                    {
+                        <h4>@DateTime.Now.Day/@DateTime.Now.Month/@DateTime.Now.Year</h4>
+                    }
+
+                    <h4>ZAR</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding-left:20px">
+        <br />
+        <br />
+        <div class="row" style="background-color:lightgrey; color:black;">
+            <div class="col-md-4" style="padding-top:20px;">
+                <p>Description</p>
+            </div>
+            <div class="col-md-2" style="padding-top:20px">
+                <p>Unit Price (Excl. VAT)</p>
+            </div>
+            <div class="col-md-1" style="padding-top:20px;">
+                <p>Qty</p>
+            </div>
+            <div class="col-md-2" style="padding-top:20px;">
+                <p>Discount</p>
+            </div>
+            <div class="col-md-1" style="padding-top:20px;">
+                <p>VAT 15%</p>
+            </div>
+            <div class="col-md-2" style="padding-top:20px;">
+                <p>Amount (Excl. VAT)</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="padding-top:20px;">
+                <p>Gas Cage 1 x 19kg</p>
+                <p>Coupler 3/8 Copper to 8 mm HOSE</p>
+                <p>3/8 Soft Drawn Copper - Per 15.24m coil</p>
+                <p>3/8 Solder Elbow</p>
+                <p>Copper Saddle 3/8</p>
+                <p>190g Butane Cartridge</p>
+                <p>Shut off Valve 3/8 Butterfly</p>
+                <p>Low Pressure Inline Reg Single Sets(S)</p>
+                <p>3/8 M x 3/8 OD Coupler (68 - 6B)</p>
+                <p>Gas Hose 8mm per m</p>
+                <p>Hose Clamp S/Steel</p>
+                <p>Hex Nipple Brass 3/8 (122-6)</p>
+                <p>Labor</p>
+                
+                
+            </div>
+            <div class="col-md-2" style="padding-top:20px">
+                <p>1300.00</p>
+                <p>25.00</p>
+                <p>599.00</p>
+                <p>5.00</p>
+                <p>4.00</p>
+                <p>13.50</p>
+                <p>54.00</p>
+                <p>215.00</p>
+                <p>22.00</p>
+                <p>21.74</p>
+                <p>3.00</p>
+                <p>29.00</p>
+                <p>2200.00</p>
+
+            </div>
+            <div class="col-md-1" style="padding-top:20px;">
+                <p>2</p>
+                <p>2</p>
+                <p>1</p>
+                <p>6</p>
+                <p>4</p>
+                <p>1</p>
+                <p>2</p>
+                <p>2</p>
+                <p>2</p>
+                <p>2</p>
+                <p>4</p>
+                <p>2</p>
+                <p>1</p>
+                
+            </div>
+            <div class="col-md-2" style="padding-top:20px;">
+                <p>00.00</p>
+                <p>00.00</p>
+                <p>00.00</p>
+                <p>00.00</p>
+                <p>00.00</p>
+                <p>00.00</p>
+                <p>00.00</p>
+                <p>00.00</p>
+                <p>00.00</p>
+                <p>00.00</p>
+                <p>00.00</p>
+                <p>00.00</p>
+                <p>00.00</p>
+            </div>
+            <div class="col-md-1" style="padding-top:20px;">
+                <p>15%</p>
+                <p>15%</p>
+                <p>15%</p>
+                <p>15%</p>
+                <p>15%</p>
+                <p>15%</p>
+                <p>15%</p>
+                <p>15%</p>
+                <p>15%</p>
+                <p>15%</p>
+                <p>15%</p>
+                <p>15%</p>
+                <p>15%</p>
+                
+            
+            </div>
+            <div class="col-md-2" style="padding-top:20px;">
+                <p>2600.00</p>
+                <p>50.00</p>
+                <p>599.00</p>
+                <p>30.00</p>
+                <p>16.00</p>
+                <p>13.50</p>
+                <p>108.00</p>
+                <p>430.00</p>
+                <p>44.00</p>
+                <p>43.48</p>
+                <p>12.00</p>
+                <p>58.00</p>
+                <p>2200.00</p>
+                
+                <p><strong id="Total_Price"></strong></p>
+            </div>
+        </div>
+        <hr />
+        <div class="row" style="color:grey">
+            <div class="col-md-6">
+                
+                <h5>Zumane Gas</h5>
+                <h5>Tel: 0603509968</h5>
+                <h5>Email: zumanegas@gmail.com</h5>
+                <h5>P7 Bhejane Road, KwaMashu</h5>
+                <h5>VAT REGISTRATION NO. 4860273384</h5>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-8">
+                        <p>Sub Total</p>
+                        <p>Discount</p>
+                        <p>Amount Excl. Tax</p>
+                        <p>Tax</p>
+                        <hr />
+                        <p><strong>Total</strong></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>6204.00</p>
+                        <p>500.00</p>
+                        <p>5704.00</p>
+                        <p>856.00</p>
+                        <hr/>
+                        <p>6560.00</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+

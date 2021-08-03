@@ -180,6 +180,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PayoutController.cs" />
+    <Compile Include="Controllers\QuotationController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SaleController.cs" />
     <Compile Include="Controllers\StockController.cs" />
@@ -314,6 +315,7 @@
     <Content Include="Views\Order\A4_Order.cshtml" />
     <Content Include="Views\Order\Outstanding_Order.cshtml" />
     <Content Include="Views\Empty_Cylinder\Decrement_Empties.cshtml" />
+    <Content Include="Views\Quotation\getQuote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

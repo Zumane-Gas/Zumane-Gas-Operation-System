@@ -125,24 +125,7 @@
                     $("#submit").prop('disabled', true);
                 }
             });
-            //$("#Bulk").change(function () {
-            //    var isChecked = $(this).is(":checked");
 
-            //    if (isChecked == true) {
-            //        $("#Bulk_Add").fadeIn(1000);
-
-            //        if ($("#Single").is(":checked", true)) {
-            //            $("#Single_Add").fadeOut(1000);
-            //            $("#Single").prop('checked', false);
-            //        }
-            //        $("#submit").prop('disabled', false);
-                    
-            //    }
-            //    else {
-            //        $("#Bulk_Add").fadeOut(1000);
-            //        $("#submit").prop('disabled', true);
-            //    }
-            //});
 
             $("#Invetory_Id").change(function () {
                 var value = $("#Invetory_Id :selected").text();
@@ -150,10 +133,15 @@
                 console.log('Empty Size', v);
                 $.get("/Empty_Cylinder/GetCurrent_Quantity?Size=" + v, function (data) {
                     console.log('Testing:', data);
-                    $("#Current").append(data.Empty_Size_Quantity);
+
+                    var txtCurrentSize = document.getElementById('Current')
+                    txtCurrentSize.value = data.Empty_Size_Quantity;
+                    
+
                     $("#submit").click(function () {
                         var Empty = {};
                         //Single add
+
                         var Size = $("#Invetory_Id :selected").text();
                         var New = $("#New").val();
 
@@ -170,8 +158,6 @@
                     });
                 });
             });
-
-
         });
     </script>
 

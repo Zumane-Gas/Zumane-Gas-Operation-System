@@ -36,13 +36,17 @@
         <h4><strong>Minus Empties:</strong></h4>
         <br />
         <div class="form-group">
+            <div class="row" id="Status">
+
+            </div>
             <div class="col-md-10">
                 <small class="form-text text-muted">Total Empties (Used for order)</small>
                 <input type="text" id="Total_Empties" class="form-control" placeholder="Total Empties" />
             </div>
         </div>
         <br/>
-        <hr/>
+        <br/>
+        <hr />
         <div id="Single_Add">
             <div class="form-group">
                 <div class="col-md-10" id="Total_Wording">
@@ -60,26 +64,76 @@
             <div class="form-group">
                 <div class="col-md-10">
                     <div class="form-group">
-                        <input type="text" class="form-control" required name="" placeholder="Current Empties" id="Current" readonly="readonly" />
-                        <h5>Available Empties*</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-10">
-                    <div class="form-group">
                         <input type="text" class="form-control" required name="" placeholder="New Empties" id="New" />
                         <h5>Quantity*</h5>
                     </div>
                 </div>
             </div>
+            <div id="Info" class="col-sm-offset-1">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3" style="background-color:lightgrey">
+                            <h5>Size</h5>
+                        </div>
+                        <div class="col-md-1" style="background-color:lightgrey">
+                            <h5>QTY</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5 id="size1"></h5>
+                            <h5 id="size2"></h5>
+                            <h5 id="size3"></h5>
+                            <h5 id="size4"></h5>
+                        </div>
+                        <div class="col-md-1">
+                            <h5 id="qty1"></h5>
+                            <h5 id="qty2"></h5>
+                            <h5 id="qty3"></h5>
+                            <h5 id="qty4"></h5>
+                        </div>
+                    </div>
+                </div>
 
+       @*<div class="col-md-9" style="padding-left: 10px;">
+        <h5 style="font-weight:bold">Order Items:</h5>
+        <div class="row">
+            <div class="col-md-3">
+                <p style="font-size:small" id="size1"><strong>Size (kg)</strong></p>
+            </div>
+            <div class="col-md-3">
+                <p style="font-size:small"  id="size2"><strong>Unit Price</strong></p>
+            </div>
+            <div class="col-md-3">
+                <p style="font-size:small" id="size3"><strong>Quantity</strong></p>
+            </div>
+            <div class="col-md-3">
+                <p style="font-size:small" id="size4"><strong>Total Price</strong></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <p style="font-size:small" id="qty1"></p>
+            </div>
+            <div class="col-md-3">
+                <p style="font-size:small" id="qty2"></p>
+            </div>
+            <div class="col-md-3">
+                <p style="font-size:small" id="qty3"></p>
+            </div>
+            <div class="col-md-3">
+                <p style="font-size:small" id="qty4"></p>
+            </div>
+        </div>
+    </div>*@
+            </div>
             <br />
             <br />
             <br/>
             <div class="form-group">
                 <div class="col-md-10" style="padding-left:0px">
-                    <button type="button" class="btn btn-secondary" id="capture">Capture DetailsS</button>
+                    <button type="button" class="btn btn-secondary" id="capture">Capture Details</button>
+                    <button type="button" class="btn btn-success" id="Save">Save Details</button>
                 </div>
             </div>
         </div>
@@ -92,18 +146,23 @@
         $(document).ready(function () {
             var Items = [];
             var quantity = [];
-            var Total = 0;
+            var Total = 1;
+            var Orig_Value = 0;
 
             window.onload = function () {
                 $("#Single_Add").hide();
+                $("#Save").hide();
+                $("#Info").hide();
             }
 
             $("#Total_Empties").change(function () {
                 var Current_Total = $(this).val();
+                Total = 0;
                 Total = Current_Total - Total;
                 $("#Total_Wording").html("");
                 $("#Total_Wording").append('<h4>' + 'Total Empties: ' + '<strong>' + Total + '</strong>' + '</h4>');
                 $("#Single_Add").fadeIn(1000);
+                console.log('Start Total: ', Total)
             });
 
             $("#EmptiesID").change(function () {
@@ -111,51 +170,102 @@
                 $.get("/Empty_Cylinder/GetCurrent_Quantity?Size=" + value, function (data) {
                     var current_quantity = data.Empty_Size_Quantity;
                     console.log(current_quantity)
-                    $("#Current").append(current_quantity);
                 });
             });
 
             $("#capture").click(function () {
-              
+                console.clear();
+                $("#Info").fadeIn(1000);
+                $("#Status").html("");
                 var qty = $("#New").val();
                 var size = $("#EmptiesID :selected").text().toString();
 
-                //1. No Items
-                if (Items.length <= 0) {
-                    Items.push(size);
-                    quantity.push(qty);
-                    alert('Condition 1');
-                }
-                //2. length > 0
-                else if (!Items.includes(size)) {
-                    Items.push(size);
-                    quantity.push(qty);
-                    alert('Condition 2');
-                }
-                //3. Update Array
-                else if (Items.includes(size)) {
-                    for (var i in Items) {
-                        if (Items[i] === size) {
-                            quantity.splice(i, 1, parseFloat(qty));
-                            alert('Condition 3: Updated succesfully');
+                if (Total >= qty) {
+                    //1. No Items
+                    if (Items.length <= 0) {
+                        Items.push(size);
+                        quantity.push(parseInt(qty));
+                        alert('Condition 1');
+                        $("#size1").append(size);
+                        $("#qty1").append(qty);
+
+                    }
+                        //2. length > 0
+                    else if (!Items.includes(size)) {
+                        Items.push(size);
+                        quantity.push(parseInt(qty));
+                        alert('Condition 2');
+                        //if (Items.length == 1) {
+                        //    $("#size2").append(size);
+                        //    $("#qty2").append(qty);
+                        //}
+                        //else if (Items.length == 2) {
+                        //    $("#size2").append(size);
+                        //    $("#qty2").append(qty);
+                        //}
+                        //else if (Items.length == 3) {
+                        //    $("#size3").append(size);
+                        //    $("#qty3").append(qty);
+                        //}
+                        //else if (Items.length == 4) {
+                        //    $("#size4").append(size);
+                        //    $("#qty4").append(qty);
+                        //}
+                    }
+                        //3. Update Array
+                    else if (Items.includes(size)) {
+                        for (var i in Items) {
+                            if (Items[i] === size) {
+                                Orig_Value = quantity[i]
+                                quantity.splice(i, 1, parseInt(qty) + Orig_Value);
+                                alert('Condition 3: Updated succesfully');
+                            }
                         }
                     }
                 }
 
-                //get array total 
-                for (var i = 0; i < quantity.length; i++) {
-                    Total += quantity[i];
+                var current_qty = parseInt($("#New").val());
+                if (Total != 0) {
+                    if (Total >= current_qty) {
+                        $("#Total_Wording").html("");
+                        Total = Total - current_qty;
+                        $("#Total_Wording").append('<h4>' + 'Total Empties: ' + '<strong>' + Total + '</strong>' + '</h4>');
+                    }
+                    else {
+                        $("#Status").append("<div class='alert alert-danger' role='alert'>" + "<img src='/Images/exclamation-mark(2).png' class='img-circle' style='padding-bottom: 2px;'>" + "<span>" + " Quantity greater than Empties due" + "</span>" + "</div>")
+                    }
                 }
-
+                console.log('Current Total: ', Total)
+                console.log('Curr Qty: ', current_qty)
                 console.log(Items);
                 console.log(quantity);
             });
 
+            function checkTotal() {
+                if (Total == 0) {
+                    $("#Status").append("<div class='alert alert-success' role='alert'>" + "<img src='/Images/check.png' class='img-circle' style='padding-bottom: 2px;'>" + "<span>" + " No empty due!!!" + "</span>" + "</div>")
+                    $("#capture").hide();
+                    $("#Save").show();
+                }
+            };
+
+            $("body").on('DOMSubtreeModified', "#Total_Wording", function () {
+                checkTotal();
+            });
+
+            $("#Save").click(function () {
+                var Empty = {}
+
+                Empty.getSize = Items;
+                Empty.getQuantity = quantity;
+
+                $.post('/Empty_Cylinder/Order_DecrementEmpies/', Empty, function () {
+                    alert('Empties updated')
+                });
+            });
 
 
-        });
-
-
+            });
     </script>
    
 }

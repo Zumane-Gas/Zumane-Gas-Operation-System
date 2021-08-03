@@ -116,7 +116,7 @@ namespace ZumaneGas_OperationalSystem.Controllers
                 
             if (sale.ServiceType == ServiceType.Refill)
             {
-                //need to make vakue dynamic
+                //need to make value dynamic
                 Tot = Tot + 20;
             }
             else if(sale.ServiceType == ServiceType.Exchange)
@@ -146,24 +146,33 @@ namespace ZumaneGas_OperationalSystem.Controllers
             var GasSize2 = db.Stockes.Where(x => x.C_Size == sale.item2).FirstOrDefault();
             var GasS = db.Stockes.Where(x => x.ProductName == P_Name).FirstOrDefault();
 
-            var getEmpty1 = db.Empties.Where(x => x.Empty_Size == sale.item1).First();
+            //Need to cater fo non-exchange gas
+            //int secondSize;
+            //int firstSize;
+            ////if(sale.item1 )
+            //if(sale.item2 != null)
+            //{
+            //     secondSize = int.Parse(sale.item2);
+            //}
 
-            if (getEmpty1 != null)
-            {
-                getEmpty1.Empty_Size_Quantity = getEmpty1.Empty_Size_Quantity + sale.Qty1;
-                db.Entry(getEmpty1).State = EntityState.Modified;
-            }
+            //var getEmpty1 = db.Empties.Where(x => x.Empty_Size == sale.item1 && firstSize < 9 && secondSize < 9).FirstOrDefault();
 
-            if (sale.item2 != null)
-            {
-                var getEmpty2 = db.Empties.Where(x => x.Empty_Size == sale.item2).First();
-                if(getEmpty2 != null)
-                {
-                    getEmpty2.Empty_Size_Quantity = getEmpty2.Empty_Size_Quantity + sale.Qty2;
-                    db.Entry(getEmpty2).State = EntityState.Modified;
-                }
+            //if (getEmpty1 != null)
+            //{
+            //    getEmpty1.Empty_Size_Quantity = getEmpty1.Empty_Size_Quantity + sale.Qty1;
+            //    db.Entry(getEmpty1).State = EntityState.Modified;
+            //}
+
+            //if (sale.item2 != null)
+            //{
+            //    var getEmpty2 = db.Empties.Where(x => x.Empty_Size == sale.item2).First();
+            //    if(getEmpty2 != null)
+            //    {
+            //        getEmpty2.Empty_Size_Quantity = getEmpty2.Empty_Size_Quantity + sale.Qty2;
+            //        db.Entry(getEmpty2).State = EntityState.Modified;
+            //    }
                
-            }
+            //}
             
 
 
@@ -207,7 +216,7 @@ namespace ZumaneGas_OperationalSystem.Controllers
                 sale.SaleD = DateTime.Now;
                 sale.Alias_SaleD = sale.SaleD;
                 db.Sales.Add(sale);
-                db.SaveChanges();
+               // db.SaveChanges();
             }
             else if(sale.SaleType == SaleType.Cash){
                 if (rec >= sale.finalPrice)
@@ -217,7 +226,7 @@ namespace ZumaneGas_OperationalSystem.Controllers
                     sale.SaleD = DateTime.Now;
                     sale.Alias_SaleD = sale.SaleD;
                     db.Sales.Add(sale);
-                    db.SaveChanges();
+                   // db.SaveChanges();
 
                 }
             }

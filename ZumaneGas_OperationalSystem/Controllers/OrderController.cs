@@ -19,6 +19,42 @@ namespace ZumaneGas_OperationalSystem.Controllers
         }
         public ActionResult Capture_CustomerDetails()
         {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var order = db.orders.Where(x => x.Order_Date.Value.Day.Equals(DateTime.Now.Day) && x.Order_Date.Value.Month.Equals(DateTime.Now.Month) && x.Order_Date.Value.Year.Equals(DateTime.Now.Year) && x.OrderStatus == OrderStatus.Processing && x.DeliveryStatus == DeliveryStatus.NotDelivered && x.isViewed == false).Count();
+            int OrderCount = order;
+            if (OrderCount > 0)
+            {
+                ViewBag.Orders = OrderCount;
+            }
+
+            //getOverdue similar logic
+            var o = db.orders.Where(x => x.Order_Date != null && x.OrderStatus == OrderStatus.Processing && x.DeliveryStatus == DeliveryStatus.NotDelivered).ToList();
+            int result;
+            int overdue_Count = 0;
+            List<Order> overdue = new List<Order>();
+
+            foreach (var item in o)
+            {
+                result = DateTime.Compare(item.Order_Date.Value, DateTime.Today);
+                if (result < 0)
+                {
+                    overdue.Add(item);
+                    overdue_Count = overdue.Count();
+                }
+            }
+
+            if (overdue_Count > 0)
+            {
+                ViewBag.Overdue = overdue_Count;
+            }
+
+            //Notification badge
+            var totalCount = OrderCount + overdue_Count;
+            if (totalCount > 0)
+            {
+                ViewBag.total = totalCount;
+            }
+
             return View();
         }
         [HttpPost]
@@ -58,11 +94,45 @@ namespace ZumaneGas_OperationalSystem.Controllers
         }
         public ActionResult NextPage_Order(int? id)
         {
-           
-            Order order = db.orders.Find(id);
-            if (order != null)
+            ApplicationDbContext db = new ApplicationDbContext();
+            var order = db.orders.Where(x => x.Order_Date.Value.Day.Equals(DateTime.Now.Day) && x.Order_Date.Value.Month.Equals(DateTime.Now.Month) && x.Order_Date.Value.Year.Equals(DateTime.Now.Year) && x.OrderStatus == OrderStatus.Processing && x.DeliveryStatus == DeliveryStatus.NotDelivered && x.isViewed == false).Count();
+            int OrderCount = order;
+            if (OrderCount > 0)
             {
-                return View(order);
+                ViewBag.Orders = OrderCount;
+            }
+
+            //getOverdue similar logic
+            var o = db.orders.Where(x => x.Order_Date != null && x.OrderStatus == OrderStatus.Processing && x.DeliveryStatus == DeliveryStatus.NotDelivered).ToList();
+            int result;
+            int overdue_Count = 0;
+            List<Order> overdue = new List<Order>();
+
+            foreach (var item in o)
+            {
+                result = DateTime.Compare(item.Order_Date.Value, DateTime.Today);
+                if (result < 0)
+                {
+                    overdue.Add(item);
+                    overdue_Count = overdue.Count();
+                }
+            }
+
+            if (overdue_Count > 0)
+            {
+                ViewBag.Overdue = overdue_Count;
+            }
+
+            //Notification badge
+            var totalCount = OrderCount + overdue_Count;
+            if (totalCount > 0)
+            {
+                ViewBag.total = totalCount;
+            }
+            Order orders = db.orders.Find(id);
+            if (orders != null)
+            {
+                return View(orders);
             }
             else
             {
@@ -144,8 +214,8 @@ namespace ZumaneGas_OperationalSystem.Controllers
             var record = db.orders.Where(x => x.Order_ID == order.Order_ID).First();
             var sale = db.Sales.Where(x => x.Order_ID == order.Order_ID).First();
 
-            var getEmpty1 = db.Empties.Where(x => x.Empty_Size == record.Order_item1).First();
-            var getEmpty2 = db.Empties.Where(x => x.Empty_Size == record.Order_item2).First();
+            var getEmpty1 = db.Empties.Where(x => x.Empty_Size == record.Order_item1).FirstOrDefault();
+            var getEmpty2 = db.Empties.Where(x => x.Empty_Size == record.Order_item2).FirstOrDefault();
 
             if (getEmpty1 != null)
             {
@@ -252,8 +322,6 @@ namespace ZumaneGas_OperationalSystem.Controllers
 
 
             }
-
-
             //Minus stock
             var GasSize1 = db.Stockes.Where(x => x.C_Size == record.Order_item1).FirstOrDefault();
             var GasSize2 = db.Stockes.Where(x => x.C_Size == record.Order_item2).FirstOrDefault();
@@ -309,10 +377,46 @@ namespace ZumaneGas_OperationalSystem.Controllers
         }
         public ActionResult OrderReview(int? id)
         {
-            Order order = db.orders.Find(id);
-            if (order != null)
+            ApplicationDbContext db = new ApplicationDbContext();
+            var order = db.orders.Where(x => x.Order_Date.Value.Day.Equals(DateTime.Now.Day) && x.Order_Date.Value.Month.Equals(DateTime.Now.Month) && x.Order_Date.Value.Year.Equals(DateTime.Now.Year) && x.OrderStatus == OrderStatus.Processing && x.DeliveryStatus == DeliveryStatus.NotDelivered && x.isViewed == false).Count();
+            int OrderCount = order;
+            if (OrderCount > 0)
             {
-                return View(order);
+                ViewBag.Orders = OrderCount;
+            }
+
+            //getOverdue similar logic
+            var o = db.orders.Where(x => x.Order_Date != null && x.OrderStatus == OrderStatus.Processing && x.DeliveryStatus == DeliveryStatus.NotDelivered).ToList();
+            int result;
+            int overdue_Count = 0;
+            List<Order> overdue = new List<Order>();
+
+            foreach (var item in o)
+            {
+                result = DateTime.Compare(item.Order_Date.Value, DateTime.Today);
+                if (result < 0)
+                {
+                    overdue.Add(item);
+                    overdue_Count = overdue.Count();
+                }
+            }
+
+            if (overdue_Count > 0)
+            {
+                ViewBag.Overdue = overdue_Count;
+            }
+
+            //Notification badge
+            var totalCount = OrderCount + overdue_Count;
+            if (totalCount > 0)
+            {
+                ViewBag.total = totalCount;
+            }
+
+            Order orders = db.orders.Find(id);
+            if (orders != null)
+            {
+                return View(orders);
             }
             else
             {

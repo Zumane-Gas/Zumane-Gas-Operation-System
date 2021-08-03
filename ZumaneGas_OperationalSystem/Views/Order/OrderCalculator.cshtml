@@ -264,7 +264,7 @@
             $("#submit").click(function () {
                 var TotalPrice = $("#Price").val();
                 var TotalQuantity = $("#Qty").val();
-                var UnitPrice = (TotalPrice / TotalQuantity).toFixed(2);
+                var UnitPrice = (TotalPrice / TotalQuantity).toFixed(1);
                 $("#Unit").val(UnitPrice);
                 $("#UnitPrice").fadeIn(1000);
                 $("#GasSize").fadeIn(1000);
@@ -277,7 +277,7 @@
             $("#submitPrice").click(function () {
                 var UP = $("#Unit").val();
                 var Size = $("#Size").val();
-                var Kg = (UP / Size).toFixed(2);
+                var Kg = (UP / Size).toFixed(1);
                 $("#KG").val(Kg);
                 $("#KgPrice").fadeIn(1000);
                 $("#KgWording").append("Price per KG: R", Kg);

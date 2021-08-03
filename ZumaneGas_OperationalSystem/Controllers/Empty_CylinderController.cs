@@ -33,8 +33,86 @@ namespace ZumaneGas_OperationalSystem.Controllers
             return View();
         }
 
+
+        // Add new empty details [e.g. new size to consider when counting empties]
         [HttpPost]
         public void Add_Empties(Empty_Cylinder Empty)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            Empty_Cylinder e = new Empty_Cylinder();
+
+
+            //Important check -- Check if gas size already exist,  if yes { increment quantity } else { Add gas Size and details}
+            //var getAll_ID = db.Empties.Select(x => new { x.EmptiesID }).ToList();
+            var getID = Empty.EmptiesID;
+            var getSingleRecord = db.Empties.Where(x => x.EmptiesID == getID).FirstOrDefault();
+
+            if (getSingleRecord != null)
+            {
+                var new_size = Empty.Empty_Size_Quantity;
+                getSingleRecord.Empty_Size_Quantity = getSingleRecord.Empty_Size_Quantity + new_size;
+                db.Entry(getSingleRecord).State = EntityState.Modified;
+            }
+            else
+            {
+                e.Empty_Size = Empty.Empty_Size;
+                //var currrent_size = e.Empty_Size_Quantity;
+                e.Empty_Size_Quantity = Empty.Empty_Size_Quantity;
+                db.Empties.Add(e);
+            }
+            db.SaveChanges();
+        }
+        [HttpPost]
+        public void Add_Empties_Array(Empty_Cylinder Empty)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            Empty_Cylinder e = new Empty_Cylinder();
+            var count = db.Empties.ToList().Count();
+            //need to add to db (use as temp array)
+            //string[] items = Empty.items;
+            //int[] quanties = Empty.quanties;
+
+            //int i = 0;
+            //while(i <= items.Length && i <= quanties.Length)
+            //{
+            //    for(i; i <= items.Length;)
+            //    {
+            //        for(i; i <= quanties.Length;)
+            //        {
+            //            e.Empty_Size = items[i];
+            //            var currrent_size = e.Empty_Size_Quantity;
+            //            e.Empty_Size_Quantity = quanties[i] + currrent_size;
+            //            i = i + 1;
+            //        }
+            //    }
+            //}
+
+            e.Empty_Size = Empty.Empty_Size;
+            var currrent_size = e.Empty_Size_Quantity;
+            e.Empty_Size_Quantity = Empty.Empty_Size_Quantity + currrent_size;
+
+            if (count > 0 && Empty.EmptiesID != 0)
+            {
+                var GetSingle = db.Empties.Where(x => x.EmptiesID == Empty.EmptiesID).First();
+                if (GetSingle != null)
+                {
+                    GetSingle.Empty_Size_Quantity = GetSingle.Empty_Size_Quantity + Empty.Empty_Size_Quantity;
+                    //Need to add a new parameter to keep track of old and new (add them up)
+                    db.Entry(GetSingle).State = EntityState.Modified;
+                    //db.SaveChanges();
+                }
+            }
+            else
+            {
+                db.Empties.Add(e);
+
+            }
+            db.SaveChanges();
+        }
+
+
+        [HttpPost]
+        public void Add_Empties_Order(Empty_Cylinder Empty)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             Empty_Cylinder e = new Empty_Cylinder();
@@ -54,39 +132,61 @@ namespace ZumaneGas_OperationalSystem.Controllers
                     GetSingle.Empty_Size_Quantity = GetSingle.Empty_Size_Quantity + Empty.Empty_Size_Quantity;
                     //Need to add a new parameter to keep track of old and new (add them up)
                     db.Entry(GetSingle).State = EntityState.Modified;
-                    db.SaveChanges();
+                    //db.SaveChanges();
                 }
             }
             else
             {
                 db.Empties.Add(e);
-                db.SaveChanges();
+               
             }
+            db.SaveChanges();
         }
         //Minus empties on order request
-        public ActionResult Decrement_Empties(Empty_Cylinder empties)
+        public ActionResult Decrement_Empties()
         {
             Empty_Cylinder empty = new Empty_Cylinder();
             ViewBag.Inv = new SelectList(db.Empties.Where(x => x.Empty_Size_Quantity != 0),"EmptiesID", "Empty_Size", empty.EmptiesID);
-
-            string[] items = { };
-            int[] qty = { };
-
-            //Nested for loop
-
-            /** if(Required_size >= Total_Available empties){
-             * foreach(var i in )
-             * } **/
-
-            /*****
-             On client side:
-             Document total empties - e.g 50 -> 40 9kg, 5 19kg, 5 14kg
-             Store empties in an array -> when required empties have been captured, then button to complete will be activated. 
-             ******/
-
             return View();
         }
 
+        public void Order_DecrementEmpies(Empty_Cylinder Empty_ClientSide)
+        {   
+            /******
+             -- Information required from client side 
+             1. empty size 
+             2. quanity to decrement
+
+            -- The process 
+            1. Store data in arrays (sizes and quantity) 
+            2. iterate through arrays to getSize and getQuantity
+            3. Update empties table
+            4. SaveChanges
+
+            --- Decrement empties on sale 
+            1. get values from sale - 
+                1.1. if(array_items and array_qty length is not 0)
+                1.2. pass values to Order_DecrementEmpties 
+                1.3 logic already caters for values passed from client side 
+            2. This eliminate duplicating logic - reusability
+             *******/
+            
+            string[] getSizes = Empty_ClientSide.getSize;
+            int[] getQuantity = Empty_ClientSide.getQuantity;
+
+            for(int S = 0; S < getSizes.Length; S++)
+            {
+                    var tempSize = getSizes[S];
+                    var getSize_Info = db.Empties.Where(x => x.Empty_Size == tempSize).FirstOrDefault();
+                    var currentSize = getSize_Info.Empty_Size_Quantity;
+                    getSize_Info.Empty_Size_Quantity = currentSize - getQuantity[S];
+                    db.Entry(getSize_Info).State = EntityState.Modified;           
+            }
+
+            //db.SaveChanges();     
+        }
+
+       
         public ActionResult getAllEmpties()
         {
             Empty_Cylinder empty = new Empty_Cylinder();
@@ -101,8 +201,6 @@ namespace ZumaneGas_OperationalSystem.Controllers
         
         public JsonResult GetCurrent_Quantity(string Size)
         {
-           
-
             Empty_Cylinder E = db.Empties.Where(x => x.Empty_Size == Size).FirstOrDefault();
 
             if(E != null)

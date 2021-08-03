@@ -14,12 +14,20 @@
 
         <a href="" class="list-group-item" style="font-size:large"><strong>Sale</strong></a>
         <a href="@Url.Action("NewSale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> New Sale</a>
-        <a href="@Url.Action("Index","Home")" class="list-group-item active"><span class="glyphicon glyphicon-eye-open"></span> View Today's Sales</a>
+        <a href="@Url.Action("Index","Home")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Today's Sales</a>
         <a href="@Url.Action("S_Sale","Sale")" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Search Sale</a>
 
         <a href="#" class="list-group-item" style="font-size:large"><strong>Stock</strong></a>
         <a href="@Url.Action("ViewStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Stock</a>
         <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Stock Details</a>
+
+        <a href="#" class="list-group-item" style="font-size:large"><strong>Order</strong></a>
+        <a href="@Url.Action("ViewStock","Stock")" class="list-group-item active"><span class="glyphicon glyphicon-plus"></span>  New Order</a>
+        <a href="@Url.Action("AvailableStock","Stock")" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> View Order Details</a>
+        <a href="@Url.Action("getOrders_Due", "Order")" class="list-group-item">
+            <span class="glyphicon glyphicon-eye-open"></span> Outstanding Order @if (ViewBag.total > 0)
+            { <span class="badge"> @ViewBag.total</span> }
+        </a>
 
         <a href="#" class="list-group-item" style="font-size:large"><strong>Invetory</strong></a>
         <a href="@Url.Action("Create","Inventories")" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  New Invetory</a>
@@ -99,7 +107,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             var OrderPrice;
-
+            
             window.onload = function () {
                 var UrlSearch = window.location.pathname;
                 var parameters = UrlSearch.split("/");

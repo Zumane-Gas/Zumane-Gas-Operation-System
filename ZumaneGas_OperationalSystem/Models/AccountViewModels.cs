@@ -48,6 +48,10 @@ namespace ZumaneGas_OperationalSystem.Models
 
     public class LoginViewModel
     {
+        /*
+         * public string UserName {get;set;}
+        */
+
         [Required]
         [Display(Name = "Email")]
         [EmailAddress]
@@ -64,6 +68,10 @@ namespace ZumaneGas_OperationalSystem.Models
 
     public class RegisterViewModel
     {
+        /*
+         * public string UserName {get;set;}
+        */
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -83,6 +91,9 @@ namespace ZumaneGas_OperationalSystem.Models
 
     public class ResetPasswordViewModel
     {
+        /*
+         * public string UserName {get;set;}
+        */
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
